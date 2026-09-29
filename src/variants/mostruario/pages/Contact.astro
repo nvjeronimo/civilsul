@@ -1,0 +1,81 @@
+---
+import Icon from '../Icon.astro';
+import Chip from '../Chip.astro';
+import { SITE, UI, CALL_NOTE, href, whatsapp } from '../../../lib/site';
+import { INVITE } from '../../../content/company';
+import { sampleByCode } from '../samples';
+import { C } from '../copy';
+const V = 'mostruario' as const;
+const u = UI.pt;
+---
+<div class="lime ct">
+  <header class="pagehead">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href={href(V, 'pt', 'home')}>{C.home}</a></li><li aria-current="page">{u.nav.contact}</li></ol>
+      <h1>{C.contactH}</h1>
+      <p class="lead">{C.contactLead}</p>
+    </div>
+  </header>
+
+  <div class="wrap ct__grid">
+    <div>
+      <dl class="chan">
+        <div>
+          <dt>{C.mobile}</dt>
+          <dd><a class="tel" href={`tel:${SITE.mobile.tel}`}><Icon name="phone" />{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd>
+        </div>
+        <div>
+          <dt>{u.whatsapp}</dt>
+          <dd><a href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd>
+        </div>
+        {SITE.landlines.map((l) => (
+          <div>
+            <dt>{C.landline}</dt>
+            <dd><a class="tel" href={`tel:${l.tel}`}><Icon name="phone" />{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd>
+          </div>
+        ))}
+        <div>
+          <dt>{u.email}</dt>
+          <dd><a href={`mailto:${SITE.email}`}><Icon name="mail" />{SITE.email}</a></dd>
+        </div>
+        <div>
+          <dt>{u.address}</dt>
+          <dd>
+            <address>{SITE.legalName}<br />{SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}, {SITE.address.region}</address>
+            <a class="more" href={SITE.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" />{u.directions}</a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <aside class="ct__side">
+      <Chip sample={sampleByCode('S-02')} w={[400, 340]} />
+      <div class="ct__inv">
+        <p>{INVITE.pt}</p>
+        <div class="actions">
+          <a class="btn btn--primary" href={href(V, 'pt', 'quote')}><span class="dot" aria-hidden="true"></span>{C.quoteLink}</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<style>
+  .ct { padding-bottom: var(--sec); }
+  .ct__grid { display: grid; gap: 3.5rem; align-items: start; }
+  @media (min-width: 1000px) { .ct__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 5rem; } }
+  .chan { border-top: 1px solid var(--hair-2); }
+  .chan > div { display: grid; gap: 0.35rem 2rem; padding: 1.25rem 0; border-bottom: 1px solid var(--hair); }
+  @media (min-width: 700px) { .chan > div { grid-template-columns: 11rem 1fr; align-items: baseline; } }
+  .chan dt { color: var(--fg-2); font-size: var(--t-small); }
+  .chan dd { display: grid; gap: 0.2rem; justify-items: start; }
+  .chan dd > a:not(.more) {
+    display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--fg); text-decoration: none;
+    font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.9rem); font-weight: 680; letter-spacing: -0.02em;
+  }
+  .chan dd > a:not(.more):hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .chan dd > a .ic { width: 1.3rem; height: 1.3rem; color: var(--fg-2); }
+  .chan small { color: var(--fg-2); font-size: var(--t-tag); }
+  address { font-style: normal; font-size: 1.15rem; line-height: 1.5; font-weight: 520; }
+  .ct__side { display: grid; gap: 2rem; max-width: 26rem; }
+  .ct__inv p { font-size: var(--t-lead); line-height: 1.5; margin-bottom: 1.5rem; }
+</style>

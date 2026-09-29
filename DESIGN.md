@@ -12,10 +12,10 @@ This project has no single design system yet. It ships three complete, parallel 
 | World | Route | Design system | Sidecar |
 |---|---|---|---|
 | Mapa de Quantidades | `/mapa/` (`src/pages/mapa/[...path].astro`) | `src/variants/mapa/DESIGN.md` | `src/variants/mapa/design.json` |
-| Aviso de Obra | `/aviso/` (`src/pages/aviso/[...path].astro`) | `src/variants/aviso/DESIGN.md` | `src/variants/aviso/design.json` |
+| Mostruário (B, só PT; substitui o Aviso de Obra, rejeitado a 2026-09-29) | `/mostruario/` (`src/pages/mostruario/[...path].astro`) | `src/variants/mostruario/DESIGN.md` (a escrever) | `src/variants/mostruario/design.json` |
 | Padrão do setor | `/padrao/` (`src/pages/padrao/[...path].astro`) | `src/variants/padrao/DESIGN.md` | `src/variants/padrao/design.json` |
 
-Each world's tokens are scoped to its root class (`.v-mapa`, `.v-aviso`, `.v-padrao`) and must not leak into the others. When working in a world, read only that world's DESIGN.md. Do not mix tokens, components or motion between worlds.
+Each world's tokens are scoped to its root class (`.v-mapa`, `.v-mostruario`, `.v-padrao`) and must not leak into the others. When working in a world, read only that world's DESIGN.md. Do not mix tokens, components or motion between worlds.
 
 **Once the client decides, the chosen world's DESIGN.md and design.json will be promoted to the project root (replacing this file), and the other two worlds retired.**
 

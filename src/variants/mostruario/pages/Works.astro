@@ -1,0 +1,60 @@
+---
+import Chip from '../Chip.astro';
+import Final from '../Final.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, KINDS } from '../../../content/works';
+import { sampleForWork } from '../samples';
+import { C } from '../copy';
+const V = 'mostruario' as const;
+const u = UI.pt;
+const kindLabel = (k: string) => KINDS.find((x) => x.id === k)!.label.pt;
+---
+<div class="lime">
+  <header class="pagehead">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href={href(V, 'pt', 'home')}>{C.home}</a></li><li aria-current="page">{u.nav.works}</li></ol>
+      <h1>{C.worksPageH}</h1>
+      <p class="lead">{C.worksPageLead}</p>
+    </div>
+  </header>
+
+  <section class="wk" aria-label={u.nav.works}>
+    <div class="wrap">
+      <div class="flt" role="group" aria-label={C.filterLabel} data-filter hidden>
+        <button type="button" data-k="all" aria-pressed="true">{C.all}</button>
+        {KINDS.map((k) => <button type="button" data-k={k.id} aria-pressed="false">{k.label.pt}</button>)}
+        <p class="flt__n" aria-live="polite"><span data-count class="tnum">{WORKS.length}</span> {C.shown}</p>
+      </div>
+      <ul class="wall wk__wall">
+        {WORKS.map((w, i) => (
+          <li data-kind={w.kind}>
+            <Chip sample={sampleForWork(w.id)} ratio="pt" w={[300, 175]} open head={kindLabel(w.kind)} foot={w.place ?? w.client} eager={i < 4} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</div>
+
+<Final />
+
+<script>
+  import '../filter.ts';
+</script>
+
+<style>
+  .wk { padding-bottom: var(--sec); }
+  .flt { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--hair); }
+  .flt button {
+    min-height: 44px; padding: 0.45rem 1rem; border: 1px solid var(--hair-2); background: transparent; color: var(--fg);
+    font-weight: 560; font-size: var(--t-small); cursor: pointer; display: inline-flex; align-items: center; gap: 0.55rem;
+  }
+  .flt button:hover { border-color: var(--fg); }
+  .flt button[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--lime); }
+  .flt button[aria-pressed='true']::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); }
+  .flt__n { margin-left: auto; font-size: var(--t-small); color: var(--fg-2); }
+  .wk__wall { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1rem; }
+  @media (min-width: 700px) { .wk__wall { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.75rem 1.5rem; } }
+  @media (min-width: 1100px) { .wk__wall { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .flt__n { margin-left: 0; width: 100%; } }
+</style>

@@ -1,0 +1,33 @@
+---
+import { UI, href } from '../../../lib/site';
+import { PRIVACY } from '../../../content/privacy';
+import { C } from '../copy';
+const V = 'mostruario' as const;
+const u = UI.pt;
+---
+<div class="lime pv">
+  <header class="pagehead">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href={href(V, 'pt', 'home')}>{C.home}</a></li><li aria-current="page">{u.privacy}</li></ol>
+      <h1>{C.privacyH}</h1>
+      <p class="lead">{C.privacyLead}</p>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="pv__body">
+      {PRIVACY.pt.map((b) => (
+        <section>
+          <h2>{b.h}</h2>
+          {b.p.map((p) => <p>{p}</p>)}
+        </section>
+      ))}
+    </div>
+  </div>
+</div>
+<style>
+  .pv { padding-bottom: var(--sec); }
+  .pv__body { max-width: 46rem; border-top: 1px solid var(--hair-2); }
+  .pv__body section { display: grid; gap: 0.6rem; padding: 1.75rem 0; border-bottom: 1px solid var(--hair); }
+  .pv__body h2 { font-size: 1.35rem; letter-spacing: -0.02em; }
+  .pv__body p { color: var(--fg-2); max-width: 68ch; }
+</style>

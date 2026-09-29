@@ -13,8 +13,9 @@ interface Props {
   image?: string; // URL absoluta ou caminho do Astro
   themeColor?: string;
   jsonLd?: Record<string, unknown>[];
+  langs?: Lang[]; // idiomas publicados desta variante (hreflang só para os que existem)
 }
-const { title, description, lang, variant, page, id, image, themeColor = '#ffffff', jsonLd = [] } = Astro.props;
+const { title, description, lang, variant, page, id, image, themeColor = '#ffffff', jsonLd = [], langs = ['pt', 'en'] } = Astro.props;
 const site = Astro.site!;
 const abs = (p: string) => new URL(p, site).href;
 const here = abs(`${BASE}${variant}/${altPath(page, id, lang)}`);
@@ -68,9 +69,9 @@ const csp = [
 <meta name="description" content={description} />
 {demo && <meta name="robots" content="noindex, nofollow" />}
 <link rel="canonical" href={here} />
-<link rel="alternate" hreflang="pt-PT" href={pt} />
-<link rel="alternate" hreflang="en" href={en} />
-<link rel="alternate" hreflang="x-default" href={pt} />
+{langs.length > 1 && <link rel="alternate" hreflang="pt-PT" href={pt} />}
+{langs.length > 1 && langs.includes('en') && <link rel="alternate" hreflang="en" href={en} />}
+{langs.length > 1 && <link rel="alternate" hreflang="x-default" href={pt} />}
 <meta name="theme-color" content={themeColor} />
 <link rel="icon" href={`${BASE}favicon.svg`} type="image/svg+xml" />
 <meta property="og:type" content="website" />

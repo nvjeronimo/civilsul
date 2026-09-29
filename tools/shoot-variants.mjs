@@ -4,7 +4,7 @@ import { chromium } from 'playwright-core';
 const port = process.argv[2] ?? '4350';
 const CHROME = path.join(os.homedir(), 'Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-x64/chrome-headless-shell');
 const b = await chromium.launch({ executablePath: CHROME });
-for (const v of ['mapa', 'aviso', 'padrao']) {
+for (const v of ['mapa', 'mostruario', 'padrao']) {
   for (const [w, h, label, dpr] of [[1440, 900, 'desktop', 1], [390, 844, 'mobile', 2]]) {
     const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: w < 500, hasTouch: w < 500, deviceScaleFactor: dpr, reducedMotion: 'reduce' });
     const p = await ctx.newPage();

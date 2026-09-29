@@ -1,0 +1,187 @@
+---
+import '@fontsource-variable/schibsted-grotesk/wght.css';
+import './styles.css';
+import Head from '../../components/Head.astro';
+import Logo from '../../components/Logo.astro';
+import Icon from './Icon.astro';
+import { SITE, BASE, UI, CALL_NOTE, href, whatsapp, type PageKey } from '../../lib/site';
+import type { RouteProps } from '../../lib/routes';
+import { meta } from '../../lib/meta';
+import { C } from './copy';
+
+interface Props extends RouteProps { image?: string; jsonLd?: Record<string, unknown>[] }
+const { lang, page, id, image, jsonLd } = Astro.props;
+const V = 'mostruario' as const;
+const u = UI.pt;
+const m = meta({ lang, page, id });
+const nav: { key: PageKey; label: string }[] = [
+  { key: 'services', label: u.nav.services },
+  { key: 'works', label: u.nav.works },
+  { key: 'about', label: u.nav.about },
+  { key: 'contact', label: u.nav.contact },
+];
+const cur = (k: PageKey) => (page === k ? (id ? 'true' : 'page') : undefined);
+const year = new Date().getFullYear();
+---
+<html lang="pt-PT" class="v-mos">
+  <head>
+    <Head title={m.title} description={m.description} lang={lang} variant={V} page={page} id={id} image={image} jsonLd={jsonLd} themeColor="#1c1e1d" langs={['pt']} />
+  </head>
+  <body class="board">
+    <a class="skip" href="#main">{u.skip}</a>
+
+    <header class="hd board">
+      <div class="wrap hd__row">
+        <a class="hd__brand" href={href(V, lang, 'home')} aria-label={`Civilsul, ${C.home}`}>
+          <Logo tone="reverse" size="2.1rem" />
+          <span class="hd__name">Civilsul</span>
+        </a>
+        <nav class="hd__nav" aria-label={C.contents}>
+          <ul>
+            {nav.map((n) => <li><a href={href(V, lang, n.key)} aria-current={cur(n.key)}>{n.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="hd__phone phone">
+          <a href={`tel:${SITE.mobile.tel}`} class="tel">{SITE.mobile.display}</a>
+          <small>{CALL_NOTE.mobile.pt}</small>
+        </div>
+        <a class="btn btn--primary btn--sm hd__q" href={href(V, lang, 'quote')} aria-current={cur('quote')}><span class="dot" aria-hidden="true"></span>{u.nav.quote}</a>
+        <button class="hd__menu" type="button" aria-expanded="false" aria-controls="menu" hidden data-menu-btn>
+          <span data-open><Icon name="menu" />{u.menu}</span>
+          <span data-close hidden><Icon name="close" />{u.close}</span>
+        </button>
+      </div>
+      <div class="mm" id="menu" data-menu>
+        <div class="wrap">
+          <ul class="mm__nav">
+            {nav.map((n) => <li><a href={href(V, lang, n.key)} aria-current={cur(n.key)}>{n.label}</a></li>)}
+            <li><a href={href(V, lang, 'quote')} aria-current={cur('quote')}><span class="dot" aria-hidden="true"></span>{u.nav.quote}</a></li>
+          </ul>
+          <div class="mm__foot phone">
+            <a href={`tel:${SITE.mobile.tel}`} class="tel">{SITE.mobile.display}</a>
+            <small>{CALL_NOTE.mobile.pt}</small>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="ft board">
+      <div class="wrap">
+        <div class="ft__grid">
+          <div class="ft__id">
+            <a class="ft__brand" href={href(V, lang, 'home')}><Logo tone="reverse" size="2.4rem" /><span>Civilsul</span></a>
+            <p><strong>{SITE.legalName}</strong><br />{u.permit}<br />{SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}, {SITE.address.region}</p>
+          </div>
+          <dl class="ft__chan">
+            <div><dt>{C.mobile}</dt><dd class="phone"><a class="tel" href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd></div>
+            {SITE.landlines.map((l) => (
+              <div><dt>{C.landline}</dt><dd class="phone"><a class="tel" href={`tel:${l.tel}`}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd></div>
+            ))}
+            <div><dt>{u.email}</dt><dd class="phone"><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+          </dl>
+          <nav class="ft__nav" aria-label="Rodapé">
+            <ul>
+              {nav.map((n) => <li><a href={href(V, lang, n.key)}>{n.label}</a></li>)}
+              <li><a href={href(V, lang, 'quote')}>{u.nav.quote}</a></li>
+              <li><a href={href(V, lang, 'privacy')}>{u.privacy}</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="ft__base">
+          <span>© {year} {SITE.legalName} {u.rights}</span>
+          <a href={BASE}>{u.demo}</a>
+        </div>
+      </div>
+    </footer>
+
+    <nav class:list={['actbar', page === 'quote' && 'actbar--two']} aria-label={C.quick}>
+      <a href={`tel:${SITE.mobile.tel}`} aria-label={`${u.call} ${SITE.mobile.display} (${CALL_NOTE.mobile.pt})`}><Icon name="phone" />{u.call}</a>
+      <a href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+      {page !== 'quote' && <a class="actbar__q" href={href(V, lang, 'quote')}><span class="dot" aria-hidden="true"></span>{C.quoteShort}</a>}
+    </nav>
+
+    <script>
+      import './menu.ts';
+      import './chips.ts';
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .hd { position: relative; z-index: 30; border-bottom: 1px solid var(--hair); }
+  .hd__row { display: flex; align-items: center; gap: 1.5rem; min-height: var(--head-h); }
+  .hd__brand { display: inline-flex; align-items: center; gap: 0.7rem; margin-right: auto; min-height: 44px; color: var(--fg); text-decoration: none; }
+  .hd__name { font-weight: 780; font-size: 1.45rem; letter-spacing: -0.03em; }
+  .hd__nav { display: none; }
+  .hd__nav ul { display: flex; gap: 0.25rem; }
+  .hd__nav a {
+    position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.8rem;
+    color: var(--fg); font-weight: 560; text-decoration: none;
+  }
+  .hd__nav a::after { content: ''; position: absolute; left: 0.8rem; right: 0.8rem; bottom: 6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 400ms var(--ease); }
+  .hd__nav a:hover::after, .hd__nav a[aria-current]::after { transform: scaleX(1); }
+  .hd__phone { display: none; padding-left: 1.5rem; border-left: 1px solid var(--hair); white-space: nowrap; }
+  .hd__phone a { font-size: 1.05rem; }
+  .hd__q { display: none; white-space: nowrap; }
+  .hd__menu {
+    display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding: 0 0.25rem 0 0.75rem;
+    border: 0; background: transparent; color: var(--fg); font-weight: 600; cursor: pointer;
+  }
+  .hd__menu span { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .hd__menu .ic { width: 1.4rem; height: 1.4rem; }
+  .mm { border-top: 1px solid var(--hair); padding: 0.5rem 0 1.5rem; }
+  .mm__nav a {
+    display: flex; align-items: center; gap: 0.75rem; min-height: 60px; border-bottom: 1px solid var(--hair);
+    color: var(--fg); font-size: 1.85rem; font-weight: 720; letter-spacing: -0.03em; text-decoration: none;
+  }
+  .mm__nav a[aria-current] { color: var(--blue-b); }
+  .mm__nav .dot { width: 0.8rem; height: 0.8rem; }
+  .mm__foot { padding-top: 1.25rem; }
+  .mm__foot a { font-size: 1.3rem; }
+  @media (min-width: 1100px) {
+    .hd__nav, .hd__phone, .hd__q { display: flex; }
+    .hd__phone { display: grid; }
+    .hd__menu, .mm { display: none !important; }
+  }
+  @media (max-width: 1099.98px) {
+    :root.v-mos { --head-h: 64px; }
+  }
+
+  .ft { padding: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) 0 1.5rem; border-top: 1px solid var(--hair); }
+  .ft__grid { display: grid; gap: 2.75rem 4rem; }
+  .ft__brand { display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; color: var(--fg); font-size: 1.9rem; font-weight: 780; letter-spacing: -0.03em; text-decoration: none; }
+  .ft__id p { color: var(--fg-2); line-height: 1.65; }
+  .ft__id strong { color: var(--fg); font-weight: 620; }
+  .ft__chan { display: grid; gap: 1rem; }
+  .ft__chan dt { font-size: var(--t-tag); color: var(--fg-2); }
+  .ft__chan dd a { font-size: 1.1rem; display: inline-flex; min-height: 32px; align-items: center; }
+  .ft__nav a { display: flex; align-items: center; min-height: 44px; color: var(--fg); font-weight: 560; text-decoration: none; }
+  .ft__nav a:hover { text-decoration: underline; }
+  .ft__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--hair); font-size: var(--t-tag); color: var(--fg-2); }
+  .ft__base span, .ft__base a { display: inline-flex; align-items: center; min-height: 44px; }
+  .ft__base a { color: var(--fg-2); }
+  .ft__base a:hover { color: var(--fg); }
+  @media (min-width: 900px) { .ft__grid { grid-template-columns: 1.3fr 1.2fr 0.8fr; } }
+
+  .actbar {
+    position: fixed; inset: auto 0 0; z-index: 40; display: grid; grid-template-columns: repeat(3, 1fr);
+    background: var(--board); border-top: 1px solid var(--hair-b2); padding-bottom: env(safe-area-inset-bottom);
+  }
+  .actbar--two { grid-template-columns: repeat(2, 1fr); }
+  .actbar a {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 56px;
+    color: var(--lime); font-weight: 620; text-decoration: none; border-left: 1px solid var(--hair-b);
+  }
+  .actbar a:first-child { border-left: 0; }
+  .actbar .ic { width: 1.2rem; height: 1.2rem; }
+  .actbar__q { background: var(--lime); color: var(--ink) !important; }
+  body { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+  @media (min-width: 1100px) {
+    .actbar { display: none; }
+    body { padding-bottom: 0; }
+  }
+</style>

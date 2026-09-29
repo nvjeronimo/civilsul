@@ -1,0 +1,98 @@
+---
+import { Picture } from 'astro:assets';
+import Chip from '../Chip.astro';
+import Icon from '../Icon.astro';
+import Final from '../Final.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, KINDS, workById } from '../../../content/works';
+import { serviceById } from '../../../content/services';
+import { sampleForWork, TIPO } from '../samples';
+import { C } from '../copy';
+interface Props { id: string }
+const { id } = Astro.props;
+const V = 'mostruario' as const;
+const u = UI.pt;
+const w = workById(id);
+const i = WORKS.findIndex((x) => x.id === id);
+const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length];
+const next = WORKS[(i + 1) % WORKS.length];
+const svc = serviceById(w.service);
+const kind = KINDS.find((k) => k.id === w.kind)!.label.pt;
+const sample = sampleForWork(id);
+---
+<header class="pagehead board wh">
+  <div class="wrap wh__grid">
+    <div>
+      <ol class="crumbs">
+        <li><a href={href(V, 'pt', 'home')}>{C.home}</a></li>
+        <li><a href={href(V, 'pt', 'works')}>{u.nav.works}</a></li>
+        <li aria-current="page">{kind}</li>
+      </ol>
+      <h1>{w.title.pt}</h1>
+      <dl class="wh__meta">
+        <div><dt>{C.kind}</dt><dd>{kind}</dd></div>
+        {w.place && <div><dt>{C.place}</dt><dd>{w.place}</dd></div>}
+        {w.client && <div><dt>{C.client}</dt><dd>{w.client}</dd></div>}
+        <div><dt>{C.service}</dt><dd><a href={href(V, 'pt', 'services', svc.slug.pt)}>{svc.title.pt}</a></dd></div>
+      </dl>
+    </div>
+    <div class="wh__chip">
+      <Chip sample={sample} w={[340, 360]} hrefOverride="#fotos" eager dot />
+    </div>
+  </div>
+</header>
+
+<section class="lime wp" id="fotos" aria-label={u.photos}>
+  <div class="wrap">
+    {w.photos.map((p, n) => {
+      const portrait = p.src.height > p.src.width;
+      return (
+        <figure class:list={['wp__fig', portrait && 'wp__fig--port']}>
+          <Picture
+            src={p.src}
+            alt={p.alt.pt}
+            formats={['avif', 'webp']}
+            widths={[640, 960, 1400, 1920, 2400]}
+            sizes={portrait ? '(min-width: 900px) 56vw, 100vw' : '(min-width: 1400px) 1270px, 100vw'}
+            loading={n === 0 ? 'eager' : 'lazy'}
+            fetchpriority={n === 0 ? 'high' : undefined}
+          />
+          <figcaption><span class="wp__n">{C.photoOf} {n + 1}/{w.photos.length}</span><span>{p.alt.pt}</span></figcaption>
+        </figure>
+      );
+    })}
+
+    <nav class="pn" aria-label={u.nav.works}>
+      <a href={href(V, 'pt', 'works', prev.slug.pt)} rel="prev"><span class="pn__l"><Icon name="arrow-left" />{C.prev}</span><span class="pn__t">{prev.title.pt}</span></a>
+      <a href={href(V, 'pt', 'works', next.slug.pt)} rel="next" class="pn__next"><span class="pn__l">{C.next}<Icon name="arrow" /></span><span class="pn__t">{next.title.pt}</span></a>
+    </nav>
+    <a class="more" href={href(V, 'pt', 'works')}>{u.allWorks}<Icon name="arrow" /></a>
+  </div>
+</section>
+
+<Final title={C.workCtaH} lead={C.workCtaLead} tipo={TIPO[w.service]} />
+
+<style>
+  .wh__grid { display: grid; gap: 2.5rem; align-items: end; }
+  .wh h1 { max-width: 20ch; font-size: clamp(2.1rem, 1.3rem + 2.6vw, 3.75rem); }
+  .wh__meta { display: grid; gap: 0; margin-top: 2rem; max-width: 34rem; border-top: 1px solid var(--hair); }
+  .wh__meta > div { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--hair); }
+  .wh__meta dt { color: var(--fg-2); font-size: var(--t-small); }
+  .wh__meta dd { font-weight: 600; }
+  .wh__chip { max-width: 22rem; }
+  @media (min-width: 1000px) { .wh__grid { grid-template-columns: minmax(0, 8fr) minmax(0, 3fr); gap: 5rem; } .wh__chip { justify-self: end; width: 100%; } }
+
+  .wp { padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem) var(--sec); }
+  .wp__fig { margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); }
+  .wp__fig :global(img) { width: 100%; height: auto; background: var(--lime-2); }
+  .wp__fig--port { max-width: 56rem; }
+  .wp__fig figcaption { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; padding-top: 0.75rem; margin-top: 0.75rem; border-top: 1px solid var(--hair); font-size: var(--t-small); color: var(--fg-2); }
+  .wp__fig figcaption .wp__n { color: var(--fg); font-weight: 600; }
+
+  .pn { display: grid; gap: 1rem; margin-bottom: 1.5rem; border-top: 1px solid var(--hair-2); padding-top: 1.5rem; }
+  .pn a { display: grid; gap: 0.35rem; padding: 1rem 0; color: var(--fg); text-decoration: none; min-height: 44px; }
+  .pn__l { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--t-tag); color: var(--fg-2); }
+  .pn__t { font-weight: 650; font-size: 1.15rem; line-height: 1.3; }
+  .pn a:hover .pn__t { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  @media (min-width: 760px) { .pn { grid-template-columns: 1fr 1fr; gap: 3rem; } .pn__next { text-align: right; justify-items: end; } }
+</style>

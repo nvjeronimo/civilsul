@@ -11,7 +11,7 @@ const BASE = `http://localhost:${port}/civilsul/${variant}`;
 const CHROME = process.env.CHROME ?? path.join(os.homedir(), 'Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-x64/chrome-headless-shell');
 const PAGES = [
   ['home', '/'], ['servicos', '/servicos/'], ['servico', '/servicos/remodelacoes/'], ['obras', '/obras/'],
-  ['obra', '/obras/moradia-vale-del-rey/'], ['orcamento', '/orcamento/'], ['empresa', '/empresa/'], ['contactos', '/contactos/'], ['en-home', '/en/'],
+  ['obra', '/obras/moradia-vale-del-rey/'], ['orcamento', '/orcamento/'], ['empresa', '/empresa/'], ['contactos', '/contactos/'], ...(variant === 'mostruario' ? [] : [['en-home', '/en/']]),
 ];
 const sizes = [[1440, 'desktop'], [390, 'mobile']].filter(([, l]) => which === 'both' || which === l);
 const b = await chromium.launch({ executablePath: CHROME });

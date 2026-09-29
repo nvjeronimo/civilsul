@@ -23,12 +23,12 @@ export const SITE = {
 } as const;
 
 export type Lang = 'pt' | 'en';
-export type Variant = 'mapa' | 'aviso' | 'padrao';
+export type Variant = 'mapa' | 'mostruario' | 'padrao';
 
-export const VARIANTS: { id: Variant; name: string; line: { pt: string; en: string } }[] = [
-  { id: 'mapa', name: 'Mapa de Quantidades', line: { pt: 'O site como o orçamento de um construtor sério.', en: 'The site as a serious builder’s bill of quantities.' } },
-  { id: 'aviso', name: 'Aviso de Obra', line: { pt: 'Cada página é uma placa de licença de obra.', en: 'Every page is a building-permit board.' } },
-  { id: 'padrao', name: 'Padrão do setor', line: { pt: 'O site de construtora esperado, com acabamento a sério.', en: 'The expected builder site, finished properly.' } },
+export const VARIANTS: { id: Variant; name: string; line: { pt: string; en: string }; langs: Lang[] }[] = [
+  { id: 'mapa', name: 'Mapa de Quantidades', line: { pt: 'O site como o orçamento de um construtor sério.', en: 'The site as a serious builder’s bill of quantities.' }, langs: ['pt', 'en'] },
+  { id: 'mostruario', name: 'Mostruário', line: { pt: 'Cada serviço é uma amostra de material tirada das obras reais.', en: 'Every service is a material sample cut from real work.' }, langs: ['pt'] },
+  { id: 'padrao', name: 'Padrão do setor', line: { pt: 'O site de construtora esperado, com acabamento a sério.', en: 'The expected builder site, finished properly.' }, langs: ['pt', 'en'] },
 ];
 
 // Nota obrigatória junto de números de telefone (DL 59/2021)

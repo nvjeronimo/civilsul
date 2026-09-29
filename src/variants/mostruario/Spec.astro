@@ -1,0 +1,16 @@
+---
+// Ficha da empresa como uma só etiqueta de amostra: factos do site atual, nada mais.
+import { SITE, UI } from '../../lib/site';
+import { C } from './copy';
+const u = UI.pt;
+---
+<div class="spec">
+  <p class="spec__head"><span class="dot" aria-hidden="true"></span>{C.specTitle}</p>
+  <dl>
+    <div><dt>{C.spec.legal}</dt><dd>{SITE.legalName}</dd></div>
+    <div><dt>{C.spec.since}</dt><dd>{SITE.since}</dd></div>
+    <div><dt>{C.spec.permit}</dt><dd>nº {SITE.permit}</dd></div>
+    <div><dt>{C.spec.seat}</dt><dd>{SITE.address.street}, {SITE.address.postal} {SITE.address.city}</dd></div>
+    <div><dt>{C.spec.area}</dt><dd>{u.area}</dd></div>
+  </dl>
+</div>

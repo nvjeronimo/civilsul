@@ -1,0 +1,313 @@
+---
+// "Monte a sua amostra": pedido guiado em 4 passos (contrato de src/scripts/quote.ts).
+// O tipo de obra escolhe-se por amostras recortadas das obras; o resumo é uma única etiqueta "Ref. do pedido".
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import { SITE, UI, CALL_NOTE, href } from '../../../lib/site';
+import { WORK_TYPES, PROPERTY, TIMING, PROJECT_STATE, Q } from '../../../content/quote';
+import { workById } from '../../../content/works';
+import { sampleByCode, TYPE_SAMPLE } from '../samples';
+import { C } from '../copy';
+const V = 'mostruario' as const;
+const u = UI.pt;
+const q = Q.pt;
+const prefs = (['telefone', 'whatsapp', 'email'] as const).map((id) => ({ id, label: C.pref[id] }));
+const types = WORK_TYPES.map((t) => {
+  const code = TYPE_SAMPLE[t.id];
+  const s = code ? sampleByCode(code) : undefined;
+  const photo = s ? workById(s.work).photos[s.photo] : undefined;
+  return { ...t, s, photo };
+});
+const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.details, q.name, q.phone, q.email, q.contactPref];
+---
+<div class="lime qp">
+  <header class="pagehead">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href={href(V, 'pt', 'home')}>{C.home}</a></li><li aria-current="page">{u.nav.quote}</li></ol>
+      <h1>{C.quoteH}</h1>
+      <p class="lead">{C.quoteLead}</p>
+    </div>
+  </header>
+
+  <div class="wrap qg">
+    <form
+      class="qf"
+      data-quote
+      data-i18n={JSON.stringify(q)}
+      data-wa={SITE.mobile.wa}
+      data-email={SITE.email}
+      action={`mailto:${SITE.email}`}
+      method="post"
+      enctype="text/plain"
+    >
+      <div class="qf__steps" data-progress>
+        <ol>
+          {q.steps.map((s, i) => (
+            <li data-step-label><span class="qf__sn tnum">{i + 1}</span><span class="qf__sl">{s}</span></li>
+          ))}
+        </ol>
+        <span class="qf__bar" aria-hidden="true"></span>
+      </div>
+
+      <p class="qf__nojs muted">{C.noJs}</p>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__of">{C.step} 1 {C.of} 4</span>{q.steps[0]}</legend>
+        <fieldset class="field">
+          <legend class="qf__q">{q.type}</legend>
+          <div class="types">
+            {types.map((t) => (
+              <label class="ts" style={t.s ? `--cx:${t.s.x}%;--cy:${t.s.y}%;--s:${t.s.s};--hx:${t.s.hx}%;--hy:${t.s.hy}%` : undefined}>
+                <input type="radio" name="type" value={t.id} data-text={t.label.pt} />
+                <span class:list={['chip__frame', 'ts__frame', !t.s && 'ts__frame--blank']}>
+                  {t.photo && (
+                    <Picture class="chip__img" src={t.photo.src} alt="" formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 900px) 520px, 480px" loading="lazy" decoding="async" />
+                  )}
+                  {!t.s && <span class="ts__blank">{C.blank}</span>}
+                  <span class="dot ts__dot" aria-hidden="true"></span>
+                </span>
+                <span class="ts__tag">
+                  <span class="ts__ref">{t.s ? `${C.ref} ${t.s.code}` : `${C.ref} S-00`}</span>
+                  <span class="ts__l">{t.label.pt}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+          <p class="err" data-error-for="type" hidden></p>
+        </fieldset>
+      </fieldset>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__of">{C.step} 2 {C.of} 4</span>{q.steps[1]}</legend>
+        <fieldset class="field">
+          <legend class="qf__q">{q.property}</legend>
+          <div class="opts">
+            {PROPERTY.map((o) => (
+              <label class="opt"><input type="radio" name="property" value={o.id} data-text={o.label.pt} /><span class="opt__i" aria-hidden="true"></span><span>{o.label.pt}</span></label>
+            ))}
+          </div>
+          <p class="err" data-error-for="property" hidden></p>
+        </fieldset>
+        <div class="row2">
+          <div class="field">
+            <label class="qf__q" for="q-place">{q.place}</label>
+            <input id="q-place" name="place" type="text" autocomplete="address-level2" placeholder={q.placeHint} aria-describedby="e-place" />
+            <p class="err" id="e-place" data-error-for="place" hidden></p>
+          </div>
+          <div class="field">
+            <label class="qf__q" for="q-area">{q.area} <span class="muted">· {q.areaHint}</span></label>
+            <input id="q-area" name="area" type="number" inputmode="numeric" min="0" step="1" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__of">{C.step} 3 {C.of} 4</span>{q.steps[2]}</legend>
+        <fieldset class="field">
+          <legend class="qf__q">{q.timing}</legend>
+          <div class="opts">
+            {TIMING.map((o) => (
+              <label class="opt"><input type="radio" name="timing" value={o.id} data-text={o.label.pt} /><span class="opt__i" aria-hidden="true"></span><span>{o.label.pt}</span></label>
+            ))}
+          </div>
+          <p class="err" data-error-for="timing" hidden></p>
+        </fieldset>
+        <fieldset class="field">
+          <legend class="qf__q">{q.state} <span class="muted">· {C.optional}</span></legend>
+          <div class="opts">
+            {PROJECT_STATE.map((o) => (
+              <label class="opt"><input type="radio" name="state" value={o.id} data-text={o.label.pt} /><span class="opt__i" aria-hidden="true"></span><span>{o.label.pt}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label class="qf__q" for="q-details">{q.details} <span class="muted">· {C.optional}</span></label>
+          <textarea id="q-details" name="details" rows="5" placeholder={q.detailsHint}></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__of">{C.step} 4 {C.of} 4</span>{q.steps[3]}</legend>
+        <div class="field">
+          <label class="qf__q" for="q-name">{q.name}</label>
+          <input id="q-name" name="name" type="text" autocomplete="name" aria-describedby="e-name" />
+          <p class="err" id="e-name" data-error-for="name" hidden></p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label class="qf__q" for="q-phone">{q.phone}</label>
+            <input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="e-phone" />
+            <p class="err" id="e-phone" data-error-for="phone" hidden></p>
+          </div>
+          <div class="field">
+            <label class="qf__q" for="q-email">{q.email}</label>
+            <input id="q-email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="e-email" />
+            <p class="err" id="e-email" data-error-for="email" hidden></p>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend class="qf__q">{q.contactPref}</legend>
+          <div class="opts opts--3">
+            {prefs.map((o) => (
+              <label class="opt"><input type="radio" name="pref" value={o.id} data-text={o.label} /><span class="opt__i" aria-hidden="true"></span><span>{o.label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label class="consent"><input type="checkbox" name="consent" value="true" aria-describedby="e-consent" /><span class="consent__box" aria-hidden="true"><Icon name="check" /></span><span>{q.consent} <a href={href(V, 'pt', 'privacy')}>{u.privacy}</a></span></label>
+          <p class="err" id="e-consent" data-error-for="consent" hidden></p>
+        </div>
+        <p class="qf__note">{q.photosNote}</p>
+      </fieldset>
+
+      <div class="qf__nav">
+        <button class="btn" type="button" data-prev><Icon name="arrow-left" />{q.back}</button>
+        <button class="btn btn--primary" type="button" data-next>{q.next}<Icon name="arrow" /></button>
+        <button class="btn btn--primary" type="button" data-send="wa"><span class="dot" aria-hidden="true"></span><Icon name="chat" />{q.sendWa}</button>
+        <button class="btn" type="submit" data-send="email"><Icon name="mail" />{q.sendEmail}</button>
+      </div>
+      <p class="qf__status" data-status aria-live="polite"></p>
+      <p class="qf__draft small muted">{q.draft}</p>
+    </form>
+
+    <aside class="qt" aria-labelledby="qt-h">
+      <div class="qt__tag">
+        <span class="qt__hole" aria-hidden="true"></span>
+        <p class="qt__head"><span class="dot" aria-hidden="true"></span><span id="qt-h">{C.quoteRef}</span></p>
+        <p class="qt__sub small muted">{q.summary} · {C.quoteTagNote}</p>
+        <dl class="qt__dl" data-summary>
+          {preview.map((k) => <div data-filled="false"><dt>{k}</dt><dd>{q.empty}</dd></div>)}
+        </dl>
+      </div>
+      <div class="qt__direct">
+        <p class="small muted">{C.orCall}</p>
+        <div class="phone"><a class="tel" href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></div>
+        <div class="phone"><a href={`mailto:${SITE.email}`}>{SITE.email}</a></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  import '../../../scripts/quote.ts';
+</script>
+
+<style>
+  .qp { padding-bottom: var(--sec); }
+  .qg { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 1100px) { .qg { grid-template-columns: minmax(0, 7.5fr) minmax(0, 4fr); gap: 4.5rem; } .qt { position: sticky; top: 1.5rem; } }
+
+  /* passos */
+  .qf__steps { margin-bottom: 2rem; }
+  .qf__steps ol { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
+  .qf__steps li { display: flex; align-items: center; gap: 0.5rem; min-height: 44px; font-size: var(--t-small); color: var(--fg-2); font-weight: 520; }
+  .qf__sn { display: inline-grid; place-items: center; flex: none; width: 1.8rem; height: 1.8rem; border: 1px solid var(--hair-2); border-radius: 50%; font-size: 0.8125rem; }
+  .qf__steps li[aria-current] { color: var(--fg); font-weight: 650; }
+  .qf__steps li[aria-current] .qf__sn { background: var(--ink); color: var(--lime); border-color: var(--ink); }
+  .qf__steps li[data-done] { color: var(--fg); cursor: pointer; }
+  .qf__steps li[data-done] .qf__sn { background: var(--sun); border-color: var(--ink); color: var(--ink); }
+  .qf__steps li[data-done]:hover .qf__sl { text-decoration: underline; }
+  .qf__bar { display: block; height: 1px; margin-top: 0.75rem; background: var(--hair-2); position: relative; }
+  .qf__bar::after { content: ''; position: absolute; inset: -1px 0; background: var(--ink); transform-origin: left; transform: scaleX(var(--progress, 0)); transition: transform 600ms var(--ease); }
+  @media (max-width: 640px) { .qf__sl { display: none; } .qf__steps li[aria-current] .qf__sl { display: inline; } .qf__steps ol { grid-template-columns: auto auto auto auto; justify-content: start; gap: 0.5rem 1rem; } }
+  .qf:not(.is-js) .qf__steps { display: none; }
+  .qf.is-js .qf__nojs { display: none; }
+  .qf__nojs { margin-bottom: 1.5rem; }
+
+  .qf fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .qf fieldset[data-step] { display: grid; gap: 2rem; }
+  .qf:not(.is-js) fieldset[data-step] + fieldset[data-step] { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--hair-2); }
+  .qf fieldset[data-step] > legend { display: grid; gap: 0.35rem; float: left; width: 100%; margin-bottom: 0.5rem; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.2rem); font-weight: 740; letter-spacing: -0.03em; line-height: 1.1; }
+  .qf fieldset[data-step] > legend:focus { outline: none; }
+  .qf fieldset[data-step] > legend + * { clear: both; }
+  .qf__of { font-size: var(--t-tag); color: var(--fg-2); font-weight: 500; letter-spacing: 0; }
+  .field { display: grid; gap: 0.6rem; }
+  .qf__q { font-weight: 620; font-size: 1.05rem; padding: 0; margin-bottom: 0.2rem; }
+  fieldset.field > legend { margin-bottom: 0.8rem; }
+  .row2 { display: grid; gap: 2rem 1.25rem; }
+  @media (min-width: 640px) { .row2 { grid-template-columns: 1.4fr 1fr; } }
+
+  input[type='text'], input[type='tel'], input[type='email'], input[type='number'], textarea {
+    width: 100%; min-height: 52px; padding: 0.75rem 0.9rem; border: 1px solid var(--hair-2); border-radius: 0;
+    background: #fff; color: var(--ink); font: inherit; font-size: 1.0625rem;
+    transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+  }
+  textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
+  input::placeholder, textarea::placeholder { color: #6a6e6b; }
+  input:hover, textarea:hover { border-color: var(--ink-2); }
+  input:focus-visible, textarea:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+  [aria-invalid='true'] { border-color: var(--err) !important; }
+  .err { color: var(--err); font-weight: 560; font-size: var(--t-small); display: flex; gap: 0.5rem; align-items: baseline; }
+  .err::before { content: ''; flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--err); transform: translateY(-0.05em); }
+  .qp { --err: #b42318; }
+
+  /* tipos de obra como amostras */
+  .types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 1rem; }
+  @media (min-width: 760px) { .types { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .ts { position: relative; display: grid; align-content: start; gap: 0.6rem; cursor: pointer; }
+  .ts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .ts__frame { aspect-ratio: 1; }
+  .ts__frame--blank { display: grid; place-items: center; background: var(--lime-2); }
+  .ts__blank { font-size: var(--t-small); color: var(--fg-2); }
+  .ts__dot { position: absolute; top: 0.6rem; right: 0.6rem; width: 0.95rem; height: 0.95rem; opacity: 0; transform: scale(0.4); transition: opacity 250ms var(--ease), transform 450ms var(--ease); }
+  .ts__tag { display: grid; gap: 0.15rem; padding-top: 0.5rem; border-top: 1px solid var(--hair); }
+  .ts__ref { font-size: var(--t-tag); color: var(--fg-2); }
+  .ts__l { font-weight: 620; line-height: 1.3; }
+  .ts:hover .ts__frame { box-shadow: 0 18px 30px -20px rgb(28 30 29 / 0.55); transform: translateY(-2px); }
+  .ts:has(input:checked) .ts__frame { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .ts:has(input:checked) .chip__img { object-position: var(--hx) var(--hy); transform: scale(1); }
+  .ts:has(input:checked) .ts__dot { opacity: 1; transform: none; }
+  .ts:has(input:checked) .ts__tag { border-top-color: var(--ink); }
+  .ts:has(input:focus-visible) .ts__frame { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  /* opções simples */
+  .opts { display: grid; gap: 0.6rem; }
+  @media (min-width: 640px) { .opts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .opts--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .opt {
+    position: relative; display: flex; align-items: center; gap: 0.75rem; min-height: 52px; padding: 0.6rem 0.9rem;
+    border: 1px solid var(--hair-2); background: #fff; cursor: pointer; font-weight: 540; line-height: 1.3;
+  }
+  .opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .opt__i { flex: none; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--ink-2); display: grid; place-items: center; }
+  .opt__i::after { content: ''; width: 0.62rem; height: 0.62rem; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 1px var(--ink); transform: scale(0); transition: transform 300ms var(--ease); }
+  .opt:hover { border-color: var(--ink-2); }
+  .opt:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); font-weight: 620; }
+  .opt:has(input:checked) .opt__i { border-color: var(--ink); }
+  .opt:has(input:checked) .opt__i::after { transform: scale(1); }
+  .opt:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
+  [data-invalid] .opt, [data-invalid] .ts__frame::after { border-color: var(--err); }
+
+  .consent { position: relative; display: flex; gap: 0.8rem; align-items: flex-start; cursor: pointer; line-height: 1.5; min-height: 44px; }
+  .consent input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .consent__box { flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; margin-top: 0.05rem; border: 1px solid var(--ink-2); background: #fff; color: transparent; }
+  .consent__box :global(.ic) { width: 1.1rem; height: 1.1rem; }
+  .consent:has(input:checked) .consent__box { background: var(--ink); border-color: var(--ink); color: var(--sun); }
+  .consent:has(input:focus-visible) .consent__box { outline: 2px solid var(--blue); outline-offset: 2px; }
+  [data-invalid] .consent__box { border-color: var(--err); }
+  .qf__note { padding: 1rem 1.1rem; border: 1px dashed var(--hair-2); color: var(--fg-2); font-size: var(--t-small); }
+
+  .qf__nav { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); }
+  .qf__nav [data-next], .qf__nav [data-send='wa'] { margin-left: auto; }
+  .qf__nav [data-prev] + [data-next][hidden] + [data-send='wa'] { margin-left: auto; }
+  .qf:not(.is-js) [data-prev], .qf:not(.is-js) [data-next], .qf:not(.is-js) [data-send='wa'] { display: none; }
+  .qf:not(.is-js) [data-send='email'] { margin-left: 0; }
+  @media (max-width: 520px) { .qf__nav .btn { flex: 1 1 100%; } .qf__nav [data-next], .qf__nav [data-send='wa'] { order: -1; } }
+  .qf__status { margin-top: 1rem; font-weight: 600; }
+  .qf__status:empty { display: none; }
+  .qf__draft { margin-top: 0.75rem; }
+
+  /* etiqueta do pedido */
+  .qt { display: grid; gap: 1.5rem; }
+  .qt__tag { position: relative; padding: 1.75rem 1.4rem 1.25rem; border: 1px solid var(--hair-2); background: #fff; }
+  .qt__hole { position: absolute; top: 0.9rem; left: 50%; width: 0.8rem; height: 0.8rem; margin-left: -0.4rem; border-radius: 50%; border: 1px solid var(--hair-2); background: var(--lime); }
+  .qt__head { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem; font-weight: 720; font-size: 1.35rem; letter-spacing: -0.02em; }
+  .qt__sub { margin: 0.25rem 0 1rem; }
+  .qt__dl { display: grid; }
+  .qt__dl > :global(div) { display: grid; grid-template-columns: 9rem 1fr; gap: 0.75rem; padding: 0.5rem 0; border-top: 1px solid var(--hair); font-size: var(--t-small); }
+  .qt__dl :global(dt) { color: var(--fg-2); }
+  .qt__dl :global(dd) { overflow-wrap: anywhere; font-weight: 600; }
+  .qt__dl :global([data-filled='false'] dd) { color: var(--fg-2); font-weight: 400; }
+  @media (max-width: 420px) { .qt__dl > :global(div) { grid-template-columns: 1fr; gap: 0.1rem; } }
+  .qt__direct { display: grid; gap: 0.75rem; }
+  .qt__direct a { font-size: 1.15rem; display: inline-flex; min-height: 36px; align-items: center; }
+</style>

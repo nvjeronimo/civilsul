@@ -107,7 +107,7 @@ const needs = [
       <div class="wrap">
         <div class="intro">
           <h2>Três direções, o mesmo conteúdo</h2>
-          <p>As três versões têm as mesmas páginas, textos, fotografias e funcionalidades. Muda a forma de apresentar a Civilsul. Todas estão completas e navegáveis, em português e inglês.</p>
+          <p>As três versões têm as mesmas páginas, textos, fotografias e funcionalidades. Muda a forma de apresentar a Civilsul. Todas estão completas e navegáveis. A e C já têm versão inglesa; B, por agora, só em português.</p>
         </div>
         <div class="dirs">
           {VARIANTS.map((v, i) => (
@@ -121,10 +121,10 @@ const needs = [
                 <p class="dir__line">{v.line.pt}</p>
                 <p>{({
                   mapa: 'O site apresenta-se como o documento que um construtor sério entrega: cada serviço e cada obra é um artigo numerado, as fotografias são os anexos, e o pedido de orçamento monta uma folha em tempo real. Distinto, rigoroso, fácil de percorrer.',
-                  aviso: 'Inspirado na placa de licença que está em todas as obras em Portugal: painéis brancos aparafusados, campos com os factos da Civilsul (alvará 4511, desde 1985, Quarteira) e a letra da sinalética de estrada. Reconhecível à primeira vista por qualquer português.',
+                  mostruario: 'Como o mostruário de materiais de um showroom: cada serviço é uma amostra recortada das fotografias das obras da Civilsul (madeira, água da piscina, telha, cal, mosaico, fachada), com a sua etiqueta. A amostra abre-se na casa acabada. Calmo, material, premium.',
                   padrao: 'O site de construtora que o visitante espera, feito com o cuidado de um estúdio de arquitetura: fotografia grande, serviços com imagens reais, portefólio com filtros e um botão de orçamento sempre à mão. Seguro e familiar.',
                 } as Record<string, string>)[v.id]}</p>
-                <p class="dir__links"><a class="btn btn--ink" href={`${BASE}${v.id}/`}>Ver em português</a> <a href={`${BASE}${v.id}/en/`}>English</a> <a href={`${BASE}${v.id}/orcamento/`}>Pedido de orçamento</a></p>
+                <p class="dir__links"><a class="btn btn--ink" href={`${BASE}${v.id}/`}>Ver em português</a> {v.langs.includes('en') && <a href={`${BASE}${v.id}/en/`}>English</a>} <a href={`${BASE}${v.id}/orcamento/`}>Pedido de orçamento</a></p>
               </div>
             </article>
           ))}

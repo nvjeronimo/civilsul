@@ -14,9 +14,9 @@ const SEG: Record<Exclude<PageKey, 'home'>, Record<Lang, string>> = {
   privacy: { pt: 'privacidade', en: 'privacy' },
 };
 
-export function variantPaths() {
+export function variantPaths(langs: Lang[] = ['pt', 'en']) {
   const out: { params: { path: string | undefined }; props: RouteProps }[] = [];
-  for (const lang of ['pt', 'en'] as Lang[]) {
+  for (const lang of langs) {
     const pre = lang === 'en' ? 'en/' : '';
     const add = (path: string, props: RouteProps) => out.push({ params: { path: (pre + path).replace(/\/$/, '') || undefined }, props });
     add('', { lang, page: 'home' });

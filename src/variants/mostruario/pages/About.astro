@@ -1,0 +1,73 @@
+---
+import Chip from '../Chip.astro';
+import Spec from '../Spec.astro';
+import Process from '../Process.astro';
+import Trades from '../Trades.astro';
+import Final from '../Final.astro';
+import { UI, href } from '../../../lib/site';
+import { MISSION, WHO, TEAM } from '../../../content/company';
+import { sampleByCode } from '../samples';
+import { C } from '../copy';
+const V = 'mostruario' as const;
+const u = UI.pt;
+---
+<header class="pagehead board ab">
+  <div class="wrap ab__grid">
+    <div>
+      <ol class="crumbs"><li><a href={href(V, 'pt', 'home')}>{C.home}</a></li><li aria-current="page">{u.nav.about}</li></ol>
+      <h1>{C.aboutH}</h1>
+      <p class="lead">{C.aboutLead}</p>
+    </div>
+    <div class="ab__chips">
+      <Chip sample={sampleByCode('S-09')} w={[260, 170]} eager />
+      <Chip sample={sampleByCode('S-08')} w={[260, 170]} eager />
+    </div>
+  </div>
+</header>
+
+<section class="sec lime" aria-labelledby="mi-h">
+  <div class="wrap ab__body">
+    <div class="ab__text">
+      <h2 id="mi-h">{C.missionH}</h2>
+      <p class="ab__big">{MISSION.pt}</p>
+      <div class="ab__two">
+        <div><h3>{C.whoH}</h3><p>{WHO.pt}</p></div>
+        <div><h3>{C.teamH}</h3><p>{TEAM.pt}</p></div>
+      </div>
+    </div>
+    <Spec />
+  </div>
+</section>
+
+<section class="sec lime" aria-labelledby="pr-h">
+  <div class="wrap">
+    <div class="sec__head"><h2 id="pr-h">{C.processH}</h2></div>
+    <Process />
+  </div>
+</section>
+
+<section class="sec lime" aria-labelledby="tr-h">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 id="tr-h">{C.tradesH}</h2>
+      <p class="lead">{C.tradesLead}</p>
+    </div>
+    <Trades />
+  </div>
+</section>
+
+<Final />
+
+<style>
+  .ab__grid { display: grid; gap: 2.5rem; align-items: end; }
+  .ab__chips { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 34rem; }
+  @media (min-width: 1000px) { .ab__grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 5rem; } .ab__chips { justify-self: end; width: 100%; } }
+  .ab__body { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 1000px) { .ab__body { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 5rem; } }
+  .ab__text h2 { font-size: var(--t-h2); margin-bottom: 1.5rem; }
+  .ab__big { font-size: var(--t-lead); line-height: 1.55; max-width: 38em; }
+  .ab__two { display: grid; gap: 2rem; margin-top: 2.5rem; }
+  .ab__two h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .ab__two p { color: var(--fg-2); }
+  @media (min-width: 700px) { .ab__two { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+</style>

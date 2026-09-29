@@ -1,0 +1,65 @@
+---
+// Amostra do mostruário: recorte apertado (CSS) de uma fotografia real, com etiqueta impressa por baixo.
+// Assinatura "amostra → casa": ao passar, focar ou tocar, o recorte abre na fotografia inteira dentro da moldura
+// e a etiqueta troca o material pelo título da obra. Movimento reduzido: fotografia inteira, sem transição.
+// open=true (parede de obras): sem JS vê-se a casa; com JS a amostra resolve-se ao entrar no ecrã (uma vez).
+import { Picture } from 'astro:assets';
+import { href } from '../../lib/site';
+import { workById } from '../../content/works';
+import type { Sample } from './samples';
+import { C } from './copy';
+
+interface Props {
+  sample: Sample;
+  ratio?: 'sq' | 'pt' | 'wide';
+  /** largura aproximada em px no desktop e no telemóvel (para escolher a resolução certa do recorte) */
+  w?: [number, number];
+  eager?: boolean;
+  dot?: boolean;
+  head?: string;
+  open?: boolean;
+  foot?: string;
+  class?: string;
+  as?: 'a' | 'div';
+  hrefOverride?: string;
+}
+const { sample, ratio = 'sq', w = [260, 280], eager = false, dot = false, head, open = false, foot, class: cls, as = 'a', hrefOverride } = Astro.props;
+const work = workById(sample.work);
+const photo = work.photos[sample.photo] ?? work.photos[0];
+const link = hrefOverride ?? href('mostruario', 'pt', 'works', work.slug.pt);
+const k = open ? 1.4 : sample.s;
+const px = (n: number) => Math.min(Math.round(n * k), 1500);
+const sizes = `(min-width: 900px) ${px(w[0])}px, ${px(w[1])}px`;
+const style = `--cx:${sample.x}%;--cy:${sample.y}%;--s:${sample.s};--hx:${sample.hx}%;--hy:${sample.hy}%`;
+const Tag = as;
+---
+<Tag
+  class:list={['chip', `chip--${ratio}`, open && 'chip--open', cls]}
+  href={as === 'a' ? link : undefined}
+  style={style}
+  data-chip
+  data-resolve={open ? '' : undefined}
+>
+  <span class="chip__frame">
+    <Picture
+      class="chip__img"
+      src={photo.src}
+      alt={photo.alt.pt}
+      formats={['avif', 'webp']}
+      widths={[480, 960, 1440, 1920]}
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+    />
+    {dot && <span class="dot chip__dot" aria-hidden="true"></span>}
+  </span>
+  <span class="chip__tag">
+    <span class="chip__ref"><span>{C.ref} {sample.code}</span>{head && <span class="chip__head">{head}</span>}</span>
+    <span class="chip__swap">
+      <span class="chip__mat">{sample.material}</span>
+      <span class="chip__work"><span class="chip__ap">{C.applied}</span> {work.title.pt}</span>
+    </span>
+    {foot && <span class="chip__foot">{foot}</span>}
+  </span>
+</Tag>
