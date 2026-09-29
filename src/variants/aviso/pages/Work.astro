@@ -1,0 +1,172 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import Layout from '../Layout.astro';
+import Board from '../components/Board.astro';
+import Icon from '../components/Icon.astro';
+import BlankBoard from '../components/BlankBoard.astro';
+import { UI, href, type Lang } from '../../../lib/site';
+import { WORKS, KINDS, workById } from '../../../content/works';
+import { serviceById } from '../../../content/services';
+import { copy, SERVICE_TO_TYPE } from '../copy';
+
+interface Props { lang: Lang; id: string }
+const { lang, id } = Astro.props;
+const c = copy(lang);
+const ui = UI[lang];
+const w = workById(id);
+const i = WORKS.findIndex((x) => x.id === id);
+const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length];
+const next = WORKS[(i + 1) % WORKS.length];
+const kind = KINDS.find((k) => k.id === w.kind)!.label[lang];
+const service = serviceById(w.service);
+const og = await getImage({ src: w.photos[0].src, width: 1200, format: 'jpg' });
+const site = Astro.site!;
+const abs = (p: string) => new URL(p, site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: c.breadcrumbHome, item: abs(href('aviso', lang, 'home')) },
+      { '@type': 'ListItem', position: 2, name: ui.nav.works, item: abs(href('aviso', lang, 'works')) },
+      { '@type': 'ListItem', position: 3, name: w.title[lang], item: abs(href('aviso', lang, 'works', w.slug[lang])) },
+    ],
+  },
+];
+---
+<Layout lang={lang} page="works" id={id} image={og.src} jsonLd={jsonLd}>
+  <div class="wrap page-top">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={href('aviso', lang, 'works')}><Icon name="arrow-left" size={18} /><span>{ui.allWorks}</span></a>
+    </nav>
+
+    <div class="work">
+      <div class="work__board">
+        <Board as="header" band={`${c.aviso} · ${ui.nav.works}`} size="lg">
+          <h1>{w.title[lang]}</h1>
+          <dl class="fields work__fields">
+            <div><dt class="flabel">{c.field.kind}</dt><dd class="fvalue">{kind}</dd></div>
+            {w.place && <div><dt class="flabel">{c.field.place}</dt><dd class="fvalue">{w.place}</dd></div>}
+            {w.client && <div><dt class="flabel">{c.field.client}</dt><dd class="fvalue">{w.client}</dd></div>}
+            <div><dt class="flabel">{c.field.contractor}</dt><dd class="fvalue">{c.executedBy}</dd></div>
+            <div>
+              <dt class="flabel">{c.field.service}</dt>
+              <dd class="fvalue"><a href={href('aviso', lang, 'services', service.slug[lang])}>{service.title[lang]}</a></dd>
+            </div>
+          </dl>
+          <div class="actions work__actions">
+            <a class="hazard" href={href('aviso', lang, 'quote') + `?tipo=${SERVICE_TO_TYPE[w.service]}`}><span>{ui.nav.quote}<Icon name="arrow" /></span></a>
+          </div>
+        </Board>
+      </div>
+
+      <div class="work__photos">
+        <h2 class="visually-hidden">{ui.photos}</h2>
+        {w.photos.map((p, n) => {
+          const land = p.src.width > p.src.height;
+          return (
+            <figure class:list={['lona-big', land ? 'is-land' : 'is-port']}>
+              <Picture
+                src={p.src}
+                alt={p.alt[lang]}
+                formats={['avif', 'webp']}
+                widths={land ? [640, 960, 1400, 1920] : [480, 800, 1100, 1400]}
+                sizes="(min-width: 64rem) 58vw, 100vw"
+                loading={n === 0 ? 'eager' : 'lazy'}
+                fetchpriority={n === 0 ? 'high' : undefined}
+              />
+            </figure>
+          );
+        })}
+      </div>
+    </div>
+
+    <nav class="pager" aria-label={ui.nav.works}>
+      <a class="pager__item" href={href('aviso', lang, 'works', prev.slug[lang])} rel="prev">
+        <Icon name="arrow-left" size={24} />
+        <span><span class="flabel">{c.prevWork}</span><strong>{prev.title[lang]}</strong></span>
+      </a>
+      <a class="pager__item pager__item--next" href={href('aviso', lang, 'works', next.slug[lang])} rel="next">
+        <span><span class="flabel">{c.nextWork}</span><strong>{next.title[lang]}</strong></span>
+        <Icon name="arrow" size={24} />
+      </a>
+    </nav>
+  </div>
+
+  <section class="stretch">
+    <div class="wrap">
+      <BlankBoard lang={lang} title={c.workCtaTitle} text={c.workCtaText} tipo={SERVICE_TO_TYPE[w.service]} />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .crumbs { margin-bottom: 1.25rem; }
+  .crumbs a {
+    display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px;
+    padding: 0 0.9rem 0 0.7rem;
+    background: var(--enamel); border: 2px solid var(--ink);
+    color: var(--ink); font-weight: 800; text-decoration: none;
+  }
+  .crumbs a:hover { background: var(--ink); color: var(--enamel); }
+
+  .work { display: grid; gap: 1.5rem; }
+  .work h1 { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem); }
+  .work__fields { margin-top: 1.75rem; border-top: 2px solid var(--ink); }
+  .work__fields > div:first-child { padding-top: 0.85rem; }
+  .work__actions { margin-top: 1.5rem; }
+  .work__photos { display: grid; gap: 1.5rem; }
+  .lona-big {
+    margin: 0;
+    padding: 12px;
+    background: var(--hem);
+    border: 1px solid rgb(0 0 0 / 0.14);
+    box-shadow: var(--shadow-sm);
+  }
+  .lona-big { position: relative; }
+  .lona-big::before, .lona-big::after {
+    content: '';
+    position: absolute; left: 0; right: 0;
+    height: 12px;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at calc(100% - 6px) 6px, #fff 0 1.6px, #8b8f8a 1.8px 3.2px, #4c504b 3.4px 3.9px, transparent 4.2px) no-repeat,
+      radial-gradient(circle at 6px 6px, #fff 0 1.6px, #8b8f8a 1.8px 3.2px, #4c504b 3.4px 3.9px, transparent 4.2px) 0 0 / 96px 12px repeat-x;
+  }
+  .lona-big::before { top: 0; }
+  .lona-big::after { bottom: 0; }
+  .lona-big :global(img) { height: auto; }
+
+  @media (min-width: 64rem) {
+    .work { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem; align-items: start; }
+    .work__board { position: sticky; top: 1.5rem; }
+  }
+  @media (max-width: 63.99rem) {
+    .work__photos { display: contents; }
+    .lona-big { order: 3; }
+    .lona-big:first-of-type { order: 1; }
+    .work__board { order: 2; margin-top: -3rem; padding-inline: 0.5rem; position: relative; z-index: 2; }
+  }
+
+  .pager {
+    display: grid; gap: 1rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 4rem);
+  }
+  .pager__item {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    min-height: 5rem;
+    padding: 1rem 1.25rem;
+    background: var(--enamel);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-sm);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .pager__item > span { display: grid; gap: 0.2rem; }
+  .pager__item:not(.pager__item--next) { justify-content: flex-start; }
+  .pager__item--next { text-align: right; }
+  .pager__item strong { font-weight: 800; font-size: 1.125rem; line-height: 1.25; }
+  .pager__item :global(svg) { flex: none; color: var(--blue-ink); }
+  .pager__item:hover strong { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+  @media (min-width: 48rem) { .pager { grid-template-columns: 1fr 1fr; } }
+</style>

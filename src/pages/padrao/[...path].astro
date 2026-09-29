@@ -1,0 +1,72 @@
+---
+// Variante "Padrão do setor": todas as páginas PT/EN a partir de uma só rota.
+import { getImage } from 'astro:assets';
+import Layout from '../../variants/padrao/Layout.astro';
+import Home from '../../variants/padrao/pages/Home.astro';
+import Services from '../../variants/padrao/pages/Services.astro';
+import ServiceDetail from '../../variants/padrao/pages/ServiceDetail.astro';
+import Works from '../../variants/padrao/pages/Works.astro';
+import WorkDetail from '../../variants/padrao/pages/WorkDetail.astro';
+import Quote from '../../variants/padrao/pages/Quote.astro';
+import Contact from '../../variants/padrao/pages/Contact.astro';
+import About from '../../variants/padrao/pages/About.astro';
+import Privacy from '../../variants/padrao/pages/Privacy.astro';
+import { variantPaths, type RouteProps } from '../../lib/routes';
+import { SITE, UI, href } from '../../lib/site';
+import { serviceById } from '../../content/services';
+import { workById } from '../../content/works';
+import { C, V, SERVICE_PHOTO } from '../../variants/padrao/copy';
+
+export function getStaticPaths() {
+  return variantPaths();
+}
+
+const { lang, page, id } = Astro.props as RouteProps;
+const ui = UI[lang];
+const abs = (p: string) => new URL(p, Astro.site).href;
+const crumb = (items: [string, string][]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(url) })),
+});
+
+let image: string | undefined;
+const jsonLd: Record<string, unknown>[] = [];
+const og = async (src: ImageMetadata) => (await getImage({ src, width: 1200, format: 'jpg' })).src;
+
+if (page === 'home') {
+  image = await og(workById('construcao-moradia').photos[0].src);
+} else if (page === 'works' && id) {
+  const w = workById(id);
+  image = await og(w.photos[0].src);
+  jsonLd.push(crumb([[C.home[lang], href(V, lang, 'home')], [ui.nav.works, href(V, lang, 'works')], [w.title[lang], href(V, lang, 'works', w.slug[lang])]]));
+} else if (page === 'services' && id) {
+  const s = serviceById(id);
+  image = await og(workById(SERVICE_PHOTO[s.id]).photos[0].src);
+  const url = href(V, lang, 'services', s.slug[lang]);
+  jsonLd.push(crumb([[C.home[lang], href(V, lang, 'home')], [ui.nav.services, href(V, lang, 'services')], [s.title[lang], url]]));
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: s.title[lang],
+    serviceType: s.searches[lang],
+    description: s.intro[lang],
+    url: abs(url),
+    provider: { '@id': abs(`${href(V, lang, 'home').replace(/en\/$/, '')}#empresa`), name: SITE.name },
+    areaServed: [{ '@type': 'AdministrativeArea', name: 'Algarve' }, { '@type': 'Country', name: 'Portugal' }],
+  });
+} else if (page === 'works' || page === 'services') {
+  image = await og(workById(page === 'works' ? 'vale-del-rey' : 'construcao-moradia').photos[0].src);
+}
+---
+<Layout lang={lang} page={page} id={id} overlay={page === 'home'} image={image} jsonLd={jsonLd}>
+  {page === 'home' && <Home lang={lang} />}
+  {page === 'services' && !id && <Services lang={lang} />}
+  {page === 'services' && id && <ServiceDetail lang={lang} id={id} />}
+  {page === 'works' && !id && <Works lang={lang} />}
+  {page === 'works' && id && <WorkDetail lang={lang} id={id} />}
+  {page === 'quote' && <Quote lang={lang} />}
+  {page === 'contact' && <Contact lang={lang} />}
+  {page === 'about' && <About lang={lang} />}
+  {page === 'privacy' && <Privacy lang={lang} />}
+</Layout>

@@ -1,0 +1,27 @@
+---
+import ServiceArts from '../ServiceArts.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { UI, href, type Lang } from '../../../lib/site';
+import { C } from '../copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = UI[lang];
+---
+<div class="wrap">
+  <header class="pagehead">
+    <ol class="crumbs"><li><a href={href('mapa', lang, 'home')}>{C.home[lang]}</a></li><li aria-current="page">{u.nav.services}</li></ol>
+    <h1>{C.servicesH[lang]}</h1>
+    <p class="lead">{C.servicesLead[lang]}</p>
+  </header>
+  <ServiceArts lang={lang} full headingLevel="h2" />
+
+  <section class="sec" id="oficios" aria-labelledby="t-h">
+    <div class="sechead">
+      <h2 id="t-h">{C.tradesH[lang]}</h2>
+      <p class="lead">{C.tradesLead[lang]}</p>
+    </div>
+    <Trades lang={lang} />
+  </section>
+</div>
+<Close lang={lang} />

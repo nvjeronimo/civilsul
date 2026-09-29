@@ -1,0 +1,40 @@
+---
+// Abertura das páginas interiores: migalhas, título, parágrafo de entrada.
+import { href, type Lang } from '../../lib/site';
+import { C, V } from './copy';
+
+interface Props { lang: Lang; title: string; lead?: string; crumbs?: { label: string; href: string }[]; stone?: boolean; current?: string }
+const { lang, title, lead, crumbs = [], stone = false, current } = Astro.props;
+const media = Astro.slots.has('media');
+const trail = [{ label: C.home[lang], href: href(V, lang, 'home') }, ...crumbs];
+---
+<div class:list={['intro', { 'intro--stone': stone, 'intro--media': media }]}>
+  <div class="wrap">
+    <nav class="crumbs" aria-label={C.breadcrumb[lang]}>
+      <ol>
+        {trail.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+        <li><span aria-current="page">{current ?? title}</span></li>
+      </ol>
+    </nav>
+    <div class="intro__grid">
+      <div class="intro__body">
+        <h1>{title}</h1>
+        {lead && <p class="lead">{lead}</p>}
+        <slot />
+      </div>
+      {media && <div class="intro__media"><slot name="media" /></div>}
+    </div>
+  </div>
+</div>
+
+<style>
+  .intro { padding-block: clamp(2rem, 1rem + 2vw, 3rem) clamp(3rem, 2rem + 3vw, 5rem); }
+  .intro--stone { background: var(--stone); }
+  .intro__body { max-width: 52rem; }
+  .intro__grid { display: grid; gap: var(--s5); align-items: end; }
+  @media (min-width: 64rem) { .intro--media .intro__grid { grid-template-columns: 1fr 1fr; gap: var(--s10); align-items: center; } }
+  .intro.intro--media h1 { margin-top: var(--s4); }
+  .intro__media { min-width: 0; }
+  .intro h1 { margin-top: clamp(2rem, 1rem + 3vw, 4rem); }
+  .intro .lead { margin-top: var(--s3); }
+</style>

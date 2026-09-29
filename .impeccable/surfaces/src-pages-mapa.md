@@ -1,0 +1,19 @@
+---
+version: 1
+slug: "src-pages-mapa"
+primary_target: "src/pages/mapa"
+related_targets: []
+---
+
+# Surface: Civilsul · variante "Mapa de Quantidades" (src/pages/mapa, src/variants/mapa)
+
+Mode: Persuade. Audience: private owners (PT and foreign) and small companies in the Algarve choosing a builder, mostly on a phone. Job: trust Civilsul enough to send a qualified quote request. Proof: 14 real photos / 13 works, since 1985, alvará 4511, full trade list. Constraints: only facts from PRODUCT.md; PT + EN; static; CSP script-src 'self'.
+
+## Direction contract
+THESIS: The site is the document a serious Portuguese builder hands over: a bill of quantities (mapa de quantidades) where every service and every work is a numbered article and the real photos are the annex. It refuses the category default of hero photo + icon-card service grid + "quality since 1985" slogan.
+OWN-WORLD: Cool sheet white #F4F6F5 ground, ink #121417, 1px ink rules at ~16% as the table grammar (Art. · Descrição · Un. · Qt. columns), brand blue #0B84CF as the pen (links, totals, active article), the logo's yellow #FFE11A only as a hand-drawn highlighter band behind the single primary action or newest row, 45° section hatching (like cut elements in construction drawings) for hover/selected/active states instead of tint. Photos are "Anexo A" plates: full-bleed rectangles, thin registration corner marks, a caption row under each with article code, title, place. Type: Sofia Sans Condensed 700–800 for display and article headings (sentence case, large), Sofia Sans for body, tabular lining numerals everywhere; no monospace, no serif.
+STORY: The visitor sees a real finished house and the company's facts as a filled table in one glance; scans the six service articles (1–6, with sub-items 1.1…); opens works in Anexo A (A.01–A.13) filtered by kind; reads the company facts; then fills the quote form and watches their own "Pedido de orçamento" sheet itemise itself, and sends it by WhatsApp or email.
+FIRST VIEWPORT: Header as a document header row: logo + "Civilsul", nav items as index entries (Serviços, Obras, Empresa, Contactos), PT/EN, phone. Left ~5/12: H1 "Construímos, reconstruímos e remodelamos no Algarve desde 1985." at display scale (~4.5–5.5rem desktop), below it a 4-row facts table (Alvará nº 4511 · Sede Quarteira, Algarve · Área Algarve e restante país · Desde 1985) and the primary action "Pedir orçamento" with the yellow highlighter, plus a secondary phone link. Right ~7/12: photo A.01 (Construção de moradia) full height of the viewport as an annex plate with corner marks and caption row. Mobile: photo first (60vh) then title, table, action; sticky bottom bar Ligar · WhatsApp · Orçamento.
+FORM: Mapa de Quantidades, grounded candidate 3 of 7 (the builder's quote document). Seed key 42e80edc. Raises: every item keeps a durable article code used as anchor/URL fragment (from jackfield); a dense facts band collides with each clean photo (from obi sleeve); states are drawn by hatching, not colour (from Memphis).
+SIGNATURE: the quote page: guided 4-step form beside a live A4 "Pedido de orçamento nº …" sheet whose rows fill in as the visitor types, newest row marked by the highlighter sweep. Motion grammar: table rules draw left→right once on first view, annex plates open with a clip-path wipe; nothing else moves.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

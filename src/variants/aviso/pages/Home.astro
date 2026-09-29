@@ -1,0 +1,248 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import Layout from '../Layout.astro';
+import Board from '../components/Board.astro';
+import Icon from '../components/Icon.astro';
+import Hoarding from '../components/Hoarding.astro';
+import ProcessBoard from '../components/ProcessBoard.astro';
+import TradesBoard from '../components/TradesBoard.astro';
+import BlankBoard from '../components/BlankBoard.astro';
+import { SITE, UI, CALL_NOTE, href, tel, whatsapp, type Lang } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { MISSION, TEAM } from '../../../content/company';
+import { copy } from '../copy';
+import heroPhoto from '../../../assets/obras/vale-del-rey-1.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = copy(lang);
+const ui = UI[lang];
+const og = await getImage({ src: heroPhoto, width: 1200, format: 'jpg' });
+const featured = ['vale-del-rey', 'maison-amarande', 'monte-do-pocinho', 'fachada-portaldegenios', 'construcao-moradia', 'topazmoment', 'reconstrucao-edificio', 'arranjos-exteriores-piscina'].map(workById);
+const heroAlt = { pt: 'Moradia branca reconstruída em Vale del Rey, com relvado e caminho de gravilha', en: 'Rebuilt white house in Vale del Rey, with lawn and gravel path' }[lang];
+---
+<Layout lang={lang} page="home" image={og.src} overHero>
+  <section class="hero" aria-labelledby="titulo">
+    <div class="hero__banner">
+      <Picture
+        src={heroPhoto}
+        alt={heroAlt}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280, 1600, 1920, 2560]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="wrap hero__wrap">
+      <Board as="div" band={c.band} size="lg" class="hero__board">
+        <h1 id="titulo">{c.heroTitle}</h1>
+        <dl class="hero__fields">
+          <div><dt class="flabel">{c.heroLabels.permit}</dt><dd class="fvalue">{SITE.permit}</dd></div>
+          <div><dt class="flabel">{c.heroLabels.seat}</dt><dd class="fvalue">{c.heroSeat}</dd></div>
+          <div class="span"><dt class="flabel">{c.heroLabels.works}</dt><dd class="fvalue">{c.heroWorks}</dd></div>
+          <div class="span">
+            <dt class="flabel">{c.heroLabels.phone}</dt>
+            <dd class="fvalue"><a class="hero__tel" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile[lang]}</small></dd>
+          </div>
+        </dl>
+        <div class="actions hero__actions">
+          <a class="hazard" href={href('aviso', lang, 'quote')}><span>{ui.nav.quote}<Icon name="arrow" /></span></a>
+          <a class="plate-btn" href={whatsapp(lang)} rel="noopener"><Icon name="whatsapp" />{ui.whatsapp}</a>
+        </div>
+      </Board>
+    </div>
+  </section>
+
+  <section class="stretch" aria-labelledby="servicos">
+    <div class="wrap">
+      <Board as="div" size="lg">
+        <div class="svc-head">
+          <h2 id="servicos">{c.servicesTitle}</h2>
+          <p class="lead">{c.servicesLead}</p>
+        </div>
+        <ul class="svc-list">
+          {SERVICES.map((s) => (
+            <li>
+              <a href={href('aviso', lang, 'services', s.slug[lang])}>
+                <span class="svc-text">
+                  <h3>{s.title[lang]}</h3>
+                  <span class="svc-short">{s.short[lang]}</span>
+                </span>
+                <Icon name="arrow" size={26} class="svc-arrow" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Board>
+    </div>
+  </section>
+
+  <section class="stretch works-stretch" aria-labelledby="obras">
+    <div class="wrap">
+      <Board as="div" size="md" class="works-plate">
+        <div class="works-plate__in">
+          <div>
+            <h2 id="obras">{c.worksTitle}</h2>
+            <p class="lead">{c.worksLead}</p>
+          </div>
+          <a class="plate-btn" href={href('aviso', lang, 'works')}>{c.seeAllWorks}<Icon name="arrow" /></a>
+        </div>
+      </Board>
+      <Hoarding works={featured} lang={lang} />
+    </div>
+  </section>
+
+  <section class="stretch" aria-labelledby="quem">
+    <div class="wrap">
+      <Board as="div" band={c.whoTitle} bandAs="h2" bandId="quem" size="lg">
+        <div class="who">
+          <dl class="fields who__fields">
+            <div><dt class="flabel">{c.field.contractor}</dt><dd class="fvalue">{SITE.legalName}</dd></div>
+            <div><dt class="flabel">{c.field.permit}</dt><dd class="fvalue who__big">{SITE.permit}</dd></div>
+            <div><dt class="flabel">{c.field.since}</dt><dd class="fvalue who__big">{SITE.since}</dd></div>
+            <div><dt class="flabel">{c.field.seat}</dt><dd class="fvalue">{SITE.address.street}, {SITE.address.postal} {SITE.address.city}</dd></div>
+            <div><dt class="flabel">{c.field.area}</dt><dd class="fvalue">{ui.area}</dd></div>
+          </dl>
+          <div class="who__text">
+            <p class="lead">{MISSION[lang]}</p>
+            <p>{TEAM[lang]}</p>
+            <a class="arrow-link" href={href('aviso', lang, 'about')}><span>{c.moreAbout}</span><Icon name="arrow" size={20} /></a>
+          </div>
+        </div>
+      </Board>
+    </div>
+  </section>
+
+  <section class="stretch">
+    <div class="wrap stack">
+      <ProcessBoard lang={lang} />
+      <TradesBoard lang={lang} />
+    </div>
+  </section>
+
+  <section class="stretch">
+    <div class="wrap">
+      <BlankBoard lang={lang}>
+        <p class="call-line">
+          <span class="flabel">{c.orCall}</span>
+          <a href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a>
+          <small class="note">{CALL_NOTE.mobile[lang]}</small>
+        </p>
+      </BlankBoard>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ---------- Primeira vista: lona + aviso aparafusado ---------- */
+  .hero { display: grid; position: relative; }
+  .hero__banner {
+    grid-area: 1 / 1;
+    position: relative;
+    min-height: 100%;
+    background: var(--hoarding-rib);
+  }
+  .hero__banner :global(picture) { position: absolute; inset: 0; }
+  .hero__banner :global(img) { object-fit: cover; object-position: 60% 55%; }
+  /* bainha da lona com ilhós, em cima e em baixo */
+  .hero__banner::before, .hero__banner::after {
+    content: '';
+    position: absolute; left: 0; right: 0; z-index: 1;
+    height: 14px;
+    background:
+      radial-gradient(circle at 24px 7px, #fff 0 1.8px, #8b8f8a 2px 3.6px, #4c504b 3.8px 4.4px, transparent 4.7px) 0 0 / 120px 14px repeat-x,
+      var(--hem);
+  }
+  .hero__banner::before { top: 0; }
+  .hero__banner::after { bottom: 0; }
+
+  .hero__wrap {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 2;
+    padding-top: 7.75rem;
+    padding-bottom: 4.5rem;
+  }
+  .hero :global(.hero__board) { width: min(36rem, 100%); }
+  .hero h1 { font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.25rem); }
+  .hero__fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1.75rem;
+    border-top: 2px solid var(--ink);
+  }
+  .hero__fields > div {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .hero__fields > div:nth-child(2) { padding-left: 1.25rem; border-left: 1px solid var(--rule-soft); }
+  .hero__fields .span { grid-column: 1 / -1; }
+  .hero__tel { color: var(--ink); text-decoration: none; font-weight: 800; }
+  .hero__tel:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+  .hero__actions { margin-top: 1.75rem; }
+
+  @media (min-width: 64rem) {
+    .hero { min-height: min(100svh, 64rem); }
+    .hero__wrap { padding-left: calc(var(--gutter) + 2vw); }
+  }
+  @media (max-width: 47.99rem) {
+    .hero__banner { grid-area: auto; height: 45svh; min-height: 17rem; }
+    .hero__wrap { grid-area: auto; padding-top: 0; margin-top: -4.5rem; padding-bottom: 0; }
+    .hero__actions > * { flex: 1 1 100%; }
+    .hero__fields { grid-template-columns: 1fr; }
+    .hero__fields > div:nth-child(2) { padding-left: 0; border-left: 0; }
+  }
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .hero__wrap { padding-top: 8rem; }
+  }
+
+  /* ---------- Serviços ---------- */
+  .svc-head { display: grid; gap: 1rem; max-width: 52rem; }
+  .svc-list {
+    margin-top: 2.25rem;
+    display: grid;
+    border-top: 2px solid var(--ink);
+  }
+  .svc-list li { border-bottom: 1px solid var(--rule-soft); }
+  .svc-list a {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    min-height: 5.5rem;
+    padding: 1.1rem 0.25rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .svc-text { display: grid; gap: 0.3rem; }
+  .svc-list h3 { font-size: clamp(1.3125rem, 1.2rem + 0.5vw, 1.625rem); }
+  .svc-short { color: var(--ink-2); }
+  .svc-list :global(.svc-arrow) { flex: none; color: var(--blue-ink); transition: transform 250ms var(--ease-out); }
+  .svc-list a:hover h3 { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.18em; }
+  .svc-list a:hover :global(.svc-arrow) { transform: translateX(4px); }
+  @media (min-width: 56rem) {
+    .svc-list { grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+  }
+
+  /* ---------- Obras ---------- */
+  .works-stretch :global(.works-plate) { margin-bottom: clamp(1.25rem, 0.8rem + 1.5vw, 2rem); max-width: 56rem; }
+  .works-plate__in { display: grid; gap: 1.5rem; align-items: end; }
+  .works-plate__in .lead { margin-top: 0.75rem; }
+  @media (min-width: 48rem) {
+    .works-plate__in { grid-template-columns: 1fr auto; }
+  }
+
+  /* ---------- Quem constrói ---------- */
+  .who { display: grid; gap: 2.5rem; }
+  .who__big { font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+  .who__text { display: grid; gap: 1.1rem; align-content: start; max-width: 62ch; }
+  .who__text p + p { margin-top: 0; }
+  @media (min-width: 56rem) {
+    .who { grid-template-columns: minmax(18rem, 0.8fr) 1.2fr; gap: 4rem; }
+  }
+
+  .stack { display: grid; gap: clamp(2rem, 1.4rem + 2vw, 3.5rem); }
+
+  .call-line { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-soft); }
+  .call-line a { display: inline-flex; align-items: center; min-height: 44px; font-size: 1.5rem; font-weight: 850; color: var(--ink); text-decoration: none; }
+  .call-line a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+</style>

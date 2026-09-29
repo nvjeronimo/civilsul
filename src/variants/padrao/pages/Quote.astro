@@ -1,0 +1,315 @@
+---
+import Icon from '../Icon.astro';
+import PageIntro from '../PageIntro.astro';
+import { UI, SITE, CALL_NOTE, tel, whatsapp, type Lang } from '../../../lib/site';
+import { WORK_TYPES, PROPERTY, TIMING, PROJECT_STATE, Q } from '../../../content/quote';
+import { C } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = UI[lang];
+const q = Q[lang];
+const prefs = (['telefone', 'whatsapp', 'email'] as const).map((id) => ({ id, label: C.pref[id][lang] }));
+---
+<PageIntro lang={lang} title={C.quoteTitle[lang]} lead={C.quoteLead[lang]} />
+
+<section class="qsec" aria-label={C.quoteTitle[lang]}>
+  <div class="wrap">
+    <form
+      class="q"
+      data-quote
+      data-i18n={JSON.stringify(q)}
+      data-wa={SITE.mobile.wa}
+      data-email={SITE.email}
+      action={'mailto:' + SITE.email}
+      method="post"
+      enctype="text/plain"
+    >
+      <div class="q__main">
+        <div class="q__progress">
+          <ol class="q__steps">
+            {q.steps.map((s, n) => (
+              <li>
+                <button type="button" data-step-label>
+                  <span class="q__dot num" aria-hidden="true">
+                    <span class="q__n">{n + 1}</span>
+                    <Icon name="check" size={16} class="q__tick" />
+                  </span>
+                  <span class="q__sl"><span class="visually-hidden">{C.stepOf[lang]} {n + 1} {C.of[lang]} {q.steps.length}: </span>{s}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+          <div class="q__bar" data-progress aria-hidden="true"><span></span></div>
+        </div>
+
+        <!-- Passo 1: a obra -->
+        <fieldset data-step class="q__step">
+          <legend tabindex="-1" class="q__legend">{q.steps[0]}</legend>
+          <fieldset class="q__group">
+            <legend class="q__q">{q.type}</legend>
+            <input type="hidden" name="type" value="" />
+            <div class="choices choices--2">
+              {WORK_TYPES.map((o) => (
+                <label class="choice">
+                  <input type="radio" name="type" value={o.id} data-text={o.label[lang]} />
+                  <span class="choice__box"><span class="choice__mark" aria-hidden="true"></span>{o.label[lang]}</span>
+                </label>
+              ))}
+            </div>
+            <p class="q__err" role="alert" data-error-for="type" hidden></p>
+          </fieldset>
+        </fieldset>
+
+        <!-- Passo 2: o local -->
+        <fieldset data-step class="q__step">
+          <legend tabindex="-1" class="q__legend">{q.steps[1]}</legend>
+          <fieldset class="q__group">
+            <legend class="q__q">{q.property}</legend>
+            <input type="hidden" name="property" value="" />
+            <div class="choices choices--3">
+              {PROPERTY.map((o) => (
+                <label class="choice">
+                  <input type="radio" name="property" value={o.id} data-text={o.label[lang]} />
+                  <span class="choice__box"><span class="choice__mark" aria-hidden="true"></span>{o.label[lang]}</span>
+                </label>
+              ))}
+            </div>
+            <p class="q__err" role="alert" data-error-for="property" hidden></p>
+          </fieldset>
+          <div class="q__row">
+            <div class="field">
+              <label for="q-place">{q.place}</label>
+              <input id="q-place" name="place" type="text" autocomplete="address-level2" placeholder={q.placeHint} aria-describedby="err-place" />
+              <p class="q__err" role="alert" id="err-place" data-error-for="place" hidden></p>
+            </div>
+            <div class="field field--short">
+              <label for="q-area">{q.area} <span class="q__opt">{q.areaHint}</span></label>
+              <input id="q-area" name="area" type="number" inputmode="numeric" min="1" step="1" class="num" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Passo 3: prazo e projeto -->
+        <fieldset data-step class="q__step">
+          <legend tabindex="-1" class="q__legend">{q.steps[2]}</legend>
+          <fieldset class="q__group">
+            <legend class="q__q">{q.timing}</legend>
+            <input type="hidden" name="timing" value="" />
+            <div class="choices choices--2">
+              {TIMING.map((o) => (
+                <label class="choice">
+                  <input type="radio" name="timing" value={o.id} data-text={o.label[lang]} />
+                  <span class="choice__box"><span class="choice__mark" aria-hidden="true"></span>{o.label[lang]}</span>
+                </label>
+              ))}
+            </div>
+            <p class="q__err" role="alert" data-error-for="timing" hidden></p>
+          </fieldset>
+          <fieldset class="q__group">
+            <legend class="q__q">{q.state} <span class="q__opt">{C.optional[lang]}</span></legend>
+            <input type="hidden" name="state" value="" />
+            <div class="choices choices--2">
+              {PROJECT_STATE.map((o) => (
+                <label class="choice">
+                  <input type="radio" name="state" value={o.id} data-text={o.label[lang]} />
+                  <span class="choice__box"><span class="choice__mark" aria-hidden="true"></span>{o.label[lang]}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="q-details">{q.details} <span class="q__opt">{C.optional[lang]}</span></label>
+            <textarea id="q-details" name="details" rows="5" placeholder={q.detailsHint}></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Passo 4: contacto -->
+        <fieldset data-step class="q__step">
+          <legend tabindex="-1" class="q__legend">{q.steps[3]}</legend>
+          <div class="field">
+            <label for="q-name">{q.name}</label>
+            <input id="q-name" name="name" type="text" autocomplete="name" aria-describedby="err-name" />
+            <p class="q__err" role="alert" id="err-name" data-error-for="name" hidden></p>
+          </div>
+          <div class="q__row">
+            <div class="field">
+              <label for="q-phone">{q.phone}</label>
+              <input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" class="num" aria-describedby="err-phone" />
+              <p class="q__err" role="alert" id="err-phone" data-error-for="phone" hidden></p>
+            </div>
+            <div class="field">
+              <label for="q-email">{q.email}</label>
+              <input id="q-email" name="email" type="email" autocomplete="email" aria-describedby="err-email" />
+              <p class="q__err" role="alert" id="err-email" data-error-for="email" hidden></p>
+            </div>
+          </div>
+          <fieldset class="q__group">
+            <legend class="q__q">{q.contactPref}</legend>
+            <div class="choices choices--3">
+              {prefs.map((o, n) => (
+                <label class="choice">
+                  <input type="radio" name="pref" value={o.id} data-text={o.label} checked={n === 0} />
+                  <span class="choice__box"><span class="choice__mark" aria-hidden="true"></span>{o.label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="field field--check">
+            <label class="check">
+              <input type="checkbox" name="consent" value="true" aria-describedby="err-consent" />
+              <span class="check__box" aria-hidden="true"><Icon name="check" size={16} /></span>
+              <span>{q.consent}</span>
+            </label>
+            <p class="q__err" role="alert" id="err-consent" data-error-for="consent" hidden></p>
+          </div>
+        </fieldset>
+
+        <div class="q__nav">
+          <button type="button" class="btn btn--line" data-prev hidden><Icon name="arrow-left" size={18} />{q.back}</button>
+          <button type="button" class="btn btn--dark" data-next>{q.next}<Icon name="arrow-right" size={18} /></button>
+          <button type="submit" class="btn btn--line" data-send="email"><Icon name="mail" size={20} />{q.sendEmail}</button>
+          <button type="submit" class="btn btn--primary" data-send="wa"><Icon name="chat" size={20} />{q.sendWa}</button>
+        </div>
+        <p class="q__nojs">{C.noJs[lang]}</p>
+        <p class="q__status" data-status role="status" aria-live="polite"></p>
+      </div>
+
+      <aside class="q__aside" aria-labelledby="sum-title">
+        <div class="q__card">
+          <h2 id="sum-title" class="q__sumh">{q.summary}</h2>
+          <dl class="q__sum" data-summary></dl>
+          <p class="q__note"><Icon name="document" size={18} /><span>{q.photosNote}</span></p>
+          <p class="q__note q__note--muted">{q.draft}</p>
+        </div>
+        <div class="q__direct">
+          <p class="q__directh">{C.quotePrefer[lang]}</p>
+          <a href={tel(SITE.mobile.tel)}><Icon name="phone" size={18} /><span><span class="tel">{SITE.mobile.display}</span><span class="call-note">{CALL_NOTE.mobile[lang]}</span></span></a>
+          <a href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={18} /><span>{ui.whatsapp}</span></a>
+          <a href={`mailto:${SITE.email}`}><Icon name="mail" size={18} /><span>{SITE.email}</span></a>
+        </div>
+      </aside>
+    </form>
+  </div>
+</section>
+
+<script>
+  import '../../../scripts/quote.ts';
+</script>
+
+<style>
+  .qsec { padding-bottom: var(--section); }
+  .q { display: grid; gap: var(--s6); align-items: start; }
+  @media (min-width: 64rem) { .q { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--s10); } }
+  .q__main { min-width: 0; }
+
+  /* Indicador de passos (só com JS) */
+  .q__progress { display: none; margin-bottom: var(--s5); }
+  .q.is-js .q__progress { display: block; }
+  .q__steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s1); }
+  .q__steps button {
+    display: flex; align-items: center; gap: 0.625rem; width: 100%; min-height: 44px; padding: 0;
+    border: 0; background: none; font: inherit; color: var(--ink-3); font-weight: 600; font-size: var(--fs-small); text-align: left; cursor: default;
+  }
+  .q__steps button[data-done] { cursor: pointer; color: var(--ink); }
+  .q__steps button[aria-current] { color: var(--ink); font-weight: 750; }
+  .q__dot {
+    position: relative; flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%;
+    border: 1.75px solid var(--rule-strong); background: #fff; font-size: 0.875rem; font-weight: 750;
+  }
+  .q__steps button[aria-current] .q__dot { border-color: var(--ink); background: var(--ink); color: #fff; }
+  .q__steps button[data-done] .q__dot { border-color: var(--blue); background: var(--blue); color: #fff; }
+  .q__dot :global(.q__tick) { display: none; }
+  .q__steps button[data-done] .q__n { display: none; }
+  .q__steps button[data-done] .q__dot :global(.q__tick) { display: block; }
+  @media (max-width: 39.99rem) {
+    .q__sl { display: none; }
+    .q__steps button[aria-current] .q__sl { display: inline; }
+    .q__steps { grid-template-columns: auto auto auto auto; justify-content: start; gap: var(--s2); }
+  }
+  .q__bar { margin-top: var(--s2); height: 4px; border-radius: 4px; background: var(--stone-2); overflow: hidden; }
+  .q__bar span { display: block; height: 100%; background: var(--blue); transform-origin: left; transform: scaleX(calc(0.1 + 0.9 * var(--progress, 0))); transition: transform 600ms var(--ease-out); }
+
+  /* Passos */
+  .q__step { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: var(--s4); }
+  .q__step + .q__step { margin-top: var(--s8); padding-top: var(--s6); border-top: 1px solid var(--rule); }
+  .q.is-js .q__step + .q__step { margin-top: 0; padding-top: 0; border-top: 0; }
+  .q__legend { padding: 0; font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); font-weight: 750; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: var(--s1); }
+  .q__legend:focus { outline: none; }
+  .q__group { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .q__q { padding: 0; font-weight: 700; font-size: 1.0625rem; margin-bottom: var(--s2); }
+  .q__opt { font-weight: 500; color: var(--ink-3); font-size: var(--fs-small); margin-left: 0.25rem; }
+
+  .choices { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
+  @media (min-width: 36rem) { .choices--2 { grid-template-columns: 1fr 1fr; } .choices--3 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 64rem) { .choices--3 { grid-template-columns: repeat(3, 1fr); } }
+  .choice { position: relative; display: block; cursor: pointer; }
+  .choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .choice__box {
+    display: flex; align-items: center; gap: 0.875rem; min-height: 3.5rem; padding: 0.875rem 1rem;
+    border: 1.5px solid var(--rule-strong); border-radius: var(--radius); background: #fff;
+    font-weight: 600; line-height: 1.3;
+    transition: border-color 160ms var(--ease-out-quart), background-color 160ms var(--ease-out-quart), box-shadow 160ms var(--ease-out-quart);
+  }
+  .choice__mark { flex: none; width: 1.25rem; height: 1.25rem; border-radius: 50%; border: 1.75px solid var(--rule-strong); background: #fff; transition: box-shadow 160ms var(--ease-out-quart), border-color 160ms var(--ease-out-quart); }
+  .choice:hover .choice__box { border-color: var(--ink-2); }
+  .choice input:checked + .choice__box { border-color: var(--blue); background: #f0f8fd; box-shadow: inset 0 0 0 1px var(--blue); }
+  .choice input:checked + .choice__box .choice__mark { border-color: var(--blue); box-shadow: inset 0 0 0 5px var(--blue); }
+  .choice input:focus-visible + .choice__box { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  .q__row { display: grid; gap: var(--s3); }
+  @media (min-width: 40rem) { .q__row { grid-template-columns: 1fr 1fr; } }
+  .field { display: grid; gap: 0.5rem; min-width: 0; }
+  .field label { font-weight: 700; }
+  .field input[type='text'], .field input[type='tel'], .field input[type='email'], .field input[type='number'], .field textarea {
+    width: 100%; min-height: 3.25rem; padding: 0.75rem 1rem;
+    border: 1.5px solid var(--rule-strong); border-radius: var(--radius); background: #fff;
+    font: inherit; font-size: 1.0625rem; color: var(--ink);
+    transition: border-color 160ms var(--ease-out-quart), box-shadow 160ms var(--ease-out-quart);
+  }
+  .field textarea { resize: vertical; line-height: 1.5; min-height: 8.5rem; }
+  .field ::placeholder { color: #6b7483; opacity: 1; }
+  .field input:hover, .field textarea:hover { border-color: var(--ink-2); }
+  .field input:focus-visible, .field textarea:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(11, 132, 207, 0.22); border-radius: var(--radius); }
+  .field[data-invalid] input, .field[data-invalid] textarea { border-color: var(--error); }
+  .q__group[data-invalid] .choice__box { border-color: #d9a29d; }
+
+  .check { display: flex; gap: 0.875rem; align-items: flex-start; cursor: pointer; font-weight: 500; line-height: 1.5; position: relative; }
+  .check input { position: absolute; opacity: 0; width: 1.5rem; height: 1.5rem; margin: 0; cursor: pointer; }
+  .check__box { flex: none; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 6px; border: 1.75px solid var(--rule-strong); background: #fff; color: transparent; margin-top: 0.05rem; }
+  .check input:checked + .check__box { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .check input:focus-visible + .check__box { outline: 2px solid var(--blue); outline-offset: 3px; }
+  .field--check[data-invalid] .check__box { border-color: var(--error); }
+
+  .q__err { display: flex; gap: 0.5rem; margin-top: 0.5rem; color: var(--error); font-weight: 600; font-size: var(--fs-small); }
+  .field .q__err { margin-top: 0; }
+
+  .q__nav { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s6); padding-top: var(--s4); border-top: 1px solid var(--rule); }
+  .q__nav [data-next], .q__nav [data-send='email'] { margin-left: auto; }
+  .q:not(.is-js) [data-prev], .q:not(.is-js) [data-next], .q:not(.is-js) [data-send='wa'] { display: none; }
+  .q.is-js .q__nojs { display: none; }
+  .q__nojs { margin-top: var(--s2); color: var(--ink-3); font-size: var(--fs-small); }
+  .q__status:not(:empty) { margin-top: var(--s3); padding: 1rem 1.25rem; border-radius: var(--radius); background: #eef7fd; color: var(--ink); font-weight: 600; }
+  @media (max-width: 39.99rem) { .q__nav .btn { flex: 1 1 100%; margin-left: 0; } .q__nav [data-next], .q__nav [data-send='wa'] { order: -1; } }
+
+  /* Resumo */
+  .q__aside { display: grid; gap: var(--s3); }
+  @media (min-width: 64rem) { .q__aside { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+  .q:not(.is-js) .q__card { display: none; }
+  .q__card { background: var(--stone); border-radius: var(--radius); padding: var(--s4); }
+  .q__sumh { font-size: 1.25rem; letter-spacing: -0.015em; }
+  .q__sum { margin: var(--s2) 0 0; display: grid; }
+  .q__sum :global(div) { display: grid; grid-template-columns: minmax(7rem, 42%) 1fr; gap: var(--s2); padding: 0.5rem 0; border-top: 1px solid var(--rule-strong); font-size: var(--fs-small); }
+  .q__sum :global(dt) { color: var(--ink-3); font-weight: 550; }
+  .q__sum :global(dd) { margin: 0; font-weight: 650; overflow-wrap: anywhere; white-space: pre-line; }
+  .q__sum :global(div[data-filled='false'] dd) { color: #8a919c; font-weight: 500; }
+  .q__note { display: flex; gap: 0.625rem; margin-top: var(--s3); font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
+  .q__note :global(svg) { flex: none; color: var(--blue); margin-top: 0.1rem; }
+  .q__note--muted { margin-top: var(--s1); color: var(--ink-3); padding-left: calc(18px + 0.625rem); }
+  .q__direct { display: grid; gap: 0.25rem; padding: var(--s1) var(--s4) var(--s3); }
+  .q__directh { font-weight: 700; margin-bottom: 0.25rem; }
+  .q__direct a { display: flex; align-items: center; gap: 0.75rem; min-height: 44px; color: var(--ink); text-decoration: none; font-weight: 650; }
+  .q__direct a > span { display: grid; }
+  .q__direct a :global(svg) { color: var(--blue); flex: none; }
+  .q__direct a:hover .tel, .q__direct a:hover > span:only-of-type { text-decoration: underline; text-underline-offset: 0.2em; }
+</style>

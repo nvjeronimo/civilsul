@@ -1,0 +1,65 @@
+---
+import { Picture } from 'astro:assets';
+import PageIntro from '../PageIntro.astro';
+import Process from '../Process.astro';
+import Facts from '../Facts.astro';
+import QuoteBand from '../QuoteBand.astro';
+import { UI, type Lang } from '../../../lib/site';
+import { MISSION, WHO, TEAM, TAGLINE } from '../../../content/company';
+import { workById } from '../../../content/works';
+import { C } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const main = workById('reconstrucao-edificio').photos[0];
+const second = workById('vale-del-rey').photos[1];
+---
+<PageIntro lang={lang} title={C.aboutTitle[lang]} lead={MISSION[lang]} current={UI[lang].nav.about}>
+  <p class="tag">{TAGLINE[lang]}</p>
+</PageIntro>
+
+<section class="section section--tight about-photos">
+  <div class="wrap ap">
+    <figure class="ph ap__a"><Picture src={main.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1200]} sizes="(min-width: 64rem) 40vw, 100vw" alt={main.alt[lang]} loading="eager" decoding="async" /></figure>
+    <figure class="ph ap__b"><Picture src={second.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1200]} sizes="(min-width: 64rem) 40vw, 100vw" alt={second.alt[lang]} loading="lazy" decoding="async" /></figure>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="who-title">
+  <div class="wrap about">
+    <div class="about__text" data-reveal>
+      <h2 id="who-title">{C.whoTitle[lang]}</h2>
+      <p>{WHO[lang]}</p>
+      <h2 class="about__h2b">{C.teamTitle[lang]}</h2>
+      <p>{TEAM[lang]}</p>
+    </div>
+    <div data-reveal>
+      <h2 class="about__facts-h">{C.factsTitle[lang]}</h2>
+      <Facts lang={lang} />
+    </div>
+  </div>
+</section>
+
+<Process lang={lang} stone />
+
+
+<QuoteBand lang={lang} />
+
+<style>
+  .tag { margin-top: var(--s3); font-weight: 700; color: var(--ink-2); }
+  .about-photos { padding-top: 0; }
+  .ap { display: grid; gap: var(--s3); grid-template-columns: 1fr; }
+  .ap figure { margin: 0; }
+  .ap__a, .ap__b { aspect-ratio: 4 / 3; }
+  @media (min-width: 48rem) {
+    .ap { grid-template-columns: 7fr 5fr; align-items: start; }
+    .ap__a { aspect-ratio: 4 / 3; }
+    .ap__b { aspect-ratio: 20 / 21; }
+  }
+  .about { display: grid; gap: var(--s8); }
+  @media (min-width: 64rem) { .about { grid-template-columns: 6fr 5fr; gap: var(--s12); } }
+  .about__text h2, .about__facts-h { font-size: clamp(1.625rem, 1.3rem + 1vw, 2.25rem); }
+  .about__text p { margin-top: var(--s2); font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-2); max-width: 38rem; }
+  .about__text .about__h2b { margin-top: var(--s6); }
+  .about__facts-h { margin-bottom: var(--s3); }
+</style>

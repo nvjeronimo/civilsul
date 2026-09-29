@@ -1,0 +1,94 @@
+---
+import Plate from '../Plate.astro';
+import Icon from '../Icon.astro';
+import Close from '../Close.astro';
+import { UI, href, type Lang } from '../../../lib/site';
+import { SERVICES, serviceById } from '../../../content/services';
+import { workById, KINDS } from '../../../content/works';
+import { C } from '../copy';
+import { TIPO } from '../tipo';
+interface Props { lang: Lang; id: string }
+const { lang, id } = Astro.props;
+const u = UI[lang];
+const s = serviceById(id);
+const works = s.works.map(workById);
+const lead = works[0];
+const related = works.slice(1);
+const kindOf = (k: string) => KINDS.find((x) => x.id === k)!.label[lang];
+const others = SERVICES.filter((x) => x.id !== id);
+---
+<div class="wrap">
+  <header class="svh">
+    <ol class="crumbs"><li><a href={href('mapa', lang, 'home')}>{C.home[lang]}</a></li><li><a href={href('mapa', lang, 'services')}>{u.nav.services}</a></li><li aria-current="page">{C.col.art[lang]} {s.code}</li></ol>
+    <div class="svh__grid">
+      <div class="svh__text">
+        <p class="svh__code" aria-hidden="true">{s.code}</p>
+        <h1><span class="vh">{C.col.art[lang]} {s.code}. </span>{s.title[lang]}</h1>
+        <p class="lead">{s.intro[lang]}</p>
+        <a class="cta" href={href('mapa', lang, 'quote') + '?tipo=' + TIPO[s.id]}>{C.serviceCta[lang]}<Icon name="arrow" /></a>
+      </div>
+      <Plate src={lead.photos[0].src} alt={lead.photos[0].alt[lang]} code={lead.code} title={lead.title[lang]} meta={lead.place}
+        href={href('mapa', lang, 'works', lead.slug[lang])} sizes="(min-width: 900px) 52vw, 100vw" widths={[640, 960, 1280, 1680]} eager ratio="4 / 3" />
+    </div>
+  </header>
+
+  <section class="sec" aria-labelledby="inc-h">
+    <div class="sechead"><h2 id="inc-h">{C.includedH[lang]}</h2></div>
+    <div class="inc" data-draw>
+      <div class="colhead ru ru--ink inc__row" aria-hidden="true"><span>{C.col.art[lang]}</span><span>{C.col.desc[lang]}</span></div>
+      <ol>
+        {s.items.map((it, i) => (
+          <li class="ru inc__row" id={`art-${s.code}-${i + 1}`}><span class="num">{s.code}.{i + 1}</span><span>{it[lang]}</span></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="rel-h">
+    <div class="sechead"><h2 id="rel-h">{u.related}</h2></div>
+    {related.length === 0 && <p class="muted">{C.noRelated[lang]}</p>}
+    <div class="rel">
+      {related.map((w) => (
+        <Plate src={w.photos[0].src} alt={w.photos[0].alt[lang]} code={w.code} title={w.title[lang]} meta={w.place}
+          href={href('mapa', lang, 'works', w.slug[lang])} sizes="(min-width: 1100px) 31vw, (min-width: 640px) 46vw, 100vw" widths={[480, 720, 960]} ratio="1 / 1" />
+      ))}
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="oth-h">
+    <div class="sechead"><h2 id="oth-h">{C.otherServices[lang]}</h2></div>
+    <ul class="oth" data-draw>
+      {others.map((o) => (
+        <li class="ru"><a href={href('mapa', lang, 'services', o.slug[lang])}><span class="num">{o.code}</span><span class="oth__t">{o.title[lang]}</span><Icon name="arrow" /></a></li>
+      ))}
+      <li class="ru ru--end"><a href={href('mapa', lang, 'services')}><span class="num">1–6</span><span class="oth__t">{u.allServices}</span><Icon name="arrow" /></a></li>
+    </ul>
+  </section>
+</div>
+<Close lang={lang} tipo={TIPO[s.id]} />
+
+<style is:global>
+  .svh { padding-top: clamp(2rem, 1rem + 3vw, 4.5rem); }
+  .svh__grid { display: grid; gap: 2.5rem 4rem; }
+  .svh__text { display: grid; gap: 1.5rem; align-content: start; justify-items: start; }
+  .svh__code { font-family: var(--f-disp); font-weight: 800; font-size: clamp(6rem, 4rem + 8vw, 12rem); line-height: 0.8; color: var(--pen); margin-bottom: 0.5rem; }
+  .svh h1 { font-size: var(--t-h1); max-width: 14ch; }
+  .svh .lead { max-width: 50ch; }
+  @media (min-width: 900px) { .svh__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+
+  .inc__row { display: grid; grid-template-columns: 5rem 1fr; gap: 1rem; }
+  .inc li { padding: 1rem 0; font-family: var(--f-disp); font-weight: 680; font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.9rem); line-height: 1.15; }
+  .inc li .num { font-size: 1em; }
+
+  .rel { display: grid; gap: 2rem 1.75rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .rel { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .rel { grid-template-columns: repeat(3, 1fr); } }
+
+  .oth a {
+    display: grid; grid-template-columns: 3.5rem 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0.25rem; min-height: 64px;
+    text-decoration: none; font-family: var(--f-disp); font-weight: 700; font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.75rem); line-height: 1.1;
+  }
+  .oth a:hover { background-image: var(--hatch); }
+  .oth a:hover .oth__t { text-decoration: underline; text-decoration-color: var(--pen); text-underline-offset: 0.2em; }
+  .oth svg { width: 1.5rem; height: 1.5rem; color: var(--pen-text); }
+</style>

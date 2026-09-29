@@ -1,0 +1,102 @@
+{
+  "title": "Civilsul · escolher o mundo visual",
+  "question": "A proposta sorteada é o Mapa de Quantidades. Manter, escolher uma alternativa, ou voltar a sortear.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Mapa de Quantidades",
+      "kicker": "THE ROLL",
+      "lineage": "o orçamento de empreiteiro português: artigos numerados, unidades, quantidades, marcador amarelo",
+      "thesis": "O site é o documento que um construtor sério entrega: tudo numerado, medido e verificável, com as obras reais como anexos.",
+      "palette": ["#F4F6F5", "#121417", "#0B84CF", "#FFE11A"],
+      "materials": ["folha A4 branca com régua de tabela", "marcador amarelo do logótipo", "fotos de obra como Anexo A", "tracejado de corte técnico"],
+      "viewport": "Foto de obra real a toda a largura; por cima, uma folha de rosto 'Proposta nº 1985' com Alvará 4511, Quarteira, e o botão Pedir orçamento marcado a amarelo.",
+      "risk": "Se a tabela ficar tímida, parece uma folha de Excel; tem de ter escala e fotos grandes.",
+      "raised": [
+        {"from": "challenger-jackfield", "raise": "Cada serviço e obra tem um número de artigo fixo (1.1, 3.4) que serve de âncora, URL e navegação."},
+        {"from": "challenger-obi", "raise": "Faixa densa de factos (alvará, ano, local, serviço) colide com a foto limpa de cada obra."},
+        {"from": "challenger-memphis", "raise": "Estados mudam por tracejado de corte (hachura), nunca só por cor."}
+      ],
+      "hero": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Aviso de Obra",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "a placa obrigatória de licença afixada em todas as obras em Portugal",
+      "thesis": "Cada página é uma placa de obra: branca, aparafusada, com os campos legais preenchidos pelos factos da Civilsul.",
+      "palette": ["#FFFFFF", "#111111", "#0B84CF", "#FFD400"],
+      "materials": ["chapa esmaltada com parafusos", "tipografia de sinalética", "tapume de obra"],
+      "viewport": "Uma placa gigante 'Alvará nº 4511 · desde 1985' sobre a foto de uma moradia, com contactos como campos da placa.",
+      "risk": "Muito reconhecível em Portugal, mas pode parecer burocrático para clientes estrangeiros."
+    },
+    {
+      "id": "challenger-obi",
+      "label": "Obi Band Sleeve",
+      "verdict": "declined",
+      "lineage": "capas de discos japonesas com faixa obi",
+      "palette": ["#F4F1EC", "#E03A1E", "#111111"],
+      "materials": ["papel impresso", "faixa densa de créditos"],
+      "thesis": "Face quase vazia com uma faixa densa de créditos por cima.",
+      "viewport": "Foto limpa com faixa de créditos a cobrir o terço inferior.",
+      "case": "Funde mal: donos de casas no Algarve não se reconhecem numa capa de disco.",
+      "risk": "Estética de nicho sem ligação à construção.",
+      "kept": "A colisão entre uma faixa densa de factos e uma foto limpa.",
+      "hero": "https://impeccable.style/worlds/cards/posters-covers-sleeves-shibuya-boutique-sleeve-hero.webp"
+    },
+    {
+      "id": "challenger-jackfield",
+      "label": "Jackfield Schedule",
+      "verdict": "declined",
+      "lineage": "quadros de patch de estúdio",
+      "palette": ["#0A0A0A", "#FFB000"],
+      "materials": ["vidro preto", "linhas âmbar numeradas"],
+      "thesis": "Faixas numeradas ligadas ao seu valor por uma linha.",
+      "viewport": "Grelha de faixas numeradas sob uma legenda fixa.",
+      "case": "Funde mal: é uma linguagem de operador, não de quem quer construir casa.",
+      "risk": "Escuro e técnico demais para o público.",
+      "kept": "Números fixos como âncoras duráveis.",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp"
+    },
+    {
+      "id": "challenger-memphis",
+      "label": "Memphis Showroom",
+      "verdict": "declined",
+      "lineage": "Memphis Milano",
+      "palette": ["#F7A8C4", "#9FE3C8", "#FFE11A", "#111111"],
+      "materials": ["laminado com rabiscos", "terrazzo"],
+      "thesis": "Objetos coloridos a discutir alegremente.",
+      "viewport": "Secções como móveis de showroom.",
+      "case": "Funde mal: tira seriedade a um construtor com alvará.",
+      "risk": "Lúdico demais para confiança.",
+      "kept": "Estados por padrão, não por tom.",
+      "hero": "https://impeccable.style/worlds/cards/design-canon-memphis-showroom-morning-hero.webp"
+    },
+    {
+      "id": "challenger-vu",
+      "label": "VU Meter Bridge",
+      "verdict": "declined",
+      "lineage": "mesas de gravação",
+      "palette": ["#EFE6D2", "#111111", "#C8261B"],
+      "materials": ["mostradores", "nogueira e aço"],
+      "thesis": "Agulhas que se inclinam juntas.",
+      "viewport": "Fila de medidores.",
+      "case": "Funde mal: sem sinal ao vivo para medir.",
+      "risk": "Sem relação com o produto.",
+      "kept": "Repetição idêntica como régua.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-vu-meter-bridge-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "label": "O padrão do setor",
+    "thesis": "O site de construtora que o visitante espera, executado com todo o cuidado.",
+    "palette": ["#FFFFFF", "#0F1B2D", "#0B84CF", "#FFD400"],
+    "materials": ["grelha limpa", "fotografia de obra a toda a largura"],
+    "viewport": "Foto grande, título, botão de orçamento, serviços em grelha, portefólio.",
+    "risk": "Igual à concorrência por definição."
+  },
+  "steer": true
+}

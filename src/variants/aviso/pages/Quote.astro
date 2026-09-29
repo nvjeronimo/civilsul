@@ -1,0 +1,389 @@
+---
+// O aviso em branco da obra do visitante. Marcação segundo o contrato de src/scripts/quote.ts.
+import Layout from '../Layout.astro';
+import Board from '../components/Board.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, UI, CALL_NOTE, tel, whatsapp, type Lang } from '../../../lib/site';
+import { WORK_TYPES, PROPERTY, TIMING, PROJECT_STATE, Q } from '../../../content/quote';
+import { copy, PREF } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = copy(lang);
+const ui = UI[lang];
+const q = Q[lang];
+const radios = (name: string, opts: { id: string; label: Record<Lang, string> }[]) =>
+  opts.map((o) => ({ name, value: o.id, text: o.label[lang], id: `${name}-${o.id}` }));
+---
+<Layout lang={lang} page="quote">
+  <div class="wrap page-top">
+    <Board as="header" band={`${c.aviso} · Civilsul · ${ui.permit}`} size="lg" class="q-head">
+      <h1>{c.quoteH1}</h1>
+      <p class="lead">{c.quoteIntro}</p>
+    </Board>
+
+    <form
+      class="qform"
+      data-quote
+      data-i18n={JSON.stringify(q)}
+      data-wa={SITE.mobile.wa}
+      data-email={SITE.email}
+      action={`mailto:${SITE.email}`}
+      method="post"
+      enctype="text/plain"
+    >
+      <div class="qgrid">
+        <Board as="div" class="q-main" bolt={false}>
+          <ol class="qsteps" data-js-only>
+            {q.steps.map((s, i) => (
+              <li data-step-label><span class="qsteps__n">{i + 1}</span><span class="qsteps__t">{s}</span></li>
+            ))}
+          </ol>
+          <div class="qprogress" data-progress aria-hidden="true" data-js-only><span></span></div>
+
+          <!-- 1 · A obra -->
+          <fieldset data-step class="step">
+            <legend tabindex="-1">{q.steps[0]}</legend>
+            <fieldset class="field group" aria-describedby="err-type">
+              <legend class="q-label">{q.type}</legend>
+              <div class="opts opts--2">
+                {radios('type', WORK_TYPES).map((r) => (
+                  <label class="opt" for={r.id}>
+                    <input type="radio" id={r.id} name={r.name} value={r.value} data-text={r.text} />
+                    <span class="opt__box" aria-hidden="true"><Icon name="check" size={18} /></span>
+                    <span class="opt__t">{r.text}</span>
+                  </label>
+                ))}
+              </div>
+              <p class="err" id="err-type" data-error-for="type" hidden></p>
+            </fieldset>
+          </fieldset>
+
+          <!-- 2 · O local -->
+          <fieldset data-step class="step">
+            <legend tabindex="-1">{q.steps[1]}</legend>
+            <fieldset class="field group" aria-describedby="err-property">
+              <legend class="q-label">{q.property}</legend>
+              <div class="opts opts--2">
+                {radios('property', PROPERTY).map((r) => (
+                  <label class="opt" for={r.id}>
+                    <input type="radio" id={r.id} name={r.name} value={r.value} data-text={r.text} />
+                    <span class="opt__box" aria-hidden="true"><Icon name="check" size={18} /></span>
+                    <span class="opt__t">{r.text}</span>
+                  </label>
+                ))}
+              </div>
+              <p class="err" id="err-property" data-error-for="property" hidden></p>
+            </fieldset>
+            <div class="row2">
+              <div class="field">
+                <label class="q-label" for="q-place">{q.place}</label>
+                <input class="input" id="q-place" name="place" type="text" autocomplete="address-level2" placeholder={q.placeHint} aria-describedby="err-place" />
+                <p class="err" id="err-place" data-error-for="place" hidden></p>
+              </div>
+              <div class="field">
+                <label class="q-label" for="q-area">{q.area} <span class="opt-hint">· {q.areaHint}</span></label>
+                <input class="input" id="q-area" name="area" type="number" inputmode="numeric" min="0" step="1" />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 3 · Prazo e projeto -->
+          <fieldset data-step class="step">
+            <legend tabindex="-1">{q.steps[2]}</legend>
+            <fieldset class="field group" aria-describedby="err-timing">
+              <legend class="q-label">{q.timing}</legend>
+              <div class="opts opts--2">
+                {radios('timing', TIMING).map((r) => (
+                  <label class="opt" for={r.id}>
+                    <input type="radio" id={r.id} name={r.name} value={r.value} data-text={r.text} />
+                    <span class="opt__box" aria-hidden="true"><Icon name="check" size={18} /></span>
+                    <span class="opt__t">{r.text}</span>
+                  </label>
+                ))}
+              </div>
+              <p class="err" id="err-timing" data-error-for="timing" hidden></p>
+            </fieldset>
+            <fieldset class="field group">
+              <legend class="q-label">{q.state}</legend>
+              <div class="opts opts--2">
+                {radios('state', PROJECT_STATE).map((r) => (
+                  <label class="opt" for={r.id}>
+                    <input type="radio" id={r.id} name={r.name} value={r.value} data-text={r.text} />
+                    <span class="opt__box" aria-hidden="true"><Icon name="check" size={18} /></span>
+                    <span class="opt__t">{r.text}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <div class="field">
+              <label class="q-label" for="q-details">{q.details}</label>
+              <textarea class="input" id="q-details" name="details" rows="5" placeholder={q.detailsHint}></textarea>
+            </div>
+          </fieldset>
+
+          <!-- 4 · Contacto -->
+          <fieldset data-step class="step">
+            <legend tabindex="-1">{q.steps[3]}</legend>
+            <div class="field">
+              <label class="q-label" for="q-name">{q.name}</label>
+              <input class="input" id="q-name" name="name" type="text" autocomplete="name" aria-describedby="err-name" />
+              <p class="err" id="err-name" data-error-for="name" hidden></p>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label class="q-label" for="q-phone">{q.phone}</label>
+                <input class="input" id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="err-phone" />
+                <p class="err" id="err-phone" data-error-for="phone" hidden></p>
+              </div>
+              <div class="field">
+                <label class="q-label" for="q-email">{q.email}</label>
+                <input class="input" id="q-email" name="email" type="email" autocomplete="email" aria-describedby="err-email" />
+                <p class="err" id="err-email" data-error-for="email" hidden></p>
+              </div>
+            </div>
+            <fieldset class="field group">
+              <legend class="q-label">{q.contactPref}</legend>
+              <div class="opts opts--3">
+                {PREF.map((o) => (
+                  <label class="opt" for={`pref-${o.id}`}>
+                    <input type="radio" id={`pref-${o.id}`} name="pref" value={o.id} data-text={o.label[lang]} />
+                    <span class="opt__box" aria-hidden="true"><Icon name="check" size={18} /></span>
+                    <span class="opt__t">{o.label[lang]}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <div class="field consent">
+              <label class="check" for="q-consent">
+                <input type="checkbox" id="q-consent" name="consent" value="true" aria-describedby="err-consent" />
+                <span class="check__box" aria-hidden="true"><Icon name="check" size={18} /></span>
+                <span>{q.consent}</span>
+              </label>
+              <p class="err" id="err-consent" data-error-for="consent" hidden></p>
+            </div>
+          </fieldset>
+
+          <div class="qnav">
+            <button type="button" class="plate-btn" data-prev><Icon name="arrow-left" />{q.back}</button>
+            <button type="button" class="hazard" data-next><span>{q.next}<Icon name="arrow" /></span></button>
+          </div>
+        </Board>
+
+        <Board as="aside" band={c.boardTitle} class="preview" aria-label={c.boardTitle}>
+          <dl class="preset">
+            <div><dt>{c.field.contractor}</dt><dd>{SITE.legalName}</dd></div>
+            <div><dt>{c.field.permit}</dt><dd>{SITE.permit}</dd></div>
+          </dl>
+          <h2 class="preview__h">{q.summary}</h2>
+          <dl class="sheet" data-summary></dl>
+          <p class="preview__note">{c.boardNote}</p>
+        </Board>
+
+        <div class="qsend">
+          <div class="actions qsend__btns">
+            <button type="button" class="hazard" data-send="wa"><span><Icon name="whatsapp" />{q.sendWa}</span></button>
+            <button type="submit" class="plate-btn" data-send="email"><Icon name="mail" />{q.sendEmail}</button>
+          </div>
+          <p class="qstatus" data-status role="status" aria-live="polite"></p>
+          <Board as="div" size="sm" bolt={false} class="qnotes">
+            <p class="qnote"><Icon name="form" size={20} />{q.photosNote}</p>
+            <p class="qnote" data-js-only><Icon name="check" size={20} />{q.draft}</p>
+          </Board>
+        </div>
+      </div>
+    </form>
+
+    <Board as="section" size="sm" class="q-alt" aria-label={ui.nav.contact} bolt={false}>
+      <p class="q-alt__in">
+        <span class="flabel">{c.orCall}</span>
+        <a href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a>
+        <small class="note">{CALL_NOTE.mobile[lang]}</small>
+        <a class="arrow-link" href={whatsapp(lang)} rel="noopener"><Icon name="whatsapp" size={20} /><span>{ui.whatsapp}</span></a>
+      </p>
+    </Board>
+  </div>
+</Layout>
+
+<script>
+  import '../../../scripts/quote.ts';
+</script>
+
+<style>
+  .page-top :global(.q-head) { max-width: 56rem; }
+  .page-top :global(.q-head) .lead { margin-top: 1.1rem; max-width: 56ch; }
+
+  .qform { margin-top: clamp(1.75rem, 1.2rem + 2vw, 3rem); }
+  .qgrid { display: grid; gap: 1.5rem; }
+  @media (min-width: 64rem) {
+    .qgrid {
+      grid-template-columns: minmax(0, 1fr) minmax(21rem, 25rem);
+      grid-template-areas: 'main preview' 'send preview';
+      grid-template-rows: auto 1fr;
+      align-items: start;
+      column-gap: 2rem;
+    }
+    .qgrid > :global(.q-main) { grid-area: main; }
+    .qgrid > :global(.preview) { grid-area: preview; position: sticky; top: 1.5rem; }
+    .qsend { grid-area: send; }
+  }
+
+  /* indicador de passos */
+  .qsteps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
+  .qsteps li { display: grid; gap: 0.25rem; color: var(--ink-3); font-weight: 700; font-size: 0.9375rem; line-height: 1.2; }
+  .qsteps__n {
+    display: inline-grid; place-items: center;
+    width: 2rem; height: 2rem;
+    border: 2px solid currentColor;
+    font-weight: 900; padding-top: 2px;
+  }
+  .qsteps li[aria-current='step'] { color: var(--ink); }
+  .qsteps li[aria-current='step'] .qsteps__n { background: var(--ink); color: var(--enamel); border-color: var(--ink); }
+  .qsteps li[data-done] { color: var(--ink); cursor: pointer; }
+  .qsteps li[data-done] .qsteps__t { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  @media (max-width: 30rem) { .qsteps__t { display: none; } .qsteps li[aria-current='step'] .qsteps__t { display: block; grid-column: 1; } }
+
+  /* obra em curso: barra com riscas de perigo */
+  .qprogress {
+    overflow: hidden;
+    margin: 1rem 0 0.5rem;
+    height: 12px;
+    border: 2px solid var(--ink);
+    background: var(--enamel);
+  }
+  .qprogress span {
+    display: block; height: 100%; width: 100%;
+    transform-origin: 0 50%;
+    transform: scaleX(calc(var(--progress, 0) * 0.75 + 0.25));
+    background: repeating-linear-gradient(-45deg, var(--ink) 0 7px, var(--yellow) 7px 14px);
+    transition: transform 500ms var(--ease-out);
+  }
+
+  .step { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .step + .step { margin-top: 2.5rem; padding-top: 2rem; border-top: 2px solid var(--ink); }
+  :global(.qform.is-js) .step + .step { margin-top: 0; padding-top: 0; border-top: 0; }
+  .step > legend {
+    display: block;
+    padding: 1.5rem 0 0;
+    font-size: var(--fs-h2);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+  .step > legend:focus { outline: none; }
+  .step > legend:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+
+  .field { margin-top: 1.75rem; min-width: 0; }
+  .group { border: 0; padding: 0; margin-inline: 0; }
+  .q-label { display: block; padding: 0; font-weight: 800; font-size: 1.125rem; line-height: 1.3; margin-bottom: 0.65rem; }
+  .opt-hint { font-weight: 400; color: var(--ink-3); }
+
+  .opts { display: grid; gap: 0.6rem; }
+  @media (min-width: 36rem) {
+    .opts--2 { grid-template-columns: 1fr 1fr; }
+    .opts--3 { grid-template-columns: repeat(3, 1fr); }
+  }
+  .opt {
+    position: relative;
+    display: flex; align-items: center; gap: 0.75rem;
+    min-height: 3.5rem;
+    padding: 0.6rem 0.9rem;
+    border: 2px solid var(--ink);
+    background: var(--enamel);
+    font-weight: 700; line-height: 1.25;
+    cursor: pointer;
+    transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out);
+  }
+  .opt input, .check input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: pointer; }
+  .opt__box, .check__box {
+    flex: none;
+    display: grid; place-items: center;
+    width: 1.5rem; height: 1.5rem;
+    border: 2px solid currentColor;
+    background: var(--enamel);
+    color: var(--ink);
+  }
+  .opt__box :global(svg), .check__box :global(svg) { visibility: hidden; }
+  .opt:hover { background: var(--hoarding); }
+  .opt:has(input:checked) { background: var(--ink); color: var(--enamel); }
+  .opt:has(input:checked) .opt__box { border-color: var(--enamel); }
+  .opt:has(input:checked) .opt__box :global(svg), .check:has(input:checked) .check__box :global(svg) { visibility: visible; }
+  .opt:has(input:focus-visible), .check:has(input:focus-visible) { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  .row2 { display: grid; gap: 0 1.25rem; }
+  @media (min-width: 36rem) { .row2 { grid-template-columns: 1fr 1fr; } }
+
+  .input {
+    display: block; width: 100%;
+    min-height: 3.5rem;
+    padding: 0.75rem 0.9rem 0.6rem;
+    border: 2px solid var(--ink);
+    border-radius: 0;
+    background: var(--enamel);
+    color: var(--ink);
+    font: inherit; font-size: 1.125rem; font-weight: 600;
+  }
+  textarea.input { min-height: 8rem; resize: vertical; line-height: 1.45; }
+  .input::placeholder { color: var(--ink-3); font-weight: 400; opacity: 1; }
+  .input:focus-visible { outline: 3px solid var(--blue); outline-offset: 0; }
+  .input[aria-invalid='true'] { border-color: #b42318; box-shadow: inset 0 0 0 1px #b42318; }
+  [data-invalid] .opt { border-color: #b42318; }
+
+  .err {
+    margin-top: 0.5rem;
+    color: #b42318;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    display: flex; gap: 0.4rem; align-items: baseline;
+  }
+  .err::before { content: ''; flex: none; width: 0.6rem; height: 0.6rem; background: #b42318; transform: translateY(0.05em) rotate(45deg); }
+
+  .check { position: relative; display: flex; gap: 0.8rem; align-items: flex-start; min-height: 44px; padding: 0.5rem 0; font-weight: 600; cursor: pointer; }
+  .check__box { margin-top: 0.05rem; }
+  .check:has(input:checked) .check__box { background: var(--ink); color: var(--enamel); }
+
+  .qnav { display: flex; justify-content: space-between; gap: 0.75rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule-soft); }
+  .qnav [data-next] { margin-left: auto; }
+  :global(.qform:not(.is-js)) .qnav { display: none; }
+
+  /* a placa que se vai preenchendo */
+  .preset, .sheet { display: grid; }
+  .preset div, .sheet :global(div) {
+    display: grid; gap: 0.15rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .preset dt, .sheet :global(dt) {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3);
+  }
+  .preset dd, .sheet :global(dd) { font-weight: 800; font-size: 1.0625rem; line-height: 1.3; overflow-wrap: anywhere; white-space: pre-line; }
+  .preset { border-top: 2px solid var(--ink); }
+  .preview__h {
+    margin-top: 1.5rem; padding-bottom: 0.4rem;
+    font-size: 1.125rem; font-weight: 850; letter-spacing: 0;
+    border-bottom: 2px solid var(--ink);
+  }
+  .sheet :global(div[data-filled='false'] dd) { color: var(--rule-soft); font-weight: 400; }
+  .sheet :global(div[data-filled='true'] dd) { color: var(--ink); }
+  .preview__note { margin-top: 1rem; font-size: 0.875rem; color: var(--ink-3); }
+  :global(.qform:not(.is-js)) :global(.preview) { display: none; }
+  @media (max-width: 63.99rem) {
+    :global(.qform.is-js:not([data-current='3'])) :global(.preview) { display: none; }
+  }
+
+  .qsend { display: grid; gap: 1rem; }
+  .qsend__btns > * { flex: 1 1 16rem; }
+  :global(.qform:not(.is-js)) [data-send='wa'] { display: none; }
+  .qstatus:empty { display: none; }
+  .qstatus { font-weight: 700; padding: 0.75rem 1rem; background: var(--enamel); border: 2px solid var(--ink); }
+  .qsend { align-content: start; }
+  .qnote { display: flex; gap: 0.7rem; align-items: flex-start; color: var(--ink-2); font-size: 0.9375rem; }
+  .qnote :global(svg) { flex: none; margin-top: 0.1rem; color: var(--ink); }
+  .qnote + .qnote { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--rule-soft); }
+
+  .page-top :global(.q-alt) { margin-top: clamp(2rem, 1.5rem + 2vw, 3.5rem); max-width: 40rem; }
+  .q-alt__in { display: flex; flex-wrap: wrap; align-items: center; column-gap: 1rem; row-gap: 0.25rem; }
+  .q-alt__in .flabel { flex-basis: 100%; }
+  .q-alt__in > a:not(.arrow-link) { display: inline-flex; align-items: center; min-height: 44px; font-size: 1.375rem; font-weight: 850; color: var(--ink); text-decoration: none; }
+  .q-alt__in .note { flex-basis: 100%; margin-top: -0.4rem; }
+</style>

@@ -1,0 +1,27 @@
+---
+// Lista original de ofícios; cada um remete para o(s) sub-artigo(s) do mapa de trabalhos onde está incluído.
+import { TRADES, serviceById } from '../../content/services';
+import { href, type Lang } from '../../lib/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+// índice em TRADES → [serviço, nº do sub-artigo]
+const REFS: [string, number][][] = [
+  [['moradias', 1]], [['obras-publicas', 1]], [['remodelacoes', 1], ['piscinas', 1]], [['remodelacoes', 2]], [['remodelacoes', 3]],
+  [['remodelacoes', 4]], [['remodelacoes', 5], ['piscinas', 3]], [['remodelacoes', 6]], [['telhados', 2], ['piscinas', 4]], [['telhados', 1]],
+  [['moradias', 3]], [['moradias', 3]], [['moradias', 4], ['remodelacoes', 7]], [['moradias', 2], ['reconstrucao', 4]], [['telhados', 3]],
+  [['reconstrucao', 1]], [['reconstrucao', 2]],
+];
+---
+<ul class="trades" data-draw>
+  {TRADES.map((x, i) => (
+    <li class="ru">
+      <span>{x[lang]}</span>
+      <span class="trades__refs">
+        {(REFS[i] ?? []).map(([id, n]) => {
+          const s = serviceById(id);
+          return <a href={`${href('mapa', lang, 'services', s.slug[lang])}#art-${s.code}-${n}`} title={`${s.items[n - 1][lang]} · ${s.title[lang]}`}>{s.code}.{n}</a>;
+        })}
+      </span>
+    </li>
+  ))}
+</ul>

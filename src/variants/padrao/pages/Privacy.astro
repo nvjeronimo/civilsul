@@ -1,0 +1,31 @@
+---
+import PageIntro from '../PageIntro.astro';
+import type { Lang } from '../../../lib/site';
+import { PRIVACY } from '../../../content/privacy';
+import { C } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<PageIntro lang={lang} title={C.privacyTitle[lang]} />
+
+<section class="psec">
+  <div class="wrap">
+    <div class="pblocks">
+      {PRIVACY[lang].map((b) => (
+        <section class="pb">
+          <h2>{b.h}</h2>
+          {b.p.map((p) => <p>{p}</p>)}
+        </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .psec { padding-bottom: var(--section); }
+  .pblocks { max-width: 46rem; display: grid; gap: var(--s5); }
+  .pb { padding-top: var(--s3); border-top: 1px solid var(--rule); }
+  .pb h2 { font-size: 1.375rem; letter-spacing: -0.015em; }
+  .pb p { margin-top: var(--s1); color: var(--ink-2); max-width: 68ch; }
+</style>

@@ -1,0 +1,353 @@
+---
+// Assinatura da variante: formulário guiado em 4 passos ao lado da folha A4 "Pedido de orçamento nº …",
+// que se preenche linha a linha enquanto o visitante escreve. Marcação segundo o contrato de src/scripts/quote.ts.
+import Logo from '../../../components/Logo.astro';
+import Icon from '../Icon.astro';
+import { SITE, UI, CALL_NOTE, href, type Lang } from '../../../lib/site';
+import { WORK_TYPES, PROPERTY, TIMING, PROJECT_STATE, Q } from '../../../content/quote';
+import { C } from '../copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = UI[lang];
+const q = Q[lang];
+const prefs = (['telefone', 'whatsapp', 'email'] as const).map((id) => ({ id, label: C.pref[id][lang] }));
+// Rótulos da folha (e da mensagem enviada) como designações de um mapa, não como perguntas
+const bill = C.bill[lang];
+const i18n = { ...q, ...bill };
+const preview = [bill.type, bill.property, bill.place, bill.area, bill.timing, bill.state, bill.details, bill.name, bill.phone, bill.email, bill.contactPref];
+const cols = C.sheetCols[lang];
+---
+<div class="wrap">
+  <header class="pagehead qh">
+    <ol class="crumbs"><li><a href={href('mapa', lang, 'home')}>{C.home[lang]}</a></li><li aria-current="page">{u.nav.quote}</li></ol>
+    <h1>{C.quoteH[lang]}</h1>
+    <p class="lead">{C.quoteLead[lang]}</p>
+  </header>
+
+  <div class="qg">
+    <form
+      class="qf"
+      data-quote
+      data-i18n={JSON.stringify(i18n)}
+      data-wa={SITE.mobile.wa}
+      data-email={SITE.email}
+      action={`mailto:${SITE.email}`}
+      method="post"
+      enctype="text/plain"
+    >
+      <div class="qf__steps" data-progress>
+        <ol>
+          {q.steps.map((s, i) => (
+            <li data-step-label><span class="num">{i + 1}</span><span class="qf__sl">{s}</span></li>
+          ))}
+        </ol>
+        <span class="qf__bar" aria-hidden="true"></span>
+      </div>
+
+      <p class="qf__nojs small muted">{C.noJs[lang]}</p>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__n">1</span>{q.steps[0]}</legend>
+        <fieldset class="field">
+          <legend class="qf__q">{q.type}</legend>
+          <div class="opts">
+            {WORK_TYPES.map((o) => (
+              <label class="opt"><input type="radio" name="type" value={o.id} data-text={o.label[lang]} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label[lang]}</span></label>
+            ))}
+          </div>
+          <p class="err" data-error-for="type" hidden></p>
+        </fieldset>
+      </fieldset>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__n">2</span>{q.steps[1]}</legend>
+        <fieldset class="field">
+          <legend class="qf__q">{q.property}</legend>
+          <div class="opts opts--2">
+            {PROPERTY.map((o) => (
+              <label class="opt"><input type="radio" name="property" value={o.id} data-text={o.label[lang]} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label[lang]}</span></label>
+            ))}
+          </div>
+          <p class="err" data-error-for="property" hidden></p>
+        </fieldset>
+        <div class="row2">
+          <div class="field">
+            <label class="qf__q" for="q-place">{q.place}</label>
+            <input id="q-place" name="place" type="text" autocomplete="address-level2" placeholder={q.placeHint} aria-describedby="e-place" />
+            <p class="err" id="e-place" data-error-for="place" hidden></p>
+          </div>
+          <div class="field">
+            <label class="qf__q" for="q-area">{q.area} <span class="muted">· {q.areaHint}</span></label>
+            <input id="q-area" name="area" type="number" inputmode="numeric" min="0" step="1" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__n">3</span>{q.steps[2]}</legend>
+        <fieldset class="field">
+          <legend class="qf__q">{q.timing}</legend>
+          <div class="opts opts--2">
+            {TIMING.map((o) => (
+              <label class="opt"><input type="radio" name="timing" value={o.id} data-text={o.label[lang]} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label[lang]}</span></label>
+            ))}
+          </div>
+          <p class="err" data-error-for="timing" hidden></p>
+        </fieldset>
+        <fieldset class="field">
+          <legend class="qf__q">{q.state} <span class="muted">· {C.optional[lang]}</span></legend>
+          <div class="opts opts--2">
+            {PROJECT_STATE.map((o) => (
+              <label class="opt"><input type="radio" name="state" value={o.id} data-text={o.label[lang]} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label[lang]}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label class="qf__q" for="q-details">{q.details} <span class="muted">· {C.optional[lang]}</span></label>
+          <textarea id="q-details" name="details" rows="5" placeholder={q.detailsHint}></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset data-step>
+        <legend tabindex="-1"><span class="qf__n">4</span>{q.steps[3]}</legend>
+        <div class="field">
+          <label class="qf__q" for="q-name">{q.name}</label>
+          <input id="q-name" name="name" type="text" autocomplete="name" aria-describedby="e-name" />
+          <p class="err" id="e-name" data-error-for="name" hidden></p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label class="qf__q" for="q-phone">{q.phone}</label>
+            <input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="e-phone" />
+            <p class="err" id="e-phone" data-error-for="phone" hidden></p>
+          </div>
+          <div class="field">
+            <label class="qf__q" for="q-email">{q.email}</label>
+            <input id="q-email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="e-email" />
+            <p class="err" id="e-email" data-error-for="email" hidden></p>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend class="qf__q">{q.contactPref}</legend>
+          <div class="opts opts--3">
+            {prefs.map((o) => (
+              <label class="opt"><input type="radio" name="pref" value={o.id} data-text={o.label} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label class="consent"><input type="checkbox" name="consent" value="true" aria-describedby="e-consent" /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{q.consent} <a class="pen" href={href('mapa', lang, 'privacy')}>{u.privacy}</a></span></label>
+          <p class="err" id="e-consent" data-error-for="consent" hidden></p>
+        </div>
+        <p class="qf__note">{q.photosNote}</p>
+      </fieldset>
+
+      <div class="qf__nav">
+        <button class="btn" type="button" data-prev><Icon name="arrow-left" />{q.back}</button>
+        <button class="btn btn--ink" type="button" data-next>{q.next}<Icon name="arrow" /></button>
+        <button class="cta cta--sm qf__wa" type="button" data-send="wa"><Icon name="chat" />{q.sendWa}</button>
+        <button class="btn" type="submit" data-send="email"><Icon name="mail" />{q.sendEmail}</button>
+      </div>
+      <p class="qf__status" data-status role="status" aria-live="polite"></p>
+      <p class="small muted">{q.draft}</p>
+    </form>
+
+    <aside class="sheet" id="sheet" data-sheet aria-labelledby="sheet-h">
+      <div class="sheet__paper">
+        <header class="sheet__head">
+          <div class="sheet__from">
+            <Logo size="1.9rem" />
+            <div><strong>Civilsul</strong><span>{SITE.legalName} · {u.permit}</span></div>
+          </div>
+          <dl class="sheet__meta">
+            <div><dt>{C.sheetNo[lang]}</dt><dd data-sheet-no>—</dd></div>
+            <div><dt>{C.sheetDate[lang]}</dt><dd data-sheet-date>—</dd></div>
+          </dl>
+        </header>
+        <h2 id="sheet-h" class="sheet__title">{q.subject} <span class="sheet__no">{C.sheetNo[lang]} <span data-sheet-no>—</span></span></h2>
+        <div class="sheet__cols" aria-hidden="true"><span>{cols[0]}</span><span>{cols[1]}</span><span>{cols[2]}</span></div>
+        <dl class="sheet__rows" data-summary>
+          {preview.map((k) => <div data-filled="false"><dt>{k}</dt><dd>{q.empty}</dd></div>)}
+        </dl>
+        <footer class="sheet__foot">
+          <p>{C.sheetTo[lang]}: {SITE.email} · {SITE.mobile.display} <span class="muted">({CALL_NOTE.mobile[lang]})</span></p>
+          <p class="muted">{C.sheetFoot[lang]}</p>
+        </footer>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<button class="strip" type="button" aria-expanded="false" aria-controls="sheet" data-strip hidden>
+  <span class="strip__top">
+    <span class="strip__no">{C.stripTitle[lang]} <span data-sheet-no>—</span></span>
+    <span class="strip__n"><span data-strip-count>0</span> {C.stripOf[lang]} {preview.length} {C.stripArts[lang]}</span>
+    <svg class="strip__chev" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m6 15 6-6 6 6" /></svg>
+  </span>
+  <span class="strip__new" data-strip-new><span class="muted">{C.stripEmpty[lang]}</span></span>
+  <span class="vh">{C.stripOpen[lang]}</span>
+</button>
+<div class="strip-space" aria-hidden="true"></div>
+
+<script>
+  import '../../../scripts/quote.ts';
+  import '../sheet.ts';
+</script>
+
+<style is:global>
+  .qh { padding-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
+  .qg { display: grid; gap: 3rem 4rem; align-items: start; padding-bottom: var(--sec); }
+  @media (min-width: 1100px) { .qg { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); } }
+
+  /* Passos */
+  .qf__steps { position: relative; border-top: 1px solid var(--ink); margin-bottom: 2rem; }
+  .qf__steps ol { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .qf__steps li { display: grid; gap: 0.15rem; padding: 0.75rem 0.5rem 0.9rem 0.75rem; border-bottom: 1px solid var(--rule); font-size: var(--t-small); color: var(--ink-3); }
+  .qf__steps li + li { border-left: 1px solid var(--rule); }
+  .qf__steps .num { font-size: 1.5rem; line-height: 1; color: var(--ink-3); }
+  .qf__steps li[aria-current] { color: var(--ink); font-weight: 650; background-image: var(--hatch-pen); }
+  .qf__steps li[aria-current] .num, .qf__steps li[data-done] .num { color: var(--pen-text); }
+  .qf__steps li[data-done] { color: var(--ink-2); cursor: pointer; }
+  .qf__steps li[data-done]:hover .qf__sl { text-decoration: underline; }
+  .qf__bar { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--pen); transform-origin: 0 50%; transform: scaleX(calc((var(--progress, 0) * 3 + 1) / 4)); transition: transform 0.6s var(--ease); }
+  .qf:not(.is-js) .qf__bar { display: none; }
+  @media (max-width: 560px) { .qf__sl { display: none; } .qf__steps li[aria-current] .qf__sl { display: block; } .qf__steps ol { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+
+  .qf__nojs { margin-bottom: 1.5rem; }
+  .qf.is-js .qf__nojs { display: none; }
+
+  .qf fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .qf [data-step] { display: grid; gap: 1.75rem; }
+  .qf:not(.is-js) [data-step] + [data-step] { margin-top: 3rem; }
+  .qf [data-step] > legend {
+    display: flex; align-items: baseline; gap: 0.75rem; padding: 0; margin-bottom: 1.75rem;
+    font-family: var(--f-disp); font-weight: 780; font-size: var(--t-h2); line-height: 1;
+  }
+  .qf__n { color: var(--pen); }
+  .qf .field { display: grid; gap: 0.6rem; }
+  .qf__q { display: block; padding: 0; font-weight: 650; font-size: 1.1rem; margin-bottom: 0.15rem; }
+  .qf__q .muted { font-weight: 400; }
+
+  .opts { display: grid; gap: 0; border-top: 1px solid var(--rule-2); }
+  @media (min-width: 640px) {
+    .opts--2 { grid-template-columns: 1fr 1fr; column-gap: 1.25rem; }
+    .opts--3 { grid-template-columns: repeat(3, 1fr); column-gap: 1.25rem; }
+  }
+  .opt, .consent {
+    position: relative; display: grid; grid-template-columns: 1.6rem 1fr; align-items: center; gap: 0.9rem;
+    min-height: 58px; padding: 0.6rem 0.75rem 0.6rem 0.5rem; border-bottom: 1px solid var(--rule-2); cursor: pointer; font-size: 1.1rem; line-height: 1.25;
+  }
+  .consent { align-items: start; border-bottom: 0; padding-left: 0; font-size: 1rem; }
+  .opt input, .consent input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .opt__box { width: 1.6rem; height: 1.6rem; border: 1.5px solid var(--ink); display: grid; place-items: center; background: var(--sheet); }
+  .opt__box svg { width: 1.2rem; height: 1.2rem; color: var(--sheet); opacity: 0; stroke-width: 2.25; }
+  .opt:hover, .consent:hover .opt__box { background-image: var(--hatch); }
+  .opt:has(input:checked) { background-image: var(--hatch-pen); font-weight: 700; }
+  .opt:has(input:checked) .opt__box, .consent:has(input:checked) .opt__box { background: var(--pen-text); border-color: var(--pen-text); }
+  .opt:has(input:checked) .opt__box svg, .consent:has(input:checked) .opt__box svg { opacity: 1; }
+  .opt:has(input:focus-visible), .consent:has(input:focus-visible) { outline: 2px solid var(--pen); outline-offset: 2px; z-index: 1; }
+  .field[data-invalid] .opts { border-top-color: var(--err); }
+  .field[data-invalid] .opt__box { border-color: var(--err); }
+
+  .qf input[type='text'], .qf input[type='tel'], .qf input[type='email'], .qf input[type='number'], .qf textarea {
+    width: 100%; min-height: 54px; padding: 0.75rem 0.9rem; border: 1px solid var(--rule-2); border-bottom: 1.5px solid var(--ink); border-radius: 0;
+    background: var(--sheet); color: var(--ink); font: 500 1.125rem/1.4 var(--f-body);
+  }
+  .qf textarea { resize: vertical; min-height: 9rem; }
+  .qf input::placeholder, .qf textarea::placeholder { color: #5f666e; opacity: 1; }
+  .qf input:focus, .qf textarea:focus { outline: 2px solid var(--pen); outline-offset: 0; border-color: var(--pen); }
+  .qf [aria-invalid='true'] { border-color: var(--err) !important; border-bottom-width: 2px !important; }
+  .row2 { display: grid; gap: 1.75rem 1.25rem; }
+  @media (min-width: 640px) { .row2 { grid-template-columns: 1fr 1fr; } }
+
+  .err { color: var(--err); font-weight: 600; font-size: var(--t-small); }
+  .qf__note { padding: 1rem 1.1rem; background-image: var(--hatch); border: 1px solid var(--rule-2); font-size: 1rem; color: var(--ink); }
+
+  .qf__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1rem; margin-top: 2.25rem; padding-top: 1.5rem; border-top: 1px solid var(--ink); }
+  .qf__nav [data-next] { margin-left: auto; min-height: 54px; font-size: 1.1rem; padding-inline: 1.4rem; }
+  .qf__nav [data-prev] { min-height: 54px; }
+  .qf__wa { border: 0; background: none; cursor: pointer; }
+  .qf:not(.is-js) [data-prev], .qf:not(.is-js) [data-next], .qf:not(.is-js) [data-send='wa'] { display: none; }
+  .qf__status { margin-top: 1rem; font-weight: 600; color: var(--pen-text); }
+  .qf__status:empty { display: none; }
+  .qf > .small { margin-top: 0.75rem; }
+
+  /* Folha A4 */
+  .sheet { position: relative; }
+  @media (min-width: 1100px) { .sheet { position: sticky; top: 1.5rem; } }
+  .sheet__paper {
+    background: var(--sheet); padding: clamp(1.25rem, 0.8rem + 1.6vw, 2.5rem);
+    border: 1px solid var(--rule-2);
+    box-shadow: 0 1px 1px rgb(18 20 23 / 0.06), 0 12px 32px -12px rgb(18 20 23 / 0.22);
+  }
+  @media (min-width: 1100px) { .sheet__paper { aspect-ratio: 210 / 297; display: flex; flex-direction: column; } }
+  .sheet__head { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--ink); }
+  .sheet__from { display: flex; align-items: center; gap: 0.6rem; }
+  .sheet__from div { display: grid; line-height: 1.15; }
+  .sheet__from strong { font-family: var(--f-disp); font-weight: 800; font-size: 1.25rem; }
+  .sheet__from span { font-size: 0.75rem; color: var(--ink-3); }
+  .sheet__meta { display: grid; gap: 0.1rem; font-size: 0.8rem; text-align: right; }
+  .sheet__meta div { display: flex; gap: 0.5rem; justify-content: end; }
+  .sheet__meta dt { color: var(--ink-3); }
+  .sheet__meta dd { font-weight: 650; }
+  .sheet__title { font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.4rem); margin: 1.25rem 0 1rem; }
+  .sheet__no { color: var(--pen-text); white-space: nowrap; }
+  .sheet__cols { display: grid; grid-template-columns: 2rem 10.5rem minmax(0, 1fr); gap: 0.75rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); padding: 0.4rem 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font-weight: 650; }
+  .sheet__rows { counter-reset: row; flex: 1; }
+  .sheet__rows > div {
+    position: relative; display: grid; grid-template-columns: 2rem 10.5rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline;
+    padding: 0.55rem 0; border-bottom: 1px solid var(--rule); counter-increment: row; font-size: 0.95rem;
+  }
+  .sheet__rows > div::before { content: counter(row); font-family: var(--f-disp); font-weight: 720; color: var(--ink-3); }
+  .sheet__rows > div[data-filled='true']::before { color: var(--pen-text); }
+  .sheet__rows dt { color: var(--ink-3); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sheet__rows dd { position: relative; isolation: isolate; font-family: var(--f-disp); font-weight: 700; font-size: 1.1rem; line-height: 1.25; overflow-wrap: anywhere; white-space: pre-line; justify-self: start; padding-inline: 0.2em; }
+  .sheet__rows dd { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .sheet__rows > div[data-filled='false'] dd { color: var(--rule-2); font-weight: 500; }
+  .sheet__rows > div.is-new dd::before {
+    content: ''; position: absolute; inset: 0.05em -0.1em 0.02em; z-index: -1; background: var(--hl);
+    clip-path: polygon(0 18%, 30% 8%, 100% 0, 99% 70%, 100% 100%, 40% 94%, 1% 100%);
+  }
+  .sheet__rows > div.is-sweep dd::before { animation: sweep 0.7s var(--ease) both; }
+  @keyframes sweep { from { clip-path: polygon(0 18%, 0 18%, 0 0, 0 70%, 0 100%, 0 94%, 1% 100%); } }
+  @media (max-width: 640px) {
+    .sheet__rows > div { grid-template-columns: 2rem 1fr; row-gap: 0.1rem; }
+    .sheet__rows dd { grid-column: 2; }
+    .sheet__cols { grid-template-columns: 2rem 1fr; }
+    .sheet__cols span:last-child { display: none; }
+  }
+
+  /* Folha no telemóvel: tira fixa acima da barra de ações; tocar abre a folha completa */
+  .strip { display: none; }
+  @media (max-width: 1099.98px) {
+    .strip:not([hidden]) {
+      position: fixed; left: 0; right: 0; bottom: calc(58px + env(safe-area-inset-bottom)); z-index: 41;
+      display: grid; gap: 0.2rem; width: 100%; padding: 0.55rem var(--gut) 0.65rem; min-height: 64px; text-align: left;
+      background: var(--sheet); color: var(--ink); border: 0; border-top: 1px solid var(--ink); font: inherit; cursor: pointer;
+      box-shadow: 0 -8px 24px -14px rgb(18 20 23 / 0.35);
+    }
+    .strip__top { display: flex; align-items: baseline; gap: 0.75rem; font-size: var(--t-small); }
+    .strip__no { font-family: var(--f-disp); font-weight: 780; font-size: 1.1rem; }
+    .strip__no [data-sheet-no] { color: var(--pen-text); }
+    .strip__n { color: var(--ink-3); margin-right: auto; }
+    .strip__chev { align-self: center; color: var(--pen-text); transition: transform 0.3s var(--ease); }
+    .strip[aria-expanded='true'] .strip__chev { transform: rotate(180deg); }
+    .strip__new { display: flex; gap: 0.6rem; align-items: baseline; min-width: 0; font-size: 0.95rem; white-space: nowrap; overflow: hidden; }
+    .strip__new b { position: relative; isolation: isolate; font-family: var(--f-disp); font-weight: 700; font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; padding-inline: 0.2em; }
+    .strip__new b::before {
+      content: ''; position: absolute; inset: 0.05em 0; z-index: -1; background: var(--hl);
+      clip-path: polygon(0 18%, 30% 8%, 100% 0, 99% 70%, 100% 100%, 40% 94%, 1% 100%);
+    }
+    .strip__new b.is-sweep::before { animation: sweep 0.7s var(--ease) both; }
+    .strip__new span:first-child { color: var(--ink-3); flex: none; }
+    .strip-space { height: 64px; }
+    .sheet[data-drawer] {
+      position: fixed; left: 0; right: 0; bottom: calc(58px + 64px + env(safe-area-inset-bottom)); z-index: 41;
+      max-height: calc(100svh - 58px - 64px - 24px); overflow: auto; overscroll-behavior: contain;
+      padding: 12px var(--gut) 0; background: var(--paper); border-top: 1px solid var(--ink);
+    }
+    .sheet[data-drawer]:not([data-open]) { display: none; }
+    .sheet[data-drawer] .sheet__paper { box-shadow: none; }
+  }
+  .sheet__foot { margin-top: 1.25rem; padding-top: 0.9rem; border-top: 1px solid var(--ink); display: grid; gap: 0.35rem; font-size: 0.82rem; }
+</style>

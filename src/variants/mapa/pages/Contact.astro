@@ -1,0 +1,54 @@
+---
+import Plate from '../Plate.astro';
+import Icon from '../Icon.astro';
+import { SITE, UI, CALL_NOTE, href, whatsapp, type Lang } from '../../../lib/site';
+import { INVITE } from '../../../content/company';
+import { workById } from '../../../content/works';
+import { C } from '../copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = UI[lang];
+const w = workById('arranjos-exteriores-terraco');
+---
+<div class="wrap">
+  <header class="pagehead">
+    <ol class="crumbs"><li><a href={href('mapa', lang, 'home')}>{C.home[lang]}</a></li><li aria-current="page">{u.nav.contact}</li></ol>
+    <h1>{C.contactH[lang]}</h1>
+    <p class="lead">{INVITE[lang]}</p>
+    <div class="ct__act">
+      <a class="cta" href={href('mapa', lang, 'quote')}>{u.nav.quote}<Icon name="arrow" /></a>
+    </div>
+  </header>
+
+  <div class="ct">
+    <section aria-labelledby="ch-h">
+      <h2 id="ch-h" class="ct__h">{C.channels[lang]}</h2>
+      <dl class="chan ct__chan" data-draw>
+        <div class="ru ru--ink"><dt>{C.mobile[lang]}</dt><dd><a href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile[lang]}</small></dd></div>
+        {SITE.landlines.map((l) => (
+          <div class="ru"><dt>{C.landline[lang]}</dt><dd><a href={`tel:${l.tel}`}>{l.display}</a><small>{CALL_NOTE.landline[lang]}</small></dd></div>
+        ))}
+        <div class="ru"><dt>{u.whatsapp}</dt><dd><a href={whatsapp(lang)} rel="noopener" target="_blank">{SITE.mobile.display}</a><small>{C.chat[lang]}</small></dd></div>
+        <div class="ru"><dt>{u.email}</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+        <div class="ru ru--end"><dt>{u.address}</dt><dd>
+          <address class="ct__addr">{SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}<br />{SITE.address.region}, Portugal</address>
+          <a class="arrowlink" href={SITE.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" /><span>{u.directions}</span></a>
+        </dd></div>
+      </dl>
+    </section>
+    <Plate src={w.photos[0].src} alt={w.photos[0].alt[lang]} code={w.code} title={w.title[lang]} href={href('mapa', lang, 'works', w.slug[lang])}
+      sizes="(min-width: 900px) 44vw, 100vw" widths={[480, 720, 960, 1280]} ratio="4 / 5" pos="50% 60%" />
+  </div>
+</div>
+
+<style is:global>
+  .ct__act { margin-top: 2rem; }
+  .ct { display: grid; gap: 3rem 5rem; padding-bottom: var(--sec); align-items: start; }
+  .ct__h { font-size: var(--t-h3); margin-bottom: 1rem; }
+  .ct__chan > div { grid-template-columns: 8rem 1fr; padding: 1.1rem 0; }
+  .ct__chan dd a:not(.arrowlink) { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); }
+  .ct__addr { font-style: normal; font-family: var(--f-disp); font-weight: 680; font-size: 1.45rem; line-height: 1.25; margin: 0.35rem 0 0.25rem; }
+  .ct__chan .arrowlink { font-family: var(--f-body); font-size: 1rem; }
+  @media (min-width: 900px) { .ct { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+  @media (max-width: 480px) { .ct__chan > div { grid-template-columns: 1fr; gap: 0.1rem; } .ct__chan dt { padding-top: 0; } }
+</style>

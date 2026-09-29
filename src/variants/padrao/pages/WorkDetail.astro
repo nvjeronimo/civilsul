@@ -1,0 +1,117 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import QuoteBand from '../QuoteBand.astro';
+import { UI, href, whatsapp, type Lang } from '../../../lib/site';
+import { WORKS, KINDS, workById } from '../../../content/works';
+import { serviceById } from '../../../content/services';
+import { C, V, SERVICE_QUOTE } from '../copy';
+
+interface Props { lang: Lang; id: string }
+const { lang, id } = Astro.props;
+const ui = UI[lang];
+const w = workById(id);
+const i = WORKS.findIndex((x) => x.id === id);
+const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length];
+const next = WORKS[(i + 1) % WORKS.length];
+const svc = serviceById(w.service);
+const kind = KINDS.find((k) => k.id === w.kind)!.label[lang];
+const tipo = SERVICE_QUOTE[svc.id];
+const home = href(V, lang, 'home');
+const worksHref = href(V, lang, 'works');
+---
+<article class="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <nav class="crumbs" aria-label={C.breadcrumb[lang]}>
+      <ol>
+        <li><a href={home}>{C.home[lang]}</a></li>
+        <li><a href={worksHref}>{ui.nav.works}</a></li>
+        <li><span aria-current="page">{w.title[lang]}</span></li>
+      </ol>
+    </nav>
+
+    <div class="work__grid">
+      <div class="work__info">
+        <h1 id="work-title">{w.title[lang]}</h1>
+        <dl class="work__meta">
+          <div><dt>{C.kind[lang]}</dt><dd>{kind}</dd></div>
+          {w.place && <div><dt>{C.where[lang]}</dt><dd>{w.place}</dd></div>}
+          {w.client && <div><dt>{C.client[lang]}</dt><dd>{w.client}</dd></div>}
+          <div><dt>{C.service[lang]}</dt><dd><a href={href(V, lang, 'services', svc.slug[lang])}>{svc.title[lang]}</a></dd></div>
+        </dl>
+        <div class="work__cta">
+          <a class="btn btn--primary" href={`${href(V, lang, 'quote')}?tipo=${tipo}`}>{ui.nav.quote}<Icon name="arrow-right" size={18} /></a>
+          <a class="btn btn--line" href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={20} />{ui.whatsapp}</a>
+        </div>
+      </div>
+
+      <div class="work__photos">
+        <h2 class="visually-hidden">{ui.photos}</h2>
+        {w.photos.map((p, n) => (
+          <figure class="ph work__ph" style={`aspect-ratio: ${p.src.width} / ${p.src.height}`}>
+            <Picture
+              src={p.src}
+              formats={['avif', 'webp']}
+              widths={[640, 960, 1280, 1600, 2000]}
+              sizes="(min-width: 64rem) 60vw, 100vw"
+              alt={p.alt[lang]}
+              loading={n === 0 ? 'eager' : 'lazy'}
+              fetchpriority={n === 0 ? 'high' : undefined}
+              decoding="async"
+            />
+          </figure>
+        ))}
+      </div>
+    </div>
+
+    <nav class="pn" aria-label={ui.allWorks}>
+      <a class="pn__a pn__a--prev" href={href(V, lang, 'works', prev.slug[lang])} rel="prev">
+        <span class="pn__label"><Icon name="arrow-left" size={18} />{C.prevWork[lang]}</span>
+        <span class="pn__t">{prev.title[lang]}</span>
+      </a>
+      <a class="pn__all" href={worksHref}>{ui.allWorks}</a>
+      <a class="pn__a pn__a--next" href={href(V, lang, 'works', next.slug[lang])} rel="next">
+        <span class="pn__label">{C.nextWork[lang]}<Icon name="arrow-right" size={18} /></span>
+        <span class="pn__t">{next.title[lang]}</span>
+      </a>
+    </nav>
+  </div>
+</article>
+
+<QuoteBand lang={lang} title={C.similarTitle[lang]} text={C.similarText[lang]} tipo={tipo} photo={w.id === 'arranjos-exteriores-terraco' ? 'arranjos-exteriores-piscina' : 'arranjos-exteriores-terraco'} />
+
+<style>
+  .work { padding-block: clamp(2rem, 1rem + 2vw, 3rem) clamp(3rem, 2rem + 3vw, 5rem); }
+
+  .work__grid { display: grid; gap: var(--s5); margin-top: var(--s4); }
+  @media (min-width: 64rem) {
+    .work__grid { grid-template-columns: 4fr 7fr; gap: var(--s10); align-items: start; }
+    .work__info { position: sticky; top: calc(var(--header-h) + 2rem); }
+  }
+  .work h1 { font-size: clamp(2rem, 1.4rem + 1.8vw, 3rem); letter-spacing: -0.028em; line-height: 1.08; }
+  .work__meta { margin: var(--s4) 0 0; }
+  .work__meta div { display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--s2); padding: 0.75rem 0; border-top: 1px solid var(--rule); }
+  .work__meta div:last-child { border-bottom: 1px solid var(--rule); }
+  .work__meta dt { color: var(--ink-3); font-size: var(--fs-small); font-weight: 550; padding-top: 0.1rem; }
+  .work__meta dd { margin: 0; font-weight: 650; }
+  .work__cta { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s4); }
+  .work__photos { display: grid; gap: var(--s3); }
+  .work__ph { margin: 0; width: 100%; max-height: 88svh; }
+  .work__ph :global(img) { height: 100%; }
+
+  .pn {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); align-items: stretch;
+    margin-top: clamp(3rem, 2rem + 3vw, 5rem); padding-top: var(--s3); border-top: 2px solid var(--ink);
+  }
+  @media (min-width: 48rem) { .pn { grid-template-columns: 1fr auto 1fr; } }
+  .pn__a { display: grid; gap: 0.25rem; padding: 0.5rem 0; color: var(--ink); text-decoration: none; min-width: 0; }
+  .pn__a--next { text-align: right; justify-items: end; }
+  .pn__label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--fs-small); color: var(--ink-3); font-weight: 600; }
+  .pn__label :global(svg) { color: var(--blue); transition: transform 240ms var(--ease-out); }
+  .pn__a--prev:hover .pn__label :global(svg) { transform: translateX(-4px); }
+  .pn__a--next:hover .pn__label :global(svg) { transform: translateX(4px); }
+  .pn__t { font-weight: 700; font-size: 1.0625rem; line-height: 1.3; }
+  .pn__a:hover .pn__t { text-decoration: underline; text-underline-offset: 0.2em; }
+  .pn__all { display: none; align-self: center; font-weight: 700; color: var(--ink); min-height: 44px; align-items: center; padding: 0 1rem; }
+  @media (min-width: 48rem) { .pn__all { display: inline-flex; } }
+</style>

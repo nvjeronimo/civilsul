@@ -1,0 +1,97 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import PageIntro from '../PageIntro.astro';
+import { UI, SITE, CALL_NOTE, href, tel, whatsapp, type Lang } from '../../../lib/site';
+import { INVITE } from '../../../content/company';
+import { workById } from '../../../content/works';
+import { C, V } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = UI[lang];
+const photo = workById('monte-do-pocinho').photos[0];
+---
+<PageIntro lang={lang} title={C.contactTitle[lang]} lead={INVITE[lang]} />
+
+<section class="csec" aria-label={C.contactTitle[lang]}>
+  <div class="wrap cgrid">
+    <div class="channels">
+      <div class="ch">
+        <h2 class="ch__h">{C.callUs[lang]}</h2>
+        <ul class="ch__list">
+          <li>
+            <span class="ch__label">{C.mobileLabel[lang]}</span>
+            <a class="ch__big tel" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a>
+            <span class="call-note">{CALL_NOTE.mobile[lang]}</span>
+          </li>
+          {SITE.landlines.map((l) => (
+            <li>
+              <span class="ch__label">{C.landlineLabel[lang]}</span>
+              <a class="ch__big tel" href={tel(l.tel)}>{l.display}</a>
+              <span class="call-note">{CALL_NOTE.landline[lang]}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="btn-row ch__btns">
+          <a class="btn btn--dark" href={tel(SITE.mobile.tel)}><Icon name="phone" size={18} />{ui.call}</a>
+          <a class="btn btn--line" href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={20} />{C.whatsappCta[lang]}</a>
+        </div>
+      </div>
+
+      <div class="ch">
+        <h2 class="ch__h">{C.writeUs[lang]}</h2>
+        <ul class="ch__list">
+          <li>
+            <span class="ch__label">{ui.email}</span>
+            <a class="ch__big" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ch">
+        <h2 class="ch__h">{C.officeLabel[lang]}</h2>
+        <address class="ch__addr">
+          {SITE.legalName}<br />
+          {SITE.address.street}<br />
+          {SITE.address.postal} {SITE.address.city}, {SITE.address.region}
+        </address>
+        <a class="more" href={SITE.mapsUrl} target="_blank" rel="noopener"><Icon name="pin" size={18} />{ui.directions}<span class="visually-hidden"> {C.opensNew[lang]}</span><Icon name="arrow-up-right" size={16} /></a>
+      </div>
+    </div>
+
+    <aside class="qcard" aria-labelledby="qcard-title">
+      <div class="ph qcard__ph">
+        <Picture src={photo.src} formats={['avif', 'webp']} widths={[480, 720, 960]} sizes="(min-width: 64rem) 36vw, 100vw" alt={photo.alt[lang]} loading="eager" decoding="async" />
+      </div>
+      <h2 id="qcard-title">{C.quoteCardTitle[lang]}</h2>
+      <p>{C.quoteCardText[lang]}</p>
+      <a class="btn btn--primary" href={href(V, lang, 'quote')}>{ui.nav.quote}<Icon name="arrow-right" size={18} /></a>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .csec { padding-bottom: var(--section); }
+  .cgrid { display: grid; gap: var(--s8); align-items: start; }
+  @media (min-width: 64rem) { .cgrid { grid-template-columns: 7fr 5fr; gap: var(--s12); } }
+  .channels { display: grid; gap: var(--s6); }
+  .ch { padding-top: var(--s3); border-top: 2px solid var(--ink); }
+  .ch__h { font-size: 1.375rem; letter-spacing: -0.02em; }
+  .ch__list { list-style: none; display: grid; gap: var(--s3) var(--s4); margin-top: var(--s3); }
+  @media (min-width: 40rem) { .ch__list { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); } }
+  .ch__list li { display: grid; gap: 0.125rem; }
+  .ch__label { font-size: var(--fs-small); color: var(--ink-3); font-weight: 550; }
+  .ch__big { font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem); font-weight: 750; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; overflow-wrap: anywhere; }
+  .ch__big:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+  .ch__btns { margin-top: var(--s4); }
+  .ch__addr { margin-top: var(--s2); font-style: normal; font-size: 1.125rem; line-height: 1.6; }
+  .ch .more { margin-top: var(--s2); color: var(--blue-ink); }
+  .ch .more :global(svg) { color: currentColor; }
+  .qcard { background: var(--stone); border-radius: var(--radius); padding: var(--s3); display: grid; gap: var(--s2); }
+  @media (min-width: 64rem) { .qcard { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+  .qcard__ph { aspect-ratio: 3 / 2; margin-bottom: var(--s1); }
+  .qcard h2 { font-size: 1.5rem; letter-spacing: -0.02em; padding-inline: var(--s1); }
+  .qcard p { color: var(--ink-2); padding-inline: var(--s1); }
+  .qcard .btn { margin: var(--s1) var(--s1) var(--s1); justify-self: start; }
+</style>

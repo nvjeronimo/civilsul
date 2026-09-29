@@ -1,0 +1,19 @@
+---
+version: 1
+slug: "src-pages-padrao"
+primary_target: "src/pages/padrao"
+related_targets: []
+---
+
+# Surface: Civilsul · variante "Padrão do setor" (src/pages/padrao, src/variants/padrao)
+
+Mode: Persuade. Audience, job, proof and constraints as in PRODUCT.md.
+
+## Direction contract
+THESIS: The builder website a visitor expects, played straight and finished at full craft: large real photography, clear services, portfolio, process, strong quote action. Convention is the commitment; no irony, no smuggled quirk. Craft bar: the polish of premium European residential builders and architecture studios (generous whitespace, confident type scale, photography first, precise details).
+OWN-WORLD: White #FFFFFF and a soft stone #F3F2EF alternate section ground, deep navy ink #0F1B2D, brand blue #0B84CF for links and focus, the logo yellow #FFD400 for the primary button only. Type: Manrope (variable) 700–800 display with tight but legal tracking (≥ -0.03em), Manrope 400/500 body. 8px spacing grid, 14px radius on images and buttons, soft offset shadows only on the sticky header when scrolled. Icons: authored SVG line icons, 1.75px stroke.
+STORY: Visitor lands on a full-bleed finished house with a clear promise and the quote button; sees trust facts (since 1985, alvará 4511, Algarve + rest of country); the six services as photo-led tiles (real work photos, not icon cards); featured works; how a job runs (4 steps from content/company PROCESS); company; final quote band; footer with all contacts.
+FIRST VIEWPORT: Full-bleed photo (Construção de moradia with pool) with a legibility gradient at the bottom-left, transparent header over it (logo reversed, nav, PT/EN, phone, "Pedir orçamento" button), H1 "Construímos, reconstruímos e remodelamos no Algarve desde 1985." bottom-left at ~4.5rem desktop, one-line support, primary yellow button + secondary WhatsApp. A slim facts strip overlapping the bottom edge of the hero (Desde 1985 · Alvará nº 4511 · Quarteira, Algarve · Algarve e restante país). Mobile: 80svh hero, sticky bottom action bar.
+FORM: the category standard (canon), requested explicitly by the user. Seed key 42e80edc.
+SIGNATURE: header turns from transparent to solid white with shadow on scroll; hero photo has a very slow scale-down on load (1.06 → 1, 1.6s ease-out); works grid filter animates with View Transitions where supported; section content fades up 12px once. Reduced motion = static.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

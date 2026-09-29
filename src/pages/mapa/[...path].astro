@@ -1,0 +1,60 @@
+---
+// Variante "Mapa de Quantidades": todas as páginas PT/EN a partir de uma só rota.
+import { getImage } from 'astro:assets';
+import Layout from '../../variants/mapa/Layout.astro';
+import Home from '../../variants/mapa/pages/Home.astro';
+import Services from '../../variants/mapa/pages/Services.astro';
+import Service from '../../variants/mapa/pages/Service.astro';
+import Works from '../../variants/mapa/pages/Works.astro';
+import Work from '../../variants/mapa/pages/Work.astro';
+import Quote from '../../variants/mapa/pages/Quote.astro';
+import Contact from '../../variants/mapa/pages/Contact.astro';
+import About from '../../variants/mapa/pages/About.astro';
+import Privacy from '../../variants/mapa/pages/Privacy.astro';
+import { variantPaths, type RouteProps } from '../../lib/routes';
+import { BASE, UI, href } from '../../lib/site';
+import { serviceById } from '../../content/services';
+import { workById } from '../../content/works';
+
+export function getStaticPaths() { return variantPaths(); }
+
+const { lang, page, id } = Astro.props as RouteProps;
+const site = Astro.site!;
+const abs = (p: string) => new URL(p, site).href;
+const u = UI[lang];
+const home = lang === 'pt' ? 'Início' : 'Home';
+const crumb = (items: [string, string][]) => ({
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: items.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(url) })),
+});
+
+let image: string | undefined;
+const jsonLd: Record<string, unknown>[] = [];
+if (page === 'home') {
+  image = (await getImage({ src: workById('construcao-moradia').photos[0].src, width: 1200, format: 'jpg' })).src;
+}
+if (page === 'works' && id) {
+  const w = workById(id);
+  image = (await getImage({ src: w.photos[0].src, width: 1200, format: 'jpg' })).src;
+  jsonLd.push(crumb([[home, href('mapa', lang, 'home')], [u.nav.works, href('mapa', lang, 'works')], [w.title[lang], href('mapa', lang, 'works', w.slug[lang])]]));
+}
+if (page === 'services' && id) {
+  const s = serviceById(id);
+  const url = href('mapa', lang, 'services', s.slug[lang]);
+  jsonLd.push(crumb([[home, href('mapa', lang, 'home')], [u.nav.services, href('mapa', lang, 'services')], [s.title[lang], url]]));
+  jsonLd.push({
+    '@context': 'https://schema.org', '@type': 'Service', name: s.title[lang], description: s.intro[lang], url: abs(url),
+    serviceType: s.searches[lang], areaServed: { '@type': 'AdministrativeArea', name: 'Algarve' },
+    provider: { '@id': abs(`${BASE}mapa/#empresa`) },
+  });
+}
+---
+<Layout lang={lang} page={page} id={id} image={image} jsonLd={jsonLd}>
+  {page === 'home' && <Home lang={lang} />}
+  {page === 'services' && (id ? <Service lang={lang} id={id} /> : <Services lang={lang} />)}
+  {page === 'works' && (id ? <Work lang={lang} id={id} /> : <Works lang={lang} />)}
+  {page === 'quote' && <Quote lang={lang} />}
+  {page === 'contact' && <Contact lang={lang} />}
+  {page === 'about' && <About lang={lang} />}
+  {page === 'privacy' && <Privacy lang={lang} />}
+</Layout>

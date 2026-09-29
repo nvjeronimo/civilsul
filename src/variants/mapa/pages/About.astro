@@ -1,0 +1,61 @@
+---
+import Plate from '../Plate.astro';
+import Process from '../Process.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href, type Lang } from '../../../lib/site';
+import { MISSION, WHO, TEAM, TAGLINE } from '../../../content/company';
+import { workById } from '../../../content/works';
+import { C } from '../copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = UI[lang];
+const w = workById('reconstrucao-ampliacao-moradia');
+---
+<div class="wrap">
+  <header class="pagehead">
+    <ol class="crumbs"><li><a href={href('mapa', lang, 'home')}>{C.home[lang]}</a></li><li aria-current="page">{u.nav.about}</li></ol>
+    <h1>{C.aboutH[lang]}</h1>
+    <p class="lead">{C.aboutLead[lang]}</p>
+  </header>
+
+  <Plate src={w.photos[0].src} alt={w.photos[0].alt[lang]} code={w.code} title={w.title[lang]} href={href('mapa', lang, 'works', w.slug[lang])}
+    sizes="(min-width: 1560px) 1500px, 100vw" widths={[640, 960, 1280, 1680, 2200]} eager ratio="21 / 9" class="ab__plate" />
+
+  <div class="ab">
+    <dl class="facts ab__facts" data-draw>
+      <div class="ru ru--ink"><dt>{C.facts.legal[lang]}</dt><dd>{SITE.legalName}</dd></div>
+      <div class="ru"><dt>{C.facts.permit[lang]}</dt><dd>nº {SITE.permit}</dd></div>
+      <div class="ru"><dt>{C.facts.since[lang]}</dt><dd>{SITE.since}</dd></div>
+      <div class="ru"><dt>{C.facts.seat[lang]}</dt><dd>{SITE.address.street}<small>{SITE.address.postal} {SITE.address.city}, {SITE.address.region}</small></dd></div>
+      <div class="ru"><dt>{C.facts.area[lang]}</dt><dd>{u.area}</dd></div>
+      <div class="ru ru--end"><dt>{C.motto[lang]}</dt><dd><q>{TAGLINE[lang]}</q></dd></div>
+    </dl>
+    <div class="ab__text">
+      <section aria-labelledby="m-h"><h2 id="m-h">{C.missionH[lang]}</h2><p class="ab__big">{MISSION[lang]}</p></section>
+      <section aria-labelledby="w-h"><h2 id="w-h">{C.whoH[lang]}</h2><p>{WHO[lang]}</p></section>
+      <section aria-labelledby="e-h"><h2 id="e-h">{C.teamH[lang]}</h2><p>{TEAM[lang]}</p></section>
+    </div>
+  </div>
+
+  <section class="sec" aria-labelledby="p-h">
+    <div class="sechead"><h2 id="p-h">{C.processH[lang]}</h2></div>
+    <Process lang={lang} />
+  </section>
+
+  <section class="sec" id="oficios" aria-labelledby="t-h">
+    <div class="sechead"><h2 id="t-h">{C.tradesH[lang]}</h2><p class="lead">{C.tradesLead[lang]}</p></div>
+    <Trades lang={lang} />
+  </section>
+</div>
+<Close lang={lang} />
+
+<style is:global>
+  .ab { display: grid; gap: 3rem 5rem; padding-top: clamp(3rem, 2rem + 3vw, 5rem); align-items: start; }
+  .ab__text { display: grid; gap: 2.5rem; }
+  .ab__text h2 { font-size: var(--t-h3); margin-bottom: 0.75rem; }
+  .ab__text p { max-width: 62ch; color: var(--ink-2); }
+  .ab__text .ab__big { font-size: var(--t-lead); line-height: 1.45; color: var(--ink); }
+  @media (min-width: 900px) { .ab { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } .ab__facts { position: sticky; top: 1.5rem; } }
+  @media (max-width: 640px) { .ab__plate { --ratio: 4 / 3 !important; } }
+</style>

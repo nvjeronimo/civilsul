@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+_thumbs/
+.impeccable/live/
+.impeccable/review/
+.impeccable/tmp/
+node_modules/.vite*/

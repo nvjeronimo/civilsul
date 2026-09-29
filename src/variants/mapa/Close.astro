@@ -1,0 +1,30 @@
+---
+// Bloco final: pedido de orçamento + contactos diretos, cada número com a sua nota de chamada.
+import Icon from './Icon.astro';
+import { SITE, UI, CALL_NOTE, href, whatsapp, type Lang } from '../../lib/site';
+import { INVITE } from '../../content/company';
+import { C } from './copy';
+interface Props { lang: Lang; title?: string; tipo?: string }
+const { lang, title = C.finalH[lang], tipo } = Astro.props;
+const u = UI[lang];
+const q = href('mapa', lang, 'quote') + (tipo ? `?tipo=${tipo}` : '');
+---
+<section class="close" aria-labelledby="close-h">
+  <div class="wrap close__grid">
+    <div>
+      <h2 id="close-h">{title}</h2>
+      <p class="close__lead">{INVITE[lang]}</p>
+      <div class="close__act">
+        <a class="cta" href={q}>{u.nav.quote}<Icon name="arrow" /></a>
+        <a class="arrowlink" href={whatsapp(lang)} rel="noopener" target="_blank"><Icon name="chat" /><span>{C.chat[lang]}</span></a>
+      </div>
+    </div>
+    <dl class="chan" data-draw>
+      <div class="ru ru--ink"><dt>{C.mobile[lang]}</dt><dd><a href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile[lang]}</small></dd></div>
+      {SITE.landlines.map((l) => (
+        <div class="ru"><dt>{C.landline[lang]}</dt><dd><a href={`tel:${l.tel}`}>{l.display}</a><small>{CALL_NOTE.landline[lang]}</small></dd></div>
+      ))}
+      <div class="ru ru--end"><dt>{u.email}</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+    </dl>
+  </div>
+</section>

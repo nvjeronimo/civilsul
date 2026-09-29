@@ -1,0 +1,14 @@
+---
+import { PROCESS } from '../../content/company';
+import type { Lang } from '../../lib/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<ol class="steps" data-draw>
+  {PROCESS.map((p, i) => (
+    <li class="ru ru--ink">
+      <span class="num" aria-hidden="true">{i + 1}</span>
+      <div><h3>{p.title[lang]}</h3><p>{p.text[lang]}</p></div>
+    </li>
+  ))}
+</ol>

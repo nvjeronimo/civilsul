@@ -1,0 +1,172 @@
+---
+import Plate from '../Plate.astro';
+import Icon from '../Icon.astro';
+import ServiceArts from '../ServiceArts.astro';
+import Trades from '../Trades.astro';
+import Process from '../Process.astro';
+import Close from '../Close.astro';
+import { SITE, UI, CALL_NOTE, href, type Lang } from '../../../lib/site';
+import { WORKS, workById } from '../../../content/works';
+import { MISSION, WHO, TEAM } from '../../../content/company';
+import { C } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = UI[lang];
+const hero = workById('construcao-moradia');
+const rows = [
+  { cls: 'r-a', ids: ['monte-do-pocinho', 'fachada-portaldegenios'] },
+  { cls: 'r-b', ids: ['topazmoment', 'remodelacao-ampliacao-moradia'] },
+  { cls: 'r-a', ids: ['arranjos-exteriores-terraco', 'remodelacao-apartamento'] },
+];
+// "Quem assina a obra": a 2.ª fotografia de A.02, que não aparece noutro sítio da página
+const side = workById('vale-del-rey');
+const sidePhoto = side.photos[1];
+---
+<section class="hero" aria-labelledby="h1">
+  <div class="hero__text">
+    <h1 id="h1">{C.h1[lang]}</h1>
+    <div class="hero__low">
+      <dl class="facts hero__facts" data-draw>
+        <div class="ru ru--ink"><dt>{C.facts.permit[lang]}</dt><dd>nº {SITE.permit}</dd></div>
+        <div class="ru"><dt>{C.facts.seat[lang]}</dt><dd>{C.facts.seatValue[lang]}</dd></div>
+        <div class="ru"><dt>{C.facts.area[lang]}</dt><dd>{u.area}</dd></div>
+        <div class="ru ru--end"><dt>{C.facts.since[lang]}</dt><dd>{SITE.since}</dd></div>
+      </dl>
+      <div class="hero__act">
+        <a class="cta" href={href('mapa', lang, 'quote')}>{u.nav.quote}<Icon name="arrow" /></a>
+        <div class="phone">
+          <a href={`tel:${SITE.mobile.tel}`}><Icon name="phone" />{SITE.mobile.display}</a>
+          <small>{CALL_NOTE.mobile[lang]}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__plate">
+    <Plate
+      src={hero.photos[0].src}
+      alt={hero.photos[0].alt[lang]}
+      code={hero.code}
+      title={hero.title[lang]}
+      href={href('mapa', lang, 'works', hero.slug[lang])}
+      sizes="(min-width: 1100px) 58vw, 100vw"
+      widths={[640, 960, 1280, 1680, 2200]}
+      eager
+      fill
+      pos="42% 50%"
+    />
+  </div>
+</section>
+
+<section class="sec wrap" id="servicos" aria-labelledby="s-h">
+  <div class="sechead">
+    <h2 id="s-h">{C.servicesH[lang]}</h2>
+    <p class="lead">{C.servicesLead[lang]}</p>
+  </div>
+  <ServiceArts lang={lang} skip={[hero.id]} />
+  <p class="more"><a class="arrowlink" href={href('mapa', lang, 'services')}><span>{u.allServices}</span><Icon name="arrow" /></a></p>
+</section>
+
+<section class="sec wrap" id="anexo-a" aria-labelledby="w-h">
+  <div class="sechead">
+    <h2 id="w-h">{C.worksH[lang]}</h2>
+    <p class="lead">{C.worksLead[lang]}</p>
+  </div>
+  <div class="annex">
+    {rows.map((r) => (
+      <div class:list={['annex__row', r.cls]}>
+        {r.ids.map((id) => {
+          const w = workById(id);
+          return (
+            <Plate src={w.photos[0].src} alt={w.photos[0].alt[lang]} code={w.code} title={w.title[lang]} meta={w.place}
+              href={href('mapa', lang, 'works', w.slug[lang])} sizes="(min-width: 900px) 55vw, 100vw" widths={[480, 720, 960, 1280]} fill />
+          );
+        })}
+      </div>
+    ))}
+  </div>
+  <p class="more"><a class="arrowlink" href={href('mapa', lang, 'works')}><span>{C.allAnnex[lang]} (A.01–A.{String(WORKS.length).padStart(2, '0')})</span><Icon name="arrow" /></a></p>
+</section>
+
+<section class="sec wrap co" aria-labelledby="c-h">
+  <div class="co__plate">
+    <Plate src={sidePhoto.src} alt={sidePhoto.alt[lang]} code={`${side.code}.2`} title={side.title[lang]} meta={side.place}
+      href={href('mapa', lang, 'works', side.slug[lang])} sizes="(min-width: 900px) 36vw, 100vw" widths={[480, 720, 960, 1280]} ratio="4 / 5" />
+  </div>
+  <div class="co__text">
+    <h2 id="c-h">{C.companyH[lang]}</h2>
+    <p class="lead co__lead">{MISSION[lang]}</p>
+    <dl class="facts" data-draw>
+      <div class="ru ru--ink"><dt>{C.facts.legal[lang]}</dt><dd>{SITE.legalName}</dd></div>
+      <div class="ru"><dt>{C.facts.permit[lang]}</dt><dd>nº {SITE.permit}</dd></div>
+      <div class="ru"><dt>{C.facts.since[lang]}</dt><dd>{SITE.since}</dd></div>
+      <div class="ru"><dt>{C.facts.seat[lang]}</dt><dd>{SITE.address.street}<small>{SITE.address.postal} {SITE.address.city}, {SITE.address.region}</small></dd></div>
+      <div class="ru ru--end"><dt>{C.facts.area[lang]}</dt><dd>{u.area}</dd></div>
+    </dl>
+    <div class="co__cols">
+      <p>{WHO[lang]}</p>
+      <p>{TEAM[lang]}</p>
+    </div>
+    <a class="arrowlink" href={href('mapa', lang, 'about')}><span>{u.nav.about}</span><Icon name="arrow" /></a>
+  </div>
+</section>
+
+<section class="sec wrap" aria-labelledby="p-h">
+  <div class="sechead"><h2 id="p-h">{C.processH[lang]}</h2></div>
+  <Process lang={lang} />
+</section>
+
+<section class="sec wrap" id="oficios" aria-labelledby="t-h">
+  <div class="sechead">
+    <h2 id="t-h">{C.tradesH[lang]}</h2>
+    <p class="lead">{C.tradesLead[lang]}</p>
+  </div>
+  <Trades lang={lang} />
+</section>
+
+<Close lang={lang} />
+
+<style is:global>
+  .hero { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid var(--ink); }
+  .hero__plate { order: -1; height: 62svh; min-height: 340px; display: flex; padding: 12px var(--gut) 1rem; }
+  .hero__plate .plate { flex: 1; }
+  .hero__text { display: flex; flex-direction: column; gap: 2rem; padding: 1.5rem var(--gut) 2.5rem; }
+  .hero h1 { font-size: var(--t-display); font-weight: 800; line-height: 0.94; letter-spacing: -0.022em; max-width: 13ch; }
+  .hero__low { display: grid; gap: 1.75rem; }
+  .hero__facts dd { font-size: 1.35rem; }
+  .hero__act { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; }
+  @media (min-width: 1100px) {
+    .hero {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      min-height: calc(100svh - var(--head-h)); max-height: 1080px;
+      padding-left: max(var(--gut), calc((100vw - 1560px) / 2 + var(--gut)));
+    }
+    .hero__plate { order: 0; height: auto; min-height: 620px; padding: 14px 14px 1.1rem 2.5rem; border-left: 1px solid var(--rule); }
+    .hero__text { justify-content: space-between; padding: clamp(2rem, 4vh, 3.5rem) 3rem clamp(1.75rem, 3.5vh, 3rem) 0; }
+  }
+
+  .more { margin-top: 1.5rem; }
+
+  .annex { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+  .annex__row { display: grid; gap: 2rem 1.75rem; grid-template-columns: 1fr; }
+  @media (max-width: 899.98px) {
+    .annex__row .plate__frame { flex: 0 0 auto; }
+    .annex__row .plate__media { position: relative; inset: auto; width: 100%; aspect-ratio: 4 / 3; }
+  }
+  @media (min-width: 900px) {
+    .annex__row { height: clamp(380px, 38vw, 640px); }
+    .r-a { grid-template-columns: 7fr 4fr; }
+    .r-b { grid-template-columns: 4fr 7fr; }
+  }
+
+  .co { display: grid; gap: 2.5rem 5rem; }
+  .co__text { display: grid; gap: 1.75rem; align-content: start; }
+  .co__text h2 { font-size: var(--t-h2); }
+  .co__lead { max-width: 52ch; color: var(--ink); }
+  .co__cols { display: grid; gap: 1rem 2.5rem; color: var(--ink-2); }
+  @media (min-width: 900px) {
+    .co { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+    .co__plate { position: sticky; top: 1.5rem; }
+    .co__cols { grid-template-columns: 1fr 1fr; }
+  }
+</style>

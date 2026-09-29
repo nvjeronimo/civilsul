@@ -1,0 +1,84 @@
+---
+// <head> comum: SEO (title, description, canonical, hreflang, Open Graph, JSON-LD), segurança (CSP) e favicon.
+import { SITE, BASE, type Lang, type PageKey, type Variant } from '../lib/site';
+import { altPath } from '../lib/routes';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  variant: Variant;
+  page: PageKey;
+  id?: string;
+  image?: string; // URL absoluta ou caminho do Astro
+  themeColor?: string;
+  jsonLd?: Record<string, unknown>[];
+}
+const { title, description, lang, variant, page, id, image, themeColor = '#ffffff', jsonLd = [] } = Astro.props;
+const site = Astro.site!;
+const abs = (p: string) => new URL(p, site).href;
+const here = abs(`${BASE}${variant}/${altPath(page, id, lang)}`);
+const pt = abs(`${BASE}${variant}/${altPath(page, id, 'pt')}`);
+const en = abs(`${BASE}${variant}/${altPath(page, id, 'en')}`);
+// A demonstração não deve competir no Google com o civilsul.pt real.
+const demo = import.meta.env.PUBLIC_DEMO !== 'false';
+const ogImage = image ? abs(image) : undefined;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  '@id': abs(`${BASE}${variant}/#empresa`),
+  name: SITE.name,
+  legalName: SITE.legalName,
+  foundingDate: String(SITE.since),
+  url: abs(`${BASE}${variant}/`),
+  logo: abs(`${BASE}favicon.svg`),
+  email: SITE.email,
+  telephone: SITE.mobile.tel,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    postalCode: SITE.address.postal,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
+  },
+  areaServed: [{ '@type': 'AdministrativeArea', name: 'Algarve' }, { '@type': 'Country', name: 'Portugal' }],
+  hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: lang === 'pt' ? 'Alvará de construção' : 'Construction permit', identifier: SITE.permit },
+};
+const graph = [business, ...jsonLd];
+const csp = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "form-action 'self' mailto: https://wa.me",
+  "base-uri 'self'",
+  "object-src 'none'",
+  'upgrade-insecure-requests',
+].join('; ');
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Security-Policy" content={csp} />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<title>{title}</title>
+<meta name="description" content={description} />
+{demo && <meta name="robots" content="noindex, nofollow" />}
+<link rel="canonical" href={here} />
+<link rel="alternate" hreflang="pt-PT" href={pt} />
+<link rel="alternate" hreflang="en" href={en} />
+<link rel="alternate" hreflang="x-default" href={pt} />
+<meta name="theme-color" content={themeColor} />
+<link rel="icon" href={`${BASE}favicon.svg`} type="image/svg+xml" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Civilsul" />
+<meta property="og:locale" content={lang === 'pt' ? 'pt_PT' : 'en_GB'} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={here} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json" set:html={JSON.stringify(graph)} />

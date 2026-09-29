@@ -1,0 +1,78 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import PageIntro from '../PageIntro.astro';
+import QuoteBand from '../QuoteBand.astro';
+import Trades from '../Trades.astro';
+import { UI, href, type Lang } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { C, V, SERVICE_PHOTO } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = UI[lang];
+---
+<PageIntro lang={lang} title={C.servicesPageTitle[lang]} lead={C.servicesPageLead[lang]} current={ui.nav.services} />
+
+<section class="svc-list" aria-label={ui.nav.services}>
+  <div class="wrap">
+    {SERVICES.map((s, i) => {
+      const p = workById(SERVICE_PHOTO[s.id]).photos[0];
+      const url = href(V, lang, 'services', s.slug[lang]);
+      return (
+        <article class:list={['svc', { 'svc--flip': i % 2 === 1 }]} data-reveal aria-labelledby={`svc-${s.id}`}>
+          <div class="ph svc__ph">
+            <Picture src={p.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes="(min-width: 64rem) 46vw, 100vw" alt={p.alt[lang]} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          </div>
+          <div class="svc__text">
+            <h2 id={`svc-${s.id}`}><a href={url}>{s.title[lang]}</a></h2>
+            <p class="svc__intro">{s.intro[lang]}</p>
+            <h3 class="svc__inc">{ui.includes}</h3>
+            <ul class="svc__items">
+              {s.items.map((it) => <li><Icon name="check" size={18} /><span>{it[lang]}</span></li>)}
+            </ul>
+            <a class="more" href={url}>{C.seeService[lang]}<span class="visually-hidden">: {s.title[lang]}</span><Icon name="arrow-right" size={18} /></a>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<section class="section section--stone" aria-labelledby="trades-title">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <h2 id="trades-title">{C.tradesTitle[lang]}</h2>
+        <p>{C.tradesIntro[lang]}</p>
+      </div>
+    </div>
+    <div data-reveal><Trades lang={lang} /></div>
+  </div>
+</section>
+
+<QuoteBand lang={lang} />
+
+<style>
+  .svc-list { padding-bottom: var(--section); }
+  .svc { display: grid; gap: var(--s4); align-items: center; padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); border-top: 1px solid var(--rule); }
+  .svc:first-child { border-top: 0; padding-top: 0; }
+  @media (min-width: 64rem) {
+    .svc { grid-template-columns: 1fr 1fr; gap: var(--s12); }
+    .svc--flip .svc__ph { order: 2; }
+  }
+  .svc__ph { display: block; aspect-ratio: 3 / 2; }
+  .svc__ph :global(img) { transition: transform 900ms var(--ease-out); }
+  .svc:hover .svc__ph :global(img) { transform: scale(1.03); }
+  .svc h2 { font-size: clamp(1.625rem, 1.2rem + 1.2vw, 2.25rem); letter-spacing: -0.025em; }
+  .svc h2 a { color: inherit; text-decoration: none; }
+  .svc h2 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+  .svc__intro { margin-top: var(--s2); color: var(--ink-2); max-width: 38rem; }
+  .svc__inc { margin-top: var(--s4); font-size: var(--fs-small); font-weight: 700; color: var(--ink); letter-spacing: 0; }
+  .svc__items { list-style: none; margin-top: var(--s1); display: grid; gap: 0.25rem 1.5rem; }
+  @media (min-width: 40rem) { .svc__items { grid-template-columns: 1fr 1fr; } }
+  .svc__items li { display: flex; gap: 0.625rem; align-items: flex-start; font-weight: 550; line-height: 1.45; padding: 0.3rem 0; }
+  .svc__items :global(svg) { color: var(--blue); margin-top: 0.1rem; flex: none; }
+  .svc .more { margin-top: var(--s3); }
+</style>

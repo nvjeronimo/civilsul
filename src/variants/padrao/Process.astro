@@ -1,0 +1,41 @@
+---
+import { PROCESS } from '../../content/company';
+import type { Lang } from '../../lib/site';
+import { C } from './copy';
+
+interface Props { lang: Lang; stone?: boolean }
+const { lang, stone = false } = Astro.props;
+---
+<section class:list={['section', { 'section--stone': stone }]} aria-labelledby="process-title">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <h2 id="process-title">{C.processTitle[lang]}</h2>
+        <p>{C.processIntro[lang]}</p>
+      </div>
+    </div>
+    <ol class="steps" data-reveal>
+      {PROCESS.map((p, i) => (
+        <li class="step">
+          <span class="step__n num" aria-hidden="true">{i + 1}</span>
+          <h3>{p.title[lang]}</h3>
+          <p>{p.text[lang]}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps { list-style: none; display: grid; gap: var(--s5) var(--s4); grid-template-columns: 1fr; counter-reset: s; }
+  @media (min-width: 40rem) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 64rem) { .steps { grid-template-columns: repeat(4, 1fr); gap: var(--s4); } }
+  .step { position: relative; padding-top: var(--s3); border-top: 2px solid var(--ink); }
+  .step__n {
+    display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; margin-bottom: var(--s3);
+    border-radius: 50%; border: 1.75px solid var(--blue); color: var(--blue-ink);
+    font-weight: 750; font-size: 1rem;
+  }
+  .step h3 { font-size: 1.3125rem; }
+  .step p { margin-top: 0.5rem; color: var(--ink-2); max-width: 30ch; }
+</style>

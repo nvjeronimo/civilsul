@@ -1,0 +1,66 @@
+---
+import '@fontsource-variable/manrope';
+import './styles.css';
+import Head from '../../components/Head.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Icon from './Icon.astro';
+import { UI, SITE, href, tel, whatsapp, type Lang, type PageKey } from '../../lib/site';
+import { meta } from '../../lib/meta';
+import { C, V } from './copy';
+
+interface Props {
+  lang: Lang;
+  page: PageKey;
+  id?: string;
+  overlay?: boolean;
+  image?: string;
+  jsonLd?: Record<string, unknown>[];
+}
+const { lang, page, id, overlay = false, image, jsonLd = [] } = Astro.props;
+const m = meta({ lang, page, id });
+const ui = UI[lang];
+---
+<!doctype html>
+<html lang={lang === 'pt' ? 'pt-PT' : 'en'} class="v-padrao">
+  <head>
+    <Head title={m.title} description={m.description} lang={lang} variant={V} page={page} id={id} image={image} jsonLd={jsonLd} themeColor="#ffffff" />
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#main">{ui.skip}</a>
+    <Header lang={lang} page={page} id={id} overlay={overlay} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} id={id} />
+
+    <nav class="mbar" aria-label={C.quickActions[lang]}>
+      <a class="mbar__btn" href={tel(SITE.mobile.tel)}><Icon name="phone" size={20} /><span>{ui.call}</span></a>
+      <a class="mbar__btn" href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={20} /><span>{ui.whatsapp}</span></a>
+      <a class="mbar__btn mbar__btn--primary" href={href(V, lang, 'quote')}><Icon name="document" size={20} /><span>{lang === 'pt' ? 'Orçamento' : 'Quote'}</span></a>
+    </nav>
+
+    <script>
+      import './scripts/site';
+    </script>
+  </body>
+</html>
+
+<style>
+  main:focus { outline: none; }
+  .mbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 0.5rem;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: #fff; border-top: 1px solid var(--rule);
+  }
+  .mbar__btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 3.25rem; border-radius: var(--radius);
+    color: var(--ink); background: var(--stone); text-decoration: none; font-weight: 700; font-size: 0.9375rem;
+  }
+  .mbar__btn :global(svg) { color: var(--blue-ink); }
+  .mbar__btn--primary { background: var(--yellow); }
+  .mbar__btn--primary :global(svg) { color: var(--ink); }
+  @media (min-width: 60rem) { .mbar { display: none; } }
+</style>

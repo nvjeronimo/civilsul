@@ -1,0 +1,177 @@
+---
+import Logo from '../../components/Logo.astro';
+import Icon from './Icon.astro';
+import { UI, SITE, BASE, CALL_NOTE, href, tel, whatsapp, type Lang, type PageKey } from '../../lib/site';
+import { altPath } from '../../lib/routes';
+import { C, V } from './copy';
+
+interface Props { lang: Lang; page: PageKey; id?: string; overlay?: boolean }
+const { lang, page, id, overlay = false } = Astro.props;
+const ui = UI[lang];
+const other: Lang = lang === 'pt' ? 'en' : 'pt';
+const switchHref = BASE + V + '/' + altPath(page, id, other);
+const nav: { key: PageKey; label: string }[] = [
+  { key: 'services', label: ui.nav.services },
+  { key: 'works', label: ui.nav.works },
+  { key: 'about', label: ui.nav.about },
+  { key: 'contact', label: ui.nav.contact },
+];
+---
+<header class:list={['hdr', { 'hdr--overlay': overlay }]} data-header>
+  <div class="hdr__bar wrap">
+    <a class="hdr__brand" href={href(V, lang, 'home')} aria-label={C.logoHome[lang]}>
+      <span class="hdr__logo hdr__logo--rev" aria-hidden="true"><Logo tone="reverse" size="2.25rem" title="" /></span>
+      <span class="hdr__logo hdr__logo--col" aria-hidden="true"><Logo tone="color" size="2.25rem" title="" /></span>
+      <span class="hdr__word" aria-hidden="true">Civilsul</span>
+    </a>
+
+    <nav class="hdr__nav" aria-label={C.mainNav[lang]}>
+      <ul>
+        {nav.map((n) => (
+          <li><a href={href(V, lang, n.key)} aria-current={page === n.key ? 'page' : undefined}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hdr__tools">
+      <a class="hdr__lang" href={switchHref} hreflang={other === 'pt' ? 'pt-PT' : 'en'} lang={other === 'pt' ? 'pt-PT' : 'en'}>
+        <span aria-hidden="true">{other.toUpperCase()}</span><span class="visually-hidden">{ui.langSwitch}</span>
+      </a>
+      <a class="hdr__phone" href={tel(SITE.mobile.tel)}>
+        <Icon name="phone" size={18} />
+        <span>
+          <span class="tel">{SITE.mobile.display}</span>
+          <span class="hdr__note">{CALL_NOTE.mobile[lang]}</span>
+        </span>
+      </a>
+      <a class="btn btn--primary btn--sm hdr__cta" href={href(V, lang, 'quote')}>{ui.nav.quote}</a>
+      <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="menu-panel" data-menu-open>
+        <Icon name="menu" size={24} />
+        <span>{ui.menu}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="menu" id="menu-panel" hidden data-menu>
+    <div class="menu__top wrap">
+      <a class="hdr__brand" href={href(V, lang, 'home')} aria-label={C.logoHome[lang]}>
+        <span aria-hidden="true"><Logo tone="color" size="2.25rem" title="" /></span>
+        <span class="hdr__word" aria-hidden="true">Civilsul</span>
+      </a>
+      <button class="hdr__menu hdr__menu--close" type="button" data-menu-close>
+        <Icon name="close" size={24} />
+        <span>{ui.close}</span>
+      </button>
+    </div>
+    <nav class="menu__nav wrap" aria-label={C.mainNav[lang]}>
+      <ul>
+        {nav.map((n) => (
+          <li><a href={href(V, lang, n.key)} aria-current={page === n.key ? 'page' : undefined}>{n.label}<Icon name="arrow-right" size={22} /></a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="menu__foot wrap">
+      <a class="btn btn--primary" href={href(V, lang, 'quote')}>{ui.nav.quote}</a>
+      <a class="menu__line" href={tel(SITE.mobile.tel)}>
+        <Icon name="phone" size={20} />
+        <span><span class="tel">{SITE.mobile.display}</span><span class="call-note">{CALL_NOTE.mobile[lang]}</span></span>
+      </a>
+      <a class="menu__line" href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={20} /><span>{ui.whatsapp}</span></a>
+      <a class="menu__line" href={`mailto:${SITE.email}`}><Icon name="mail" size={20} /><span>{SITE.email}</span></a>
+      <a class="menu__line" href={switchHref} hreflang={other === 'pt' ? 'pt-PT' : 'en'} lang={other === 'pt' ? 'pt-PT' : 'en'}><span class="menu__lang" aria-hidden="true">{other.toUpperCase()}</span><span>{ui.langSwitch}</span></a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky; top: 0; z-index: 50;
+    background: #fff;
+    color: var(--ink);
+    transition: background-color 280ms var(--ease-out-quart), box-shadow 280ms var(--ease-out-quart), color 280ms var(--ease-out-quart);
+  }
+  .hdr--overlay { position: fixed; left: 0; right: 0; background: transparent; color: #fff; }
+  .hdr.is-scrolled { background: #fff; color: var(--ink); box-shadow: 0 6px 24px -10px rgba(15, 27, 45, 0.22), 0 1px 0 rgba(15, 27, 45, 0.06); }
+  .hdr:not(.hdr--overlay):not(.is-scrolled) { box-shadow: 0 1px 0 var(--rule); }
+
+  .hdr__bar { display: flex; align-items: center; gap: var(--s3); height: var(--header-h); }
+  .hdr__brand { display: inline-flex; align-items: center; gap: 0.75rem; color: inherit; text-decoration: none; min-height: 44px; flex: none; }
+  .hdr__word { font-weight: 800; font-size: 1.375rem; letter-spacing: -0.03em; }
+  .hdr__logo--rev { display: none; }
+  .hdr--overlay:not(.is-scrolled) .hdr__logo--rev { display: block; }
+  .hdr--overlay:not(.is-scrolled) .hdr__logo--col { display: none; }
+
+  .hdr__nav { margin-left: auto; display: none; }
+  .hdr__nav ul { display: flex; list-style: none; gap: 0.25rem; }
+  .hdr__nav a {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.875rem;
+    color: inherit; font-weight: 600; font-size: 0.9875rem; text-decoration: none; position: relative;
+  }
+  .hdr__nav a::after {
+    content: ''; position: absolute; left: 0.875rem; right: 0.875rem; bottom: 8px; height: 2px;
+    background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 280ms var(--ease-out);
+  }
+  .hdr__nav a:hover::after, .hdr__nav a[aria-current='page']::after { transform: scaleX(1); }
+  .hdr:not(.hdr--overlay) .hdr__nav a[aria-current='page']::after,
+  .hdr.is-scrolled .hdr__nav a[aria-current='page']::after { background: var(--blue); }
+
+  .hdr__tools { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+  .hdr__lang {
+    display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: 10px;
+    color: inherit; font-weight: 700; font-size: 0.875rem; letter-spacing: 0.04em; text-decoration: none;
+  }
+  .hdr__lang:hover { background: rgba(127, 127, 127, 0.14); }
+  .hdr__phone {
+    display: none; align-items: center; gap: 0.625rem; padding: 0 0.75rem; min-height: 44px;
+    color: inherit; text-decoration: none; font-weight: 700; font-size: 0.9375rem; line-height: 1.2;
+  }
+  .hdr__phone > span { display: grid; }
+  .hdr__note { font-size: 0.75rem; font-weight: 550; letter-spacing: 0; }
+  .hdr--overlay:not(.is-scrolled) .hdr__note, .hdr--overlay:not(.is-scrolled) .hdr__phone .tel { text-shadow: 0 1px 2px rgba(10, 18, 31, 0.6); }
+  .hdr__phone:hover .tel { text-decoration: underline; text-underline-offset: 0.2em; }
+  .hdr__cta { display: none; }
+
+  .hdr__menu {
+    display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 0.75rem 0 0.625rem;
+    border: 1.5px solid currentColor; border-radius: var(--radius); background: transparent; color: inherit;
+    font: inherit; font-weight: 700; font-size: 0.9375rem; cursor: pointer;
+  }
+  .hdr--overlay:not(.is-scrolled) .hdr__menu { border-color: rgba(255, 255, 255, 0.7); background: rgba(15, 27, 45, 0.25); }
+
+  @media (min-width: 60rem) {
+    .hdr__nav { display: block; }
+    .hdr__tools { margin-left: var(--s2); }
+    .hdr__menu { display: none; }
+    .hdr__cta { display: inline-flex; }
+  }
+  @media (min-width: 80rem) { .hdr__phone { display: inline-flex; } }
+
+  /* Painel do menu móvel */
+  .menu {
+    position: fixed; inset: 0; z-index: 60; overflow-y: auto;
+    background: #fff; color: var(--ink);
+    display: flex; flex-direction: column;
+  }
+  .menu__top { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); box-shadow: 0 1px 0 var(--rule); }
+  .menu__nav { padding-top: var(--s3); }
+  .menu__nav ul { list-style: none; }
+  .menu__nav a {
+    display: flex; align-items: center; justify-content: space-between; min-height: 64px;
+    border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none;
+    font-size: 1.75rem; font-weight: 750; letter-spacing: -0.025em;
+  }
+  .menu__nav a[aria-current='page'] { color: var(--blue-ink); }
+  .menu__nav a :global(svg) { color: var(--blue); }
+  .menu__foot { display: grid; gap: var(--s1); padding-block: var(--s4) var(--s6); }
+  .menu__foot .btn { margin-bottom: var(--s2); }
+  .menu__line {
+    display: flex; align-items: center; gap: 0.875rem; min-height: 52px; color: var(--ink); text-decoration: none; font-weight: 600;
+  }
+  .menu__line > span { display: grid; }
+  .menu__line :global(svg) { color: var(--blue); flex: none; }
+  .menu__lang { display: inline-grid; place-items: center; width: 20px; font-size: 0.8125rem; font-weight: 800; color: var(--blue-ink); }
+  @media (prefers-reduced-motion: no-preference) {
+    .menu:not([hidden]) { animation: menu-in 420ms var(--ease-out); }
+    @keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } }
+  }
+</style>

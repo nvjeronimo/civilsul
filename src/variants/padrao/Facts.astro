@@ -1,0 +1,24 @@
+---
+import { SITE, UI, type Lang } from '../../lib/site';
+import { C } from './copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const rows: [string, string][] = [
+  [C.fSince[lang], String(SITE.since)],
+  [C.fPermit[lang], `nº ${SITE.permit}`],
+  [C.fOffice[lang], C.place[lang]],
+  [C.fArea[lang], UI[lang].area],
+  [C.fLegal[lang], SITE.legalName],
+];
+---
+<dl class="facts">
+  {rows.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+</dl>
+
+<style>
+  .facts { margin: 0; display: grid; }
+  .facts div { display: grid; grid-template-columns: minmax(8rem, 0.8fr) 1.2fr; gap: var(--s2); padding: 0.875rem 0; border-top: 1px solid var(--rule-strong); }
+  .facts div:last-child { border-bottom: 1px solid var(--rule-strong); }
+  .facts dt { color: var(--ink-3); font-size: var(--fs-small); font-weight: 550; padding-top: 0.1rem; }
+  .facts dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+</style>

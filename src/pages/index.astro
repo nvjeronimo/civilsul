@@ -1,0 +1,267 @@
+---
+// Página da proposta: diagnóstico do site atual, as três direções e o que muda em todas.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Logo from '../components/Logo.astro';
+import { SITE, BASE, VARIANTS } from '../lib/site';
+import { SERVICES } from '../content/services';
+import { WORKS } from '../content/works';
+import '@fontsource-variable/sofia-sans';
+import '@fontsource-variable/sofia-sans-condensed';
+
+const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/proposta/*.png', { eager: true });
+const shot = (name: string) => shots[`../assets/proposta/${name}.png`]?.default;
+
+const date = '29 de setembro de 2026';
+const pages = 2 * (7 + SERVICES.length + WORKS.length);
+
+const problems = [
+  { t: 'Os contactos estão dentro de uma imagem', d: 'Telefone, email e morada só existem no banner. Não se podem tocar no telemóvel, copiar, nem o Google os consegue ler.' },
+  { t: 'Não há forma de pedir orçamento', d: 'Nenhum formulário, nenhum botão de ligar ou WhatsApp. Quem quer uma obra tem de procurar os números na imagem.' },
+  { t: 'Duas páginas para 17 serviços e 13 obras', d: 'Os serviços são uma lista de pontos e as obras uma galeria sem páginas próprias. O Google não tem o que mostrar a quem pesquisa "remodelação de apartamento Algarve".' },
+  { t: 'Imagens genéricas em vez das obras', d: 'A página inicial mostra ilustrações de banco (uma casa digital, uma casa inteligente). As 14 fotografias de obras reais estão escondidas na segunda página.' },
+  { t: 'Sem descrição para o Google', d: 'A página inicial não tem meta description, nem dados estruturados de empresa local, nem ligação entre as versões PT e EN.' },
+  { t: 'Muito código para pouco conteúdo', d: 'A página inicial descarrega cerca de 1,25 MB de JavaScript para mostrar dois parágrafos de texto.' },
+  { t: 'Segurança desatualizada', d: 'O servidor anuncia PHP 7.4 (sem atualizações de segurança desde novembro de 2022), expõe a versão do WordPress e, pela API pública, o nome de utilizador da conta principal, e não envia cabeçalhos de segurança (HSTS, CSP, X-Frame-Options).' },
+  { t: 'Crédito do tema no rodapé', d: '"Construction Landing Page | Developed By Rara Theme · Powered by WordPress" e "© 2022" no fim de cada página.' },
+];
+
+const features = [
+  { t: 'Pedido de orçamento guiado', d: 'Quatro passos: a obra, o local, prazo e projeto, contacto. O pedido monta-se enquanto se escreve, fica guardado no dispositivo e é enviado por WhatsApp ou email com tudo o que a Civilsul precisa para responder.' },
+  { t: `Uma página por serviço e por obra`, d: `${SERVICES.length} páginas de serviço e ${WORKS.length} páginas de obra, em português e inglês: ${pages} páginas no total, cada uma com título e descrição próprios para pesquisas locais.` },
+  { t: 'Contacto num toque', d: 'Ligar, WhatsApp e orçamento sempre visíveis no telemóvel. Todos os números em texto, com a nota legal do custo da chamada (DL 59/2021).' },
+  { t: 'SEO local', d: 'Dados estruturados de empresa de construção (morada, alvará, desde 1985, área de atuação), sitemap, hreflang PT/EN, URLs legíveis e redirecionamentos dos endereços antigos.' },
+  { t: 'Rápido', d: 'Páginas HTML pré-geradas, sem WordPress nem plugins. Fotografias convertidas para AVIF/WebP no tamanho certo para cada ecrã, letras servidas pelo próprio site.' },
+  { t: 'Seguro', d: 'Site estático: sem base de dados, sem painel de administração exposto, sem PHP. Política de segurança de conteúdo (CSP) e cabeçalhos de segurança prontos para o alojamento.' },
+  { t: 'Acessível', d: 'Contraste AA, letra grande, alvos de toque de 44 px, navegação por teclado, respeito por "reduzir movimento".' },
+  { t: 'Privacidade sem cookies', d: 'Sem cookies nem estatísticas por omissão. Política de privacidade incluída.' },
+];
+
+const needs = [
+  'Escolher uma das três direções (ou combinar).',
+  'Confirmar os factos usados e acrescentar os que quiserem mostrar: número de obras, anos de algumas obras, locais, equipa, NIF.',
+  'Mais fotografias das obras (antes e depois, se existirem) e do logótipo em vetor.',
+  'Decidir o envio do formulário (WhatsApp e email já funcionam; um envio direto precisa de um pequeno serviço no alojamento).',
+  'Domínio e alojamento: onde fica o civilsul.pt e quem o gere.',
+];
+---
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'self'; object-src 'none'" />
+  <title>Proposta de redesign · Civilsul</title>
+  <meta name="description" content="Proposta de redesign do site civilsul.pt: diagnóstico, três direções visuais e as melhorias de funcionalidade, SEO, velocidade e segurança." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href={`${BASE}favicon.svg`} type="image/svg+xml" />
+</head>
+<body>
+  <a class="skip" href="#conteudo">Saltar para o conteúdo</a>
+  <header class="cover">
+    <div class="wrap cover__grid">
+      <div>
+        <Logo size="3.2rem" tone="reverse" />
+        <h1>Proposta de redesign do site <span>civilsul.pt</span></h1>
+        <p class="lede">Três direções visuais para o mesmo site novo: mais claro, mais rápido, mais seguro e feito para trazer pedidos de orçamento.</p>
+        <p class="actions">
+          {VARIANTS.map((v) => <a class="btn" href={`${BASE}${v.id}/`}>Abrir “{v.name}”</a>)}
+        </p>
+      </div>
+      <dl class="meta">
+        <div><dt>Para</dt><dd>{SITE.legalName}</dd></div>
+        <div><dt>Data</dt><dd>{date}</dd></div>
+        <div><dt>Estado</dt><dd>Demonstração, não publicada</dd></div>
+        <div><dt>Por</dt><dd><a href="https://nelsonjeronimo.pt">Nelson Jerónimo</a></dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Secções">
+    <ol class="wrap">
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+      <li><a href="#direcoes">Três direções</a></li>
+      <li><a href="#melhorias">O que muda</a></li>
+      <li><a href="#numeros">Números</a></li>
+      <li><a href="#proximos">Próximos passos</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+    <section id="diagnostico" class="s">
+      <div class="wrap">
+        <div class="intro">
+          <h2>O site atual</h2>
+          <p>WordPress de 2022 com um tema gratuito, duas páginas em cada língua e as fotografias das obras numa galeria. Verificado a {date}.</p>
+        </div>
+        <div class="before">
+          {shot('antes-desktop') && <figure class="shot shot--desk"><Picture src={shot('antes-desktop')!} formats={['avif', 'webp']} widths={[720, 1440]} sizes="(min-width: 900px) 60vw, 100vw" alt="Página inicial atual do civilsul.pt no computador" /><figcaption>civilsul.pt hoje, no computador</figcaption></figure>}
+          {shot('antes-mobile') && <figure class="shot shot--phone"><Picture src={shot('antes-mobile')!} formats={['avif', 'webp']} widths={[390, 780]} sizes="(min-width: 900px) 22vw, 60vw" alt="Página inicial atual do civilsul.pt no telemóvel" /><figcaption>No telemóvel</figcaption></figure>}
+        </div>
+        <ol class="problems">
+          {problems.map((p) => <li><h3>{p.t}</h3><p>{p.d}</p></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section id="direcoes" class="s s--tint">
+      <div class="wrap">
+        <div class="intro">
+          <h2>Três direções, o mesmo conteúdo</h2>
+          <p>As três versões têm as mesmas páginas, textos, fotografias e funcionalidades. Muda a forma de apresentar a Civilsul. Todas estão completas e navegáveis, em português e inglês.</p>
+        </div>
+        <div class="dirs">
+          {VARIANTS.map((v, i) => (
+            <article class="dir">
+              <a class="dir__shots" href={`${BASE}${v.id}/`} aria-label={`Abrir a versão ${v.name}`}>
+                {shot(`${v.id}-desktop`) && <Picture class="dir__desk" src={shot(`${v.id}-desktop`)!} formats={['avif', 'webp']} widths={[720, 1440]} sizes="(min-width: 900px) 60vw, 100vw" alt="" />}
+                {shot(`${v.id}-mobile`) && <Picture class="dir__phone" src={shot(`${v.id}-mobile`)!} formats={['avif', 'webp']} widths={[390, 780]} sizes="(min-width: 900px) 16vw, 34vw" alt="" />}
+              </a>
+              <div class="dir__text">
+                <h3><span class="num">{String.fromCharCode(65 + i)}</span> {v.name}</h3>
+                <p class="dir__line">{v.line.pt}</p>
+                <p>{({
+                  mapa: 'O site apresenta-se como o documento que um construtor sério entrega: cada serviço e cada obra é um artigo numerado, as fotografias são os anexos, e o pedido de orçamento monta uma folha em tempo real. Distinto, rigoroso, fácil de percorrer.',
+                  aviso: 'Inspirado na placa de licença que está em todas as obras em Portugal: painéis brancos aparafusados, campos com os factos da Civilsul (alvará 4511, desde 1985, Quarteira) e a letra da sinalética de estrada. Reconhecível à primeira vista por qualquer português.',
+                  padrao: 'O site de construtora que o visitante espera, feito com o cuidado de um estúdio de arquitetura: fotografia grande, serviços com imagens reais, portefólio com filtros e um botão de orçamento sempre à mão. Seguro e familiar.',
+                } as Record<string, string>)[v.id]}</p>
+                <p class="dir__links"><a class="btn btn--ink" href={`${BASE}${v.id}/`}>Ver em português</a> <a href={`${BASE}${v.id}/en/`}>English</a> <a href={`${BASE}${v.id}/orcamento/`}>Pedido de orçamento</a></p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="melhorias" class="s">
+      <div class="wrap">
+        <div class="intro">
+          <h2>O que muda, em qualquer das três</h2>
+          <p>Usámos apenas o que o site atual já diz: 1985, alvará nº 4511, a lista de serviços, as 14 fotografias e os contactos. Nada foi inventado. O que falta confirmar está em “Próximos passos”.</p>
+        </div>
+        <ul class="features">
+          {features.map((f) => <li><h3>{f.t}</h3><p>{f.d}</p></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="numeros" class="s s--tint">
+      <div class="wrap">
+        <div class="intro">
+          <h2>Antes e depois, em números</h2>
+          <p>Página inicial em computador, medida com o mesmo navegador a {date}. A proposta mostra fotografias grandes das obras e mesmo assim pesa menos de metade.</p>
+        </div>
+        <table class="nums" data-numbers>
+          <thead><tr><th scope="col">Medida</th><th scope="col">civilsul.pt hoje</th><th scope="col">Proposta</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Páginas (PT + EN)</th><td>4</td><td>{pages}</td></tr>
+            <tr><th scope="row">JavaScript descarregado</th><td>≈ 1 250 KB</td><td>≈ 2 KB</td></tr>
+            <tr><th scope="row">Peso total da página inicial</th><td>≈ 1 580 KB</td><td>≈ 440 a 670 KB, com fotografias reais</td></tr>
+            <tr><th scope="row">Contactos em texto clicável</th><td>Não</td><td>Sim</td></tr>
+            <tr><th scope="row">Pedido de orçamento</th><td>Não</td><td>Sim, em 4 passos</td></tr>
+            <tr><th scope="row">Descrição para o Google</th><td>Não</td><td>Em todas as páginas</td></tr>
+            <tr><th scope="row">Dados de empresa local (schema.org)</th><td>Não</td><td>Sim</td></tr>
+            <tr><th scope="row">Cabeçalhos de segurança</th><td>Nenhum</td><td>CSP, HSTS, X-Frame-Options e outros</td></tr>
+            <tr><th scope="row">Software de servidor a manter</th><td>WordPress, PHP 7.4, plugins</td><td>Nenhum (HTML estático)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="proximos" class="s">
+      <div class="wrap next">
+        <div>
+          <h2>Próximos passos</h2>
+          <p>Esta é uma demonstração: não substitui o site atual e não aparece no Google. Para a pôr no ar precisamos de:</p>
+        </div>
+        <ol class="needs">{needs.map((n) => <li>{n}</li>)}</ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p>Proposta preparada por <a href="https://nelsonjeronimo.pt">Nelson Jerónimo</a> para a {SITE.legalName}. Fotografias e factos: civilsul.pt.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style is:global>
+  :root {
+    --ink: #121417; --paper: #f5f6f4; --white: #fff; --blue: #0b84cf; --blue-ink: #075f96; --sun: #ffe11a;
+    --muted: #4a5058; --rule: #d9dcdb;
+    --display: 'Sofia Sans Condensed Variable', 'Arial Narrow', sans-serif;
+    --body: 'Sofia Sans Variable', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.125rem/1.6 var(--body); font-variant-numeric: tabular-nums lining-nums; }
+  ::selection { background: var(--sun); color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  a { color: var(--blue-ink); text-underline-offset: 0.2em; text-decoration-thickness: 1.5px; }
+  img { max-width: 100%; height: auto; display: block; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 1.02; letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); }
+  h3 { font-size: 1.45rem; line-height: 1.1; margin-bottom: 0.4rem; }
+  p { margin: 0 0 1em; max-width: 68ch; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+  .skip { position: absolute; left: -999px; } .skip:focus { left: 1rem; top: 1rem; background: var(--white); padding: 0.6rem 1rem; z-index: 99; }
+  .cover { background: var(--ink); color: #eef0ef; padding: clamp(48px, 9vw, 120px) 0 clamp(40px, 6vw, 72px); }
+  .cover__grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.8fr); gap: clamp(24px, 5vw, 64px); align-items: end; }
+  .cover h1 { font-size: clamp(2.8rem, 7vw, 5.6rem); margin: 2rem 0 1.2rem; color: #fff; max-width: 13ch; }
+  .cover h1 span { display: inline-block; background: var(--sun); color: var(--ink); padding: 0 0.12em; transform: rotate(-1deg); }
+  .lede { font-size: 1.3rem; color: #c9cecd; max-width: 46ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.8rem; }
+  .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0.6rem 1.1rem; border-radius: 6px; background: var(--sun); color: var(--ink); font-weight: 700; text-decoration: none; }
+  .btn:hover { background: #fff; }
+  .btn--ink { background: var(--ink); color: #fff; } .btn--ink:hover { background: var(--blue-ink); }
+  .meta { margin: 0; border-top: 1px solid #3a3f45; }
+  .meta div { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #3a3f45; }
+  .meta dt { color: #9aa1a0; font-size: 0.95rem; } .meta dd { margin: 0; color: #fff; }
+  .meta a { color: #fff; }
+  .toc { position: sticky; top: 0; z-index: 5; background: rgba(245, 246, 244, 0.96); border-bottom: 1px solid var(--rule); }
+  .toc ol { display: flex; gap: 0.25rem; list-style: none; margin: 0 auto; overflow-x: auto; scrollbar-width: none; }
+  .toc a { display: block; white-space: nowrap; padding: 0.9rem 0.75rem; color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 3px solid transparent; }
+  .toc a:hover { border-bottom-color: var(--sun); }
+  .s { padding: clamp(64px, 9vw, 120px) 0; }
+  .s--tint { background: var(--white); border-block: 1px solid var(--rule); }
+  .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 5vw, 64px); align-items: end; margin-bottom: clamp(32px, 5vw, 56px); }
+  .intro p { color: var(--muted); margin: 0; }
+  .before { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 32px); align-items: end; margin-bottom: 3rem; }
+  .shot { margin: 0; } .shot img { border: 1px solid var(--rule); border-radius: 8px; background: #fff; box-shadow: 0 18px 40px -24px rgba(18, 20, 23, 0.45); }
+  .shot figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 0.6rem; }
+  .problems, .features { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 0 clamp(24px, 4vw, 48px); }
+  .problems li, .features li { padding: 1.3rem 0; border-top: 1px solid var(--rule); }
+  .problems p, .features p { color: var(--muted); margin: 0; }
+  .problems { counter-reset: p; }
+  .problems h3::before { counter-increment: p; content: counter(p); display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; margin-right: 0.5rem; border-radius: 50%; background: var(--sun); font-size: 1rem; vertical-align: 0.15em; }
+  .dirs { display: grid; gap: clamp(56px, 8vw, 96px); }
+  .dir { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .dir__shots { position: relative; display: block; padding-bottom: 8%; }
+  .dir__desk img { border-radius: 8px; border: 1px solid var(--rule); box-shadow: 0 30px 60px -34px rgba(18, 20, 23, 0.5); aspect-ratio: 16 / 10; object-fit: cover; object-position: top; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .dir__phone { position: absolute; right: -2%; bottom: 0; width: 24%; }
+  .dir__phone img { border-radius: 16px; border: 5px solid var(--ink); aspect-ratio: 390 / 844; object-fit: cover; object-position: top; box-shadow: 0 20px 40px -20px rgba(18, 20, 23, 0.55); }
+  .dir__shots:hover .dir__desk img { transform: translateY(-4px); }
+  .dir h3 { font-size: clamp(1.9rem, 3vw, 2.6rem); }
+  .num { display: inline-grid; place-items: center; width: 2.4rem; height: 2.4rem; margin-right: 0.3rem; border-radius: 50%; background: var(--ink); color: #fff; font-size: 1.3rem; vertical-align: 0.2em; }
+  .dir__line { font-weight: 700; font-size: 1.2rem; margin-top: 0.8rem; }
+  .dir__links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; align-items: center; }
+  .dir__links a:not(.btn) { min-height: 44px; display: inline-flex; align-items: center; }
+  .dir:nth-child(even) .dir__shots { order: 2; }
+  .nums { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+  .nums th, .nums td { text-align: left; padding: 0.85rem 0.75rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .nums thead th { font-family: var(--display); font-size: 1.2rem; border-bottom: 2px solid var(--ink); }
+  .nums tbody th { font-weight: 600; }
+  .nums td:last-child { font-weight: 700; color: var(--blue-ink); }
+  .next { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(24px, 5vw, 64px); }
+  .needs { margin: 0; padding-left: 1.4rem; } .needs li { padding: 0.5rem 0 0.5rem 0.4rem; border-bottom: 1px solid var(--rule); }
+  .needs li::marker { font-family: var(--display); font-weight: 800; color: var(--blue-ink); }
+  .foot { background: var(--ink); color: #c9cecd; padding: 2.5rem 0; font-size: 1rem; } .foot a { color: #fff; }
+  @media (max-width: 860px) {
+    .cover__grid, .intro, .dir, .next { grid-template-columns: 1fr; }
+    .dir:nth-child(even) .dir__shots { order: 0; }
+    .before { grid-template-columns: 1fr; } .shot--phone { max-width: 240px; }
+    .nums { font-size: 0.95rem; } .nums th, .nums td { padding: 0.7rem 0.4rem; }
+  }
+</style>

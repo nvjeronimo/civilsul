@@ -1,0 +1,22 @@
+---
+// Símbolo Civilsul redesenhado em vetor a partir do logótipo raster do site atual (dois losangos e o círculo amarelo).
+// O losango central é recortado (transparente), por isso o símbolo funciona sobre qualquer fundo.
+// tone="color" (original) | "mono" (currentColor) | "reverse" (sobre fundo escuro: o preto passa a branco)
+interface Props { tone?: 'color' | 'mono' | 'reverse'; title?: string; class?: string; size?: string }
+const { tone = 'color', title = 'Civilsul', class: cls, size = '2.5rem' } = Astro.props;
+const left = tone === 'mono' ? 'currentColor' : tone === 'reverse' ? '#fff' : '#161616';
+const right = tone === 'mono' ? 'currentColor' : '#0A93DC';
+const sun = tone === 'mono' ? 'currentColor' : '#FFE500';
+const id = 'cs' + Math.random().toString(36).slice(2, 8);
+---
+<svg class={cls} viewBox="18 86 444 308" role="img" aria-label={title} style={`height:${size};width:auto`}>
+  <mask id={id} maskUnits="userSpaceOnUse" x="0" y="0" width="480" height="480">
+    <rect width="480" height="480" fill="#fff" />
+    <polygon points="240,126 354,240 240,354 126,240" fill="#000" />
+  </mask>
+  <g mask={`url(#${id})`}>
+    <g transform="translate(170 240) rotate(45)"><rect x="-106" y="-106" width="212" height="212" rx="38" fill={left} /></g>
+    <g transform="translate(310 240) rotate(45)"><rect x="-106" y="-106" width="212" height="212" rx="38" fill={right} /></g>
+  </g>
+  <circle cx="240" cy="240" r="70" fill={sun} />
+</svg>

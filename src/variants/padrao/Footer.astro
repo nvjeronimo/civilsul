@@ -1,0 +1,106 @@
+---
+import Logo from '../../components/Logo.astro';
+import Icon from './Icon.astro';
+import { UI, SITE, BASE, CALL_NOTE, href, tel, whatsapp, type Lang, type PageKey } from '../../lib/site';
+import { altPath } from '../../lib/routes';
+import { TAGLINE } from '../../content/company';
+import { SERVICES } from '../../content/services';
+import { C, V } from './copy';
+
+interface Props { lang: Lang; page: PageKey; id?: string }
+const { lang, page, id } = Astro.props;
+const ui = UI[lang];
+const other: Lang = lang === 'pt' ? 'en' : 'pt';
+const year = new Date().getFullYear();
+---
+<footer class="ftr">
+  <div class="wrap ftr__grid">
+    <div class="ftr__brand">
+      <a class="ftr__logo" href={href(V, lang, 'home')} aria-label={C.logoHome[lang]}>
+        <span aria-hidden="true"><Logo tone="reverse" size="2.5rem" title="" /></span>
+        <span aria-hidden="true">Civilsul</span>
+      </a>
+      <p class="ftr__tag">{TAGLINE[lang]}</p>
+      <p class="ftr__legal">{SITE.legalName}<br />{ui.permit}</p>
+      <address class="ftr__addr">
+        {SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}, {SITE.address.region}
+        <br /><a href={SITE.mapsUrl} target="_blank" rel="noopener">{ui.directions}<span class="visually-hidden"> {C.opensNew[lang]}</span></a>
+      </address>
+    </div>
+
+    <div class="ftr__col">
+      <h2 class="ftr__h">{C.footerContact[lang]}</h2>
+      <ul class="ftr__contacts">
+        <li>
+          <a href={tel(SITE.mobile.tel)}><Icon name="phone" size={18} /><span class="tel">{SITE.mobile.display}</span></a>
+          <span class="ftr__note">{CALL_NOTE.mobile[lang]}</span>
+        </li>
+        {SITE.landlines.map((l) => (
+          <li>
+            <a href={tel(l.tel)}><Icon name="phone" size={18} /><span class="tel">{l.display}</span></a>
+            <span class="ftr__note">{CALL_NOTE.landline[lang]}</span>
+          </li>
+        ))}
+        <li><a href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={18} /><span>{ui.whatsapp}</span></a></li>
+        <li><a href={`mailto:${SITE.email}`}><Icon name="mail" size={18} /><span>{SITE.email}</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="ftr__col" aria-labelledby="ftr-services">
+      <h2 class="ftr__h" id="ftr-services">{ui.nav.services}</h2>
+      <ul class="ftr__links">
+        {SERVICES.map((s) => <li><a href={href(V, lang, 'services', s.slug[lang])}>{s.title[lang]}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="ftr__col" aria-labelledby="ftr-site">
+      <h2 class="ftr__h" id="ftr-site">{C.footerNav[lang]}</h2>
+      <ul class="ftr__links">
+        <li><a href={href(V, lang, 'works')}>{ui.nav.works}</a></li>
+        <li><a href={href(V, lang, 'about')}>{ui.nav.about}</a></li>
+        <li><a href={href(V, lang, 'contact')}>{ui.nav.contact}</a></li>
+        <li><a href={href(V, lang, 'quote')}>{ui.nav.quote}</a></li>
+        <li><a href={href(V, lang, 'privacy')}>{ui.privacy}</a></li>
+        <li><a href={BASE + V + '/' + altPath(page, id, other)} hreflang={other === 'pt' ? 'pt-PT' : 'en'} lang={other === 'pt' ? 'pt-PT' : 'en'}>{ui.langSwitch}</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="wrap">
+   <div class="ftr__base">
+    <p>© {year} {SITE.legalName} {ui.rights}</p>
+    <a class="ftr__demo" href={BASE}>{ui.demo}</a>
+   </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { background: var(--ink); color: var(--on-ink-2); padding-top: clamp(4rem, 3rem + 3vw, 6rem); font-size: var(--fs-small); line-height: 1.6; }
+  @media (max-width: 59.99rem) { .ftr { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); } }
+  .ftr a { color: #fff; text-decoration: none; }
+  .ftr a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .ftr :focus-visible { outline-color: #6cc0f2; }
+  .ftr__grid { display: grid; gap: var(--s6) var(--s4); grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { .ftr__grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 64rem) { .ftr__grid { grid-template-columns: 1.3fr 1.1fr 1.2fr 0.8fr; } }
+  .ftr__logo { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; min-height: 44px; }
+  .ftr__logo:hover { text-decoration: none !important; }
+  .ftr__tag { margin-top: var(--s2); color: #fff; font-weight: 600; font-size: 1.0625rem; }
+  .ftr__legal { margin-top: var(--s3); }
+  .ftr__addr { margin-top: var(--s2); font-style: normal; }
+  .ftr__addr a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: rgba(255,255,255,.4); }
+  .ftr__h { font-size: 0.875rem; font-weight: 700; letter-spacing: 0; color: #fff; margin-bottom: var(--s2); }
+  .ftr__contacts, .ftr__links { list-style: none; display: grid; gap: 0.125rem; }
+  .ftr__contacts li { padding-bottom: 0.25rem; }
+  .ftr__contacts a { display: inline-flex; align-items: center; gap: 0.625rem; min-height: 40px; font-weight: 650; font-size: 1rem; }
+  .ftr__contacts a :global(svg) { color: #6cc0f2; }
+  .ftr__note { display: block; margin: -0.375rem 0 0 calc(18px + 0.625rem); font-size: var(--fs-note); color: var(--on-ink-2); }
+  .ftr__links a { display: inline-flex; align-items: center; min-height: 40px; }
+  .ftr__base {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s1) var(--s4);
+    margin-top: clamp(3rem, 2rem + 3vw, 5rem); padding-block: var(--s3) var(--s4);
+    border-top: 1px solid rgba(255, 255, 255, 0.14); font-size: var(--fs-note);
+  }
+  .ftr__demo { color: var(--on-ink-2) !important; text-decoration: underline !important; text-underline-offset: 0.2em; text-decoration-color: rgba(255,255,255,.35) !important; display: inline-flex; align-items: center; min-height: 44px; }
+  .ftr__base p { display: flex; align-items: center; min-height: 44px; }
+</style>

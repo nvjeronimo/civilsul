@@ -1,0 +1,54 @@
+---
+// Os seis artigos de serviço como mapa de trabalhos: Art. · Descrição (com sub-artigos 1.1…) · Un. · Qt. · Anexo.
+import Plate from './Plate.astro';
+import Icon from './Icon.astro';
+import { SERVICES } from '../../content/services';
+import { WORKS, workById } from '../../content/works';
+import { href, type Lang } from '../../lib/site';
+import { C } from './copy';
+
+interface Props { lang: Lang; full?: boolean; headingLevel?: 'h2' | 'h3'; skip?: string[] }
+const { lang, full = false, headingLevel = 'h3', skip = [] } = Astro.props;
+const totalItems = SERVICES.reduce((n, s) => n + s.items.length, 0);
+const last = WORKS[WORKS.length - 1].code;
+const H = headingLevel;
+---
+<div class="arts arts--table" data-draw>
+  <div class="colhead ru ru--ink" aria-hidden="true">
+    <span>{C.col.art[lang]}</span><span>{C.col.desc[lang]}</span><span>{C.col.qt[lang]}</span><span>{C.col.annex[lang]}</span>
+  </div>
+  {SERVICES.map((s) => {
+    const works = s.works.map(workById);
+    const lead = works.find((w) => !skip.includes(w.id)) ?? works[0];
+    const link = href('mapa', lang, 'services', s.slug[lang]);
+    return (
+      <article class="art ru" id={`art-${s.code}`} aria-labelledby={`art-${s.code}-t`}>
+        <span class="art__code" aria-hidden="true">{s.code}</span>
+        <div class="art__body">
+          <H class="art__title" id={`art-${s.code}-t`}><a href={link}><span class="vh">{C.col.art[lang]} {s.code}. </span>{s.title[lang]}</a></H>
+          <p class="art__short">{full ? s.intro[lang] : s.short[lang]}</p>
+          <ol class="art__items">
+            {s.items.map((it, i) => (
+              <li id={`art-${s.code}-${i + 1}`}><span>{s.code}.{i + 1}</span><span>{it[lang]}</span></li>
+            ))}
+          </ol>
+          <p class="art__annex">
+            {C.col.annex[lang]}:{' '}
+            {works.map((w, i) => (<>{i > 0 && ' · '}<a href={href('mapa', lang, 'works', w.slug[lang])} title={w.title[lang]}>{w.code}</a></>))}
+          </p>
+          {full && <a class="arrowlink" href={link}><span>{C.seeService[lang]} {s.code}</span><Icon name="arrow" /></a>}
+        </div>
+        <span class="art__qt" aria-hidden="true">{s.items.length}</span>
+        <div class="art__photo">
+          <Plate src={lead.photos[0].src} alt={lead.photos[0].alt[lang]} href={link} sizes="(min-width: 900px) 24vw, 1px" widths={[400, 640, 900]} ratio="4 / 3" />
+        </div>
+      </article>
+    );
+  })}
+  <div class="arts__total ru ru--ink">
+    <span class="arts__tl">{C.total[lang]}</span>
+    <p class="arts__sum">{C.totalLine(lang, SERVICES.length, totalItems, WORKS.length)}</p>
+    <span class="arts__qt" aria-hidden="true">{totalItems}</span>
+    <a class="arts__annex" href={href('mapa', lang, 'works')}>A.01–{last}</a>
+  </div>
+</div>

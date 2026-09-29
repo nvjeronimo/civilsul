@@ -1,0 +1,32 @@
+---
+import { UI, href, type Lang } from '../../../lib/site';
+import { PRIVACY } from '../../../content/privacy';
+import { C } from '../copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = UI[lang];
+---
+<div class="wrap pv">
+  <header class="pagehead">
+    <ol class="crumbs"><li><a href={href('mapa', lang, 'home')}>{C.home[lang]}</a></li><li aria-current="page">{u.privacy}</li></ol>
+    <h1>{C.privacyH[lang]}</h1>
+  </header>
+  <ol class="pv__list" data-draw>
+    {PRIVACY[lang].map((b, i) => (
+      <li class="ru ru--ink" id={`p-${i + 1}`}>
+        <span class="num" aria-hidden="true">{i + 1}</span>
+        <div><h2>{b.h}</h2>{b.p.map((p) => <p>{p}</p>)}</div>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style is:global>
+  .pv { padding-bottom: var(--sec); }
+  .pv__list li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 1rem; padding: 1.75rem 0; }
+  .pv__list .num { font-size: 2rem; line-height: 1; }
+  .pv__list h2 { font-size: var(--t-h3); margin-bottom: 0.75rem; }
+  .pv__list p { max-width: 66ch; color: var(--ink-2); }
+  .pv__list p + p { margin-top: 0.75rem; }
+  @media (min-width: 900px) { .pv__list li { grid-template-columns: 5.5rem minmax(0, 5fr) minmax(0, 2fr); } }
+</style>

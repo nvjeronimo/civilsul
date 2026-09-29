@@ -1,0 +1,79 @@
+---
+import PageIntro from '../PageIntro.astro';
+import WorkCard from '../WorkCard.astro';
+import QuoteBand from '../QuoteBand.astro';
+import type { Lang } from '../../../lib/site';
+import { WORKS, KINDS } from '../../../content/works';
+import { C } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<PageIntro lang={lang} title={C.worksTitle[lang]} lead={C.worksPageLead[lang]} />
+
+<section class="works-sec" aria-labelledby="grid-title">
+  <div class="wrap">
+    <h2 id="grid-title" class="visually-hidden">{C.worksTitle[lang]}</h2>
+    <div class="filter" role="group" aria-label={C.filterLabel[lang]} data-filter hidden>
+      <button type="button" aria-pressed="true" data-kind="all">{C.filterAll[lang]}</button>
+      {KINDS.map((k) => <button type="button" aria-pressed="false" data-kind={k.id}>{k.label[lang]}</button>)}
+    </div>
+    <p class="visually-hidden" aria-live="polite" data-filter-status data-prefix={C.showing[lang]}></p>
+    <div class="grid" data-works>
+      {WORKS.map((w, i) => {
+        // Ritmo: grupos de três (uma grande + duas pequenas), com a grande alternando de lado; a última obra fecha a toda a largura.
+        const g = Math.floor(i / 3);
+        const k = i % 3;
+        const last = i === WORKS.length - 1 && k === 0;
+        const r = g * 2 + 1;
+        const left = g % 2 === 0;
+        const cell = last
+          ? `--c: 1 / -1; --r: ${r}`
+          : k === 0
+            ? `--c: ${left ? '1 / span 2' : '2 / span 2'}; --r: ${r} / span 2`
+            : `--c: ${left ? '3' : '1'}; --r: ${r + k - 1}`;
+        const size = last ? 'wide' : k === 0 ? 'lg' : 'sm';
+        return (
+          <WorkCard
+            work={w}
+            lang={lang}
+            vt
+            level="h3"
+            eager={i < 3}
+            class={`cell cell--${size}`}
+            cell={cell}
+            sizes={size === 'sm' ? '(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw' : size === 'wide' ? '(min-width: 64rem) 90vw, (min-width: 40rem) 45vw, 100vw' : '(min-width: 64rem) 64vw, (min-width: 40rem) 45vw, 100vw'}
+          />
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<QuoteBand lang={lang} />
+
+<script>
+  import '../scripts/filter';
+</script>
+
+<style>
+  .works-sec { padding-bottom: clamp(2rem, 1rem + 3vw, 4rem); }
+  .filter { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+  .filter button {
+    min-height: 44px; padding: 0 1.125rem; border-radius: 999px;
+    border: 1.5px solid var(--rule-strong); background: #fff; color: var(--ink);
+    font: inherit; font-size: 0.9375rem; font-weight: 650; cursor: pointer;
+    transition: background-color 180ms var(--ease-out-quart), border-color 180ms var(--ease-out-quart), color 180ms var(--ease-out-quart);
+  }
+  .filter button:hover { border-color: var(--ink); }
+  .filter button[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .grid { display: grid; gap: var(--s5) var(--s3); grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 64rem) {
+    .grid { grid-template-columns: repeat(3, 1fr); gap: var(--s6) var(--s4); }
+    /* Mosaico só com todas as obras visíveis; filtrado volta a três colunas iguais */
+    .grid:not(.is-filtered) :global(.cell) { grid-column: var(--c); grid-row: var(--r); }
+    .grid:not(.is-filtered) :global(.cell--lg .wcard__ph) { flex: 1 1 auto; aspect-ratio: auto; min-height: 24rem; }
+    .grid:not(.is-filtered) :global(.cell--wide .wcard__ph) { aspect-ratio: 21 / 9; }
+  }
+</style>

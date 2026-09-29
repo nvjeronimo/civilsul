@@ -1,0 +1,51 @@
+---
+// Prancha do Anexo A: fotografia com marcas de registo nos cantos e linha de legenda (código · título · local).
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  code?: string;
+  title?: string;
+  meta?: string;
+  href?: string;
+  sizes: string;
+  widths?: number[];
+  eager?: boolean;
+  ratio?: string; // ex. "4 / 3"
+  pos?: string; // object-position
+  fill?: boolean; // a altura vem do contentor
+  class?: string;
+  headingLevel?: 'h2' | 'h3' | 'p';
+}
+const { src, alt, code, title, meta, href, sizes, widths = [480, 720, 960, 1280, 1680], eager = false, ratio, pos, fill = false, class: cls, headingLevel = 'p' } = Astro.props;
+const Tag = href ? 'a' : 'figure';
+const Cap = href ? 'div' : 'figcaption';
+const T = headingLevel;
+const w = widths.filter((x) => x <= src.width);
+const style = [ratio ? `--ratio:${ratio}` : '', pos ? `--pos:${pos}` : ''].filter(Boolean).join(';');
+---
+<Tag class:list={['plate', fill && 'plate--fill', cls]} href={href} style={style || undefined} data-plate>
+  <span class="plate__frame">
+    <span class="plate__media" data-wipe>
+      <Picture
+        src={src}
+        alt={alt}
+        formats={['avif', 'webp']}
+        widths={w.length ? w : [src.width]}
+        sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : 'auto'}
+        decoding={eager ? 'sync' : 'async'}
+      />
+    </span>
+  </span>
+  {(code || title) && (
+    <Cap class="plate__cap">
+      {code && <span class="plate__code">{code}</span>}
+      {title && <T class="plate__title">{title}</T>}
+      {meta ? <span class="plate__meta">{meta}</span> : <span class="plate__meta" aria-hidden="true"></span>}
+    </Cap>
+  )}
+</Tag>

@@ -1,0 +1,10 @@
+---
+import Icon from './Icon.astro';
+import { TRADES } from '../../content/services';
+import type { Lang } from '../../lib/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<ul class="trades">
+  {TRADES.map((t) => <li><Icon name="check" size={18} /><span>{t[lang]}</span></li>)}
+</ul>

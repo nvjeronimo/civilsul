@@ -1,0 +1,243 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import WorkCard from '../WorkCard.astro';
+import Process from '../Process.astro';
+import Facts from '../Facts.astro';
+import QuoteBand from '../QuoteBand.astro';
+import { UI, href, whatsapp, type Lang } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { MISSION, TEAM } from '../../../content/company';
+import { C, V, SERVICE_PHOTO, FEATURED, HOME_BAND } from '../copy';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = UI[lang];
+const hero = workById('construcao-moradia').photos[0];
+const featured = FEATURED.map(([id, n]) => ({ w: workById(id), n }));
+const band = workById(HOME_BAND);
+const bandPhoto = band.photos[0];
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__media">
+    <Picture
+      src={hero.src}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1280, 1600, 1920, 2560]}
+      sizes="100vw"
+      alt={hero.alt[lang]}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__content wrap">
+    <h1 id="hero-title">{C.heroTitle[lang]}</h1>
+    <p class="hero__sub">{C.heroSub[lang]}</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href={href(V, lang, 'quote')}>{ui.nav.quote}<Icon name="arrow-right" size={18} /></a>
+      <a class="btn btn--ghost-light" href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={20} />{C.whatsappCta[lang]}</a>
+    </div>
+  </div>
+</section>
+
+<div class="strip wrap">
+  <ul class="strip__list">
+    <li><Icon name="calendar" size={22} /><span>{ui.since}</span></li>
+    <li><Icon name="permit" size={22} /><span>{ui.permit}</span></li>
+    <li><Icon name="pin" size={22} /><span>{C.place[lang]}</span></li>
+    <li><Icon name="route" size={22} /><span>{ui.area}</span></li>
+  </ul>
+</div>
+
+<section class="section services" aria-labelledby="services-title">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <h2 id="services-title">{C.servicesTitle[lang]}</h2>
+        <p>{C.servicesIntro[lang]}</p>
+      </div>
+      <a class="more" href={href(V, lang, 'services')}>{ui.allServices}<Icon name="arrow-right" size={18} /></a>
+    </div>
+
+    <ul class="tiles" data-reveal>
+      {SERVICES.map((s, i) => {
+        const p = workById(SERVICE_PHOTO[s.id]).photos[0];
+        return (
+          <li class:list={['tile', { 'tile--wide': i < 2 }]}>
+            <a href={href(V, lang, 'services', s.slug[lang])}>
+              <div class="ph tile__ph">
+                <Picture src={p.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes={i < 2 ? '(min-width: 64rem) 46vw, 100vw' : '(min-width: 64rem) 23vw, (min-width: 36rem) 46vw, 100vw'} alt={p.alt[lang]} loading="lazy" decoding="async" />
+              </div>
+              <h3>{s.title[lang]}</h3>
+              <p>{s.short[lang]}</p>
+              <span class="tile__more">{C.seeService[lang]}<Icon name="arrow-right" size={18} /></span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--stone" aria-labelledby="works-title">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <h2 id="works-title">{C.worksTitle[lang]}</h2>
+        <p>{C.worksIntro[lang]}</p>
+      </div>
+      <a class="more" href={href(V, lang, 'works')}>{ui.allWorks}<Icon name="arrow-right" size={18} /></a>
+    </div>
+    <div class="mosaic" data-reveal>
+      {featured.map(({ w, n }, i) => (
+        <WorkCard work={w} photo={n} lang={lang} class={`mosaic__i mosaic__i--${i}`} sizes={i === 0 ? '(min-width: 64rem) 56vw, 100vw' : i === 1 ? '(min-width: 64rem) 40vw, 100vw' : '(min-width: 64rem) 22vw, (min-width: 40rem) 45vw, 100vw'} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<figure class="fband">
+  <Picture src={bandPhoto.src} formats={['avif', 'webp']} widths={[640, 960, 1280, 1920, 2560]} sizes="100vw" alt={bandPhoto.alt[lang]} loading="lazy" decoding="async" />
+  <figcaption class="fband__cap">
+    <div class="wrap">
+      <a href={href(V, lang, 'works', band.slug[lang])}>
+        <span class="fband__t">{band.title[lang]}</span>
+        <span class="fband__more">{C.viewWork[lang]}<Icon name="arrow-right" size={18} /></span>
+      </a>
+    </div>
+  </figcaption>
+</figure>
+
+<Process lang={lang} />
+
+<section class="section section--stone company" aria-labelledby="company-title">
+  <div class="wrap company__grid">
+    <div class="company__text" data-reveal>
+      <h2 id="company-title">{C.companyTitle[lang]}</h2>
+      <p class="lead">{MISSION[lang]}</p>
+      <p class="company__team">{TEAM[lang]}</p>
+      <a class="more" href={href(V, lang, 'about')}>{C.companyMore[lang]}<Icon name="arrow-right" size={18} /></a>
+    </div>
+    <div data-reveal><Facts lang={lang} /></div>
+  </div>
+</section>
+
+<QuoteBand lang={lang} photo={null} />
+
+<style>
+  /* Herói */
+  .hero {
+    position: relative; isolation: isolate; overflow: hidden;
+    min-height: 80svh; display: flex; align-items: flex-end;
+    background: var(--ink); color: #fff;
+  }
+  @media (min-width: 60rem) { .hero { min-height: min(100svh, 62rem); min-height: max(40rem, min(100svh, 62rem)); } }
+  .hero__media { position: absolute; inset: 0; z-index: -2; }
+  .hero__media :global(picture) { display: block; width: 100%; height: 100%; }
+  .hero__media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 64% 45%; }
+  @media (min-width: 60rem) { .hero__media :global(img) { object-position: 50% 45%; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__media :global(img) { animation: hero-settle 1.6s var(--ease-out) both; transform-origin: 60% 50%; }
+    @keyframes hero-settle { from { transform: scale(1.06); } to { transform: scale(1); } }
+  }
+  .hero__shade {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(10, 18, 31, 0.55) 0%, rgba(10, 18, 31, 0) 22%),
+      linear-gradient(90deg, rgba(10, 18, 31, 0.62) 0%, rgba(10, 18, 31, 0.5) 42%, rgba(10, 18, 31, 0) 68%),
+      linear-gradient(20deg, rgba(10, 18, 31, 0.85) 0%, rgba(10, 18, 31, 0.5) 40%, rgba(10, 18, 31, 0) 66%);
+  }
+  /* Ecrãs estreitos: o texto ocupa quase toda a altura, por isso a sombra cobre o bloco inteiro */
+  @media (max-width: 59.99rem) {
+    .hero__shade {
+      background: linear-gradient(180deg, rgba(10, 18, 31, 0.62) 0%, rgba(10, 18, 31, 0.64) 40%, rgba(10, 18, 31, 0.8) 70%, rgba(10, 18, 31, 0.92) 100%);
+    }
+  }
+  .hero__content { padding-top: calc(var(--header-h) + 3rem); padding-bottom: calc(clamp(3.5rem, 2rem + 4vw, 6rem) + 2.5rem); }
+  .hero h1 { color: #fff; font-size: var(--fs-hero); letter-spacing: -0.03em; line-height: 1.02; max-width: 15ch; }
+  .hero__sub { margin-top: var(--s3); max-width: 36rem; font-size: var(--fs-lead); line-height: 1.5; color: #e8edf3; font-weight: 500; }
+  .hero .btn-row { margin-top: var(--s4); }
+  .hero :focus-visible { outline-color: #fff; }
+
+  /* Faixa de factos sobre o limite do herói */
+  .strip { position: relative; z-index: 2; margin-top: -3rem; }
+  .strip__list {
+    list-style: none; display: grid; grid-template-columns: 1fr 1fr;
+    background: #fff; border-radius: var(--radius); border: 1px solid var(--rule);
+  }
+  .strip__list li {
+    display: flex; align-items: center; gap: 0.75rem; min-width: 0;
+    padding: 1rem 1rem; font-weight: 650; font-size: 0.9375rem; line-height: 1.3;
+  }
+  .strip__list li:nth-child(odd) { border-right: 1px solid var(--rule); }
+  .strip__list li:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  .strip__list :global(svg) { flex: none; color: var(--blue); }
+  @media (min-width: 60rem) {
+    .strip__list { grid-template-columns: repeat(4, auto); justify-content: space-between; padding-inline: var(--s2); }
+    .strip__list li { padding: 1.5rem 1.5rem; font-size: 1rem; border: 0 !important; }
+    .strip__list li + li { border-left: 1px solid var(--rule) !important; }
+  }
+
+  /* Serviços */
+  .services { padding-top: clamp(4.5rem, 3rem + 5vw, 7rem); }
+  .tiles { list-style: none; display: grid; gap: var(--s6) var(--s3); grid-template-columns: 1fr; }
+  @media (min-width: 36rem) { .tiles { grid-template-columns: 1fr 1fr; } .tile--wide { grid-column: span 2; } }
+  @media (min-width: 64rem) {
+    .tiles { grid-template-columns: repeat(12, 1fr); gap: var(--s8) var(--s4); }
+    .tile { grid-column: span 3; }
+    .tile--wide { grid-column: span 6; }
+  }
+  .tile a { display: flex; flex-direction: column; height: 100%; color: inherit; text-decoration: none; }
+  .tile__ph { aspect-ratio: 3 / 2; }
+  @media (min-width: 36rem) { .tile__ph { aspect-ratio: 4 / 5; } }
+  .tile--wide .tile__ph { aspect-ratio: 3 / 2; }
+  .tile__ph :global(img) { transition: transform 900ms var(--ease-out); }
+  .tile a:hover .tile__ph :global(img) { transform: scale(1.035); }
+  .tile h3 { margin-top: 1.25rem; }
+  .tile--wide h3 { font-size: clamp(1.3125rem, 1.1rem + 0.6vw, 1.625rem); letter-spacing: -0.02em; }
+  .tile p { margin-top: 0.375rem; color: var(--ink-2); max-width: 34rem; }
+  .tile__more { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: auto; padding-top: 0.75rem; font-weight: 700; font-size: var(--fs-small); color: var(--blue-ink); }
+  .tile__more :global(svg) { transition: transform 240ms var(--ease-out); }
+  .tile a:hover .tile__more :global(svg) { transform: translateX(4px); }
+  .tile a:hover h3 { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; }
+  .tile a:focus-visible { outline-offset: 6px; border-radius: var(--radius); }
+
+
+  /* Mosaico de obras */
+  .mosaic { display: grid; gap: var(--s5) var(--s3); grid-template-columns: 1fr; }
+  @media (min-width: 40rem) {
+    .mosaic { grid-template-columns: 1fr 1fr; }
+    .mosaic :global(.mosaic__i--0) { grid-column: span 2; }
+  }
+  @media (min-width: 64rem) {
+    .mosaic { grid-template-columns: repeat(12, 1fr); gap: var(--s6) var(--s4); }
+    .mosaic :global(.mosaic__i) { grid-column: span 3; --ar: 1 / 1; }
+    .mosaic :global(.mosaic__i--0) { grid-column: span 7; --ar: auto; }
+    .mosaic :global(.mosaic__i--1) { grid-column: span 5; --ar: auto; }
+    .mosaic :global(.mosaic__i--0 .wcard__ph), .mosaic :global(.mosaic__i--1 .wcard__ph) { height: clamp(26rem, 36vw, 36rem); }
+  }
+
+  /* Empresa */
+  .company__grid { display: grid; gap: var(--s6); align-items: start; }
+  @media (min-width: 64rem) { .company__grid { grid-template-columns: 7fr 5fr; gap: var(--s12); } }
+  .company h2 { max-width: 16ch; }
+
+  /* Faixa fotográfica */
+  .fband { position: relative; margin: 0; height: clamp(22rem, 62vw, 44rem); overflow: hidden; background: var(--ink); }
+  .fband :global(picture), .fband :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  .fband__cap {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 6rem 0 clamp(1.5rem, 1rem + 2vw, 3rem);
+    background: linear-gradient(0deg, rgba(10, 18, 31, 0.85) 0%, rgba(10, 18, 31, 0.55) 55%, rgba(10, 18, 31, 0) 100%);
+  }
+  .fband__cap a { display: inline-grid; gap: 0.25rem; color: #fff; text-decoration: none; min-height: 44px; }
+  .fband__t { font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 750; letter-spacing: -0.02em; line-height: 1.2; }
+  .fband__more { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 650; font-size: var(--fs-small); color: #e8edf3; }
+  .fband__cap a:hover .fband__t { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+  .fband :focus-visible { outline-color: #fff; }
+  .company__text .lead { margin-top: var(--s3); color: var(--ink); }
+  .company__team { margin-top: var(--s2); color: var(--ink-2); max-width: 40rem; }
+  .company__text .more { margin-top: var(--s3); }
+</style>

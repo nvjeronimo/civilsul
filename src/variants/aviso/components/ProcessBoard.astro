@@ -1,0 +1,53 @@
+---
+import Board from './Board.astro';
+import { PROCESS } from '../../../content/company';
+import type { Lang } from '../../../lib/site';
+import { copy } from '../copy';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = copy(lang);
+---
+<Board as="section" band={c.processTitle} bandAs="h2" bandId="processo" aria-labelledby="processo">
+  <ol class="steps">
+    {PROCESS.map((p, i) => (
+      <li>
+        <span class="num" aria-hidden="true">{i + 1}</span>
+        <h3>{p.title[lang]}</h3>
+        <p>{p.text[lang]}</p>
+      </li>
+    ))}
+  </ol>
+</Board>
+
+<style>
+  .steps { display: grid; gap: 0; counter-reset: s; }
+  .steps li {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    column-gap: 1rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .steps li:first-child { border-top: 0; padding-top: 0; }
+  .num {
+    grid-row: span 2;
+    font-size: 3rem; font-weight: 900; line-height: 0.9; letter-spacing: -0.04em;
+    color: var(--blue-ink);
+  }
+  h3 { font-size: 1.3125rem; align-self: start; padding-top: 0.35rem; }
+  p { color: var(--ink-2); margin-top: 0.35rem; }
+  @media (min-width: 56rem) {
+    .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .steps li {
+      grid-template-columns: 1fr;
+      padding: 0 1.5rem;
+      border-top: 0;
+      border-left: 1px solid var(--rule-soft);
+    }
+    .steps li:first-child { padding-left: 0; border-left: 0; }
+    .steps li:last-child { padding-right: 0; }
+    .steps li { align-content: start; }
+    .num { grid-row: auto; font-size: 4rem; margin-bottom: 1rem; }
+    h3 { padding-top: 0; }
+  }
+</style>

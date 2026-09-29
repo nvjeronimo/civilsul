@@ -1,0 +1,3 @@
+# Demonstração da proposta de redesign: não indexar (o site oficial é civilsul.pt)
+User-agent: *
+Disallow: /
