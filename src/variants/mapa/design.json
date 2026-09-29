@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T20:31:57+00:00",
+  "title": "Design System: Civilsul · Mapa de Quantidades",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Cool Sheet White",
+        "canonical": "oklch(97.1% 0.002 165.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 165.1)",
+          "oklch(26.4% 0.002 165.1)",
+          "oklch(37.9% 0.002 165.1)",
+          "oklch(49.3% 0.002 165.1)",
+          "oklch(60.7% 0.002 165.1)",
+          "oklch(72.1% 0.002 165.1)",
+          "oklch(83.6% 0.002 165.1)",
+          "oklch(95.0% 0.002 165.1)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Clean Sheet",
+        "canonical": "oklch(99.3% 0.002 145.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 145.6)",
+          "oklch(26.4% 0.001 145.6)",
+          "oklch(37.9% 0.001 145.6)",
+          "oklch(49.3% 0.002 145.6)",
+          "oklch(60.7% 0.002 145.6)",
+          "oklch(72.1% 0.002 145.6)",
+          "oklch(83.6% 0.001 145.6)",
+          "oklch(95.0% 0.001 145.6)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Drafting Ink",
+        "canonical": "oklch(19.0% 0.007 258.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 258.4)",
+          "oklch(26.4% 0.005 258.4)",
+          "oklch(37.9% 0.006 258.4)",
+          "oklch(49.3% 0.006 258.4)",
+          "oklch(60.7% 0.007 258.4)",
+          "oklch(72.1% 0.006 258.4)",
+          "oklch(83.6% 0.006 258.4)",
+          "oklch(95.0% 0.005 258.4)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "oklch(36.9% 0.014 252.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 252.3)",
+          "oklch(26.4% 0.011 252.3)",
+          "oklch(37.9% 0.012 252.3)",
+          "oklch(49.3% 0.013 252.3)",
+          "oklch(60.7% 0.014 252.3)",
+          "oklch(72.1% 0.013 252.3)",
+          "oklch(83.6% 0.012 252.3)",
+          "oklch(95.0% 0.01 252.3)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "oklch(47.1% 0.016 251.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.01 251.7)",
+          "oklch(26.4% 0.011 251.7)",
+          "oklch(37.9% 0.013 251.7)",
+          "oklch(49.3% 0.014 251.7)",
+          "oklch(60.7% 0.016 251.7)",
+          "oklch(72.1% 0.014 251.7)",
+          "oklch(83.6% 0.013 251.7)",
+          "oklch(95.0% 0.011 251.7)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "rgb(18 20 23 / 0.16)"
+      },
+      "rule-2": {
+        "role": "neutral",
+        "displayName": "Firm Rule",
+        "canonical": "rgb(18 20 23 / 0.34)"
+      },
+      "pen": {
+        "role": "primary",
+        "displayName": "Drafting Pen Blue",
+        "canonical": "oklch(59.3% 0.147 245.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.094 245.2)",
+          "oklch(26.4% 0.108 245.2)",
+          "oklch(37.9% 0.121 245.2)",
+          "oklch(49.3% 0.135 245.2)",
+          "oklch(60.7% 0.146 245.2)",
+          "oklch(72.1% 0.133 245.2)",
+          "oklch(83.6% 0.119 245.2)",
+          "oklch(95.0% 0.106 245.2)"
+        ]
+      },
+      "pen-text": {
+        "role": "primary",
+        "displayName": "Pen Ink for Text",
+        "canonical": "oklch(49.2% 0.119 244.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.076 244.4)",
+          "oklch(26.4% 0.087 244.4)",
+          "oklch(37.9% 0.098 244.4)",
+          "oklch(49.3% 0.109 244.4)",
+          "oklch(60.7% 0.118 244.4)",
+          "oklch(72.1% 0.107 244.4)",
+          "oklch(83.6% 0.096 244.4)",
+          "oklch(95.0% 0.085 244.4)"
+        ]
+      },
+      "highlighter": {
+        "role": "secondary",
+        "displayName": "Highlighter Yellow",
+        "canonical": "oklch(90.7% 0.184 99.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.118 99.2)",
+          "oklch(26.4% 0.135 99.2)",
+          "oklch(37.9% 0.152 99.2)",
+          "oklch(49.3% 0.169 99.2)",
+          "oklch(60.7% 0.183 99.2)",
+          "oklch(72.1% 0.167 99.2)",
+          "oklch(83.6% 0.15 99.2)",
+          "oklch(95.0% 0.133 99.2)"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error Red",
+        "canonical": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.117 29.5)",
+          "oklch(26.4% 0.133 29.5)",
+          "oklch(37.9% 0.15 29.5)",
+          "oklch(49.3% 0.166 29.5)",
+          "oklch(60.7% 0.181 29.5)",
+          "oklch(72.1% 0.164 29.5)",
+          "oklch(83.6% 0.148 29.5)",
+          "oklch(95.0% 0.131 29.5)"
+        ]
+      },
+      "plate-void": {
+        "role": "neutral",
+        "displayName": "Plate Void",
+        "canonical": "oklch(91.2% 0.005 165.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 165.0)",
+          "oklch(26.4% 0.004 165.0)",
+          "oklch(37.9% 0.004 165.0)",
+          "oklch(49.3% 0.005 165.0)",
+          "oklch(60.7% 0.005 165.0)",
+          "oklch(72.1% 0.005 165.0)",
+          "oklch(83.6% 0.004 165.0)",
+          "oklch(95.0% 0.004 165.0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home H1 beside the first annex plate."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles and the closing quote block."
+      },
+      "headline-sm": {
+        "displayName": "Headline small",
+        "purpose": "Section heads and quote step legends."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Service article titles."
+      },
+      "article-code": {
+        "displayName": "Article code",
+        "purpose": "The large pen-text number leading each service article."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Section and page intros."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 66ch measure, tabular lining numerals."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Meta, captions, sub-items."
+      },
+      "label": {
+        "displayName": "Column head",
+        "purpose": "Uppercase table column heads only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-lift",
+        "value": "0 1px 1px rgb(18 20 23 / 0.06), 0 12px 32px -12px rgb(18 20 23 / 0.22)",
+        "purpose": "The A4 quote sheet on desktop."
+      },
+      {
+        "name": "strip-rise",
+        "value": "0 -8px 24px -14px rgb(18 20 23 / 0.35)",
+        "purpose": "Fixed mobile quote-sheet strip."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The only easing."
+      },
+      {
+        "name": "rule-draw",
+        "value": "scaleX 0→1, 900ms, 55ms stagger",
+        "purpose": "Table rules draw left to right once on first view."
+      },
+      {
+        "name": "plate-wipe",
+        "value": "clip-path inset(0 100% 0 0)→inset(0), 1100ms",
+        "purpose": "Annex plates open on first view."
+      },
+      {
+        "name": "highlighter-sweep",
+        "value": "clip-path sweep, 700ms",
+        "purpose": "Newest quote-sheet row."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "lg",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Highlighter CTA",
+      "kind": "button",
+      "refersTo": "cta-highlighter",
+      "description": "The single primary action: ink text on a hand-drawn yellow marker band; hover hatches it.",
+      "html": "<a class=\"ds-cta\" href=\"#\">Pedir orçamento <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"square\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:.6em;min-height:56px;padding:.55em 1.05em .55em .9em;font-family:'Sofia Sans Condensed Variable','Sofia Sans Condensed',sans-serif;font-weight:780;font-size:1.5rem;line-height:1;color:#121417;text-decoration:none}.ds-cta::before,.ds-cta::after{content:'';position:absolute;inset:0;z-index:-1;clip-path:polygon(0.8% 14%, 18% 6%, 55% 9%, 99.2% 0%, 100% 38%, 98.6% 88%, 60% 93%, 22% 91%, 1.6% 100%, 0% 56%)}.ds-cta::before{background:#ffe11a}.ds-cta::after{background:repeating-linear-gradient(-45deg, rgb(18 20 23 / 0.2) 0 1px, transparent 1px 7px);opacity:0}.ds-cta:hover::after,.ds-cta:focus-visible::after{opacity:1}.ds-cta:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}.ds-cta svg{width:1em;height:1em}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action: 1px ink box, hatched on hover.",
+      "html": "<button class=\"ds-btn\">Enviar por email</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;min-height:48px;padding:.6em 1.05em;border:1px solid #121417;background:transparent;color:#121417;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;font-weight:650;font-size:1rem;line-height:1.1;cursor:pointer;border-radius:0}.ds-btn:hover{background-image:repeating-linear-gradient(-45deg, rgb(18 20 23 / 0.2) 0 1px, transparent 1px 7px)}.ds-btn:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Inverse action: ink fill, white hatching on hover.",
+      "html": "<button class=\"ds-btn-ink\">Seguinte</button>",
+      "css": ".ds-btn-ink{display:inline-flex;align-items:center;min-height:48px;padding:.6em 1.05em;border:1px solid #121417;background:#121417;color:#fcfdfc;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;font-weight:650;font-size:1rem;line-height:1.1;cursor:pointer;border-radius:0}.ds-btn-ink:hover{background-image:repeating-linear-gradient(-45deg, rgb(255 255 255 / .22) 0 1px, transparent 1px 7px)}.ds-btn-ink:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Square sheet field with an ink bottom edge; pen outline on focus.",
+      "html": "<label class=\"ds-field\"><span>Localidade</span><input class=\"ds-input\" placeholder=\"Ex.: Loulé\"></label>",
+      "css": ".ds-field{display:grid;gap:.6rem;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;font-weight:650;font-size:1.1rem;color:#121417}.ds-input{min-height:54px;padding:.75rem .9rem;border:1px solid rgb(18 20 23 / .34);border-bottom:1.5px solid #121417;border-radius:0;background:#fcfdfc;color:#121417;font:500 1.125rem/1.4 'Sofia Sans Variable',sans-serif}.ds-input::placeholder{color:#5f666e}.ds-input:focus{outline:2px solid #0b84cf;outline-offset:0;border-color:#0b84cf}"
+    },
+    {
+      "name": "Choice Row",
+      "kind": "chip",
+      "refersTo": "option-row",
+      "description": "Ruled option row; hatch on hover, pen hatching and filled box when checked.",
+      "html": "<label class=\"ds-opt\"><input type=\"radio\" name=\"t\" checked><span class=\"ds-box\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"><path d=\"M5 12l5 5 9-10\"/></svg></span>Construção nova</label><label class=\"ds-opt\"><input type=\"radio\" name=\"t\"><span class=\"ds-box\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\"><path d=\"M5 12l5 5 9-10\"/></svg></span>Remodelação</label>",
+      "css": ".ds-opt{position:relative;display:grid;grid-template-columns:1.6rem 1fr;align-items:center;gap:.9rem;min-height:58px;padding:.6rem .75rem .6rem .5rem;border-bottom:1px solid rgb(18 20 23 / .34);cursor:pointer;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;font-size:1.1rem;color:#121417}.ds-opt input{position:absolute;opacity:0}.ds-box{width:1.6rem;height:1.6rem;border:1.5px solid #121417;display:grid;place-items:center;background:#fcfdfc}.ds-box svg{width:1.2rem;height:1.2rem;color:#fcfdfc;opacity:0}.ds-opt:hover{background-image:repeating-linear-gradient(-45deg, rgb(18 20 23 / 0.2) 0 1px, transparent 1px 7px)}.ds-opt:has(input:checked){background-image:repeating-linear-gradient(-45deg, rgb(11 132 207 / 0.38) 0 1px, transparent 1px 6px);font-weight:700}.ds-opt:has(input:checked) .ds-box{background:#0a669f;border-color:#0a669f}.ds-opt:has(input:checked) .ds-box svg{opacity:1}.ds-opt:has(input:focus-visible){outline:2px solid #0b84cf;outline-offset:2px}"
+    },
+    {
+      "name": "Index Nav",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Header nav as index cells separated by hairlines; hatch on hover, pen hatch and underline when current.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\"><span class=\"ds-ix\">1</span>Serviços</a><a href=\"#\" aria-current=\"page\"><span class=\"ds-ix\">A</span>Obras</a><a href=\"#\"><span class=\"ds-ix\">3</span>Empresa</a></nav>",
+      "css": ".ds-nav{display:flex;height:76px;background:#f4f6f5;border-bottom:1px solid #121417;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;}.ds-nav a{display:flex;align-items:center;gap:.45rem;padding:0 1.1rem;font-weight:620;font-size:1.02rem;color:#121417;text-decoration:none;border-left:1px solid rgb(18 20 23 / .16)}.ds-ix{font-family:'Sofia Sans Condensed Variable','Sofia Sans Condensed',sans-serif;font-weight:720;font-size:.85rem;color:#0a669f}.ds-nav a:hover{background-image:repeating-linear-gradient(-45deg, rgb(18 20 23 / 0.2) 0 1px, transparent 1px 7px)}.ds-nav a[aria-current]{background-image:repeating-linear-gradient(-45deg, rgb(11 132 207 / 0.38) 0 1px, transparent 1px 6px);box-shadow:inset 0 -3px 0 #0b84cf}.ds-nav a:focus-visible{outline:2px solid #0b84cf;outline-offset:-2px}"
+    },
+    {
+      "name": "Annex Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "Photo with registration corner marks and a caption row: code, title, place.",
+      "html": "<a class=\"ds-plate\" href=\"#\"><span class=\"ds-frame\"><span class=\"ds-media\"></span></span><span class=\"ds-cap\"><b>A.01</b><span class=\"ds-t\">Construção de moradia</span><span class=\"ds-m\">Algarve</span></span></a>",
+      "css": ".ds-plate{display:flex;flex-direction:column;width:320px;color:#121417;text-decoration:none;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;font-size:.9375rem}.ds-frame{--m:#121417;--l:14px;position:relative;padding:8px;display:flex;background:linear-gradient(var(--m),var(--m)) 0 0/var(--l) 1px no-repeat,linear-gradient(var(--m),var(--m)) 0 0/1px var(--l) no-repeat,linear-gradient(var(--m),var(--m)) 100% 0/var(--l) 1px no-repeat,linear-gradient(var(--m),var(--m)) 100% 0/1px var(--l) no-repeat,linear-gradient(var(--m),var(--m)) 0 100%/var(--l) 1px no-repeat,linear-gradient(var(--m),var(--m)) 0 100%/1px var(--l) no-repeat,linear-gradient(var(--m),var(--m)) 100% 100%/var(--l) 1px no-repeat,linear-gradient(var(--m),var(--m)) 100% 100%/1px var(--l) no-repeat}.ds-media{width:100%;aspect-ratio:4/3;background:#dfe3e1}.ds-frame::after{content:'';position:absolute;inset:8px;background:repeating-linear-gradient(-45deg, rgb(11 132 207 / 0.38) 0 1px, transparent 1px 6px);opacity:0;mix-blend-mode:multiply}.ds-plate:hover .ds-frame::after{opacity:1}.ds-cap{display:grid;grid-template-columns:auto 1fr auto;gap:.35rem 1rem;align-items:baseline;padding-top:.7rem;margin-top:.35rem;border-top:1px solid #121417}.ds-cap b{font-family:'Sofia Sans Condensed Variable','Sofia Sans Condensed',sans-serif;font-weight:760;color:#0a669f;font-size:1.05rem}.ds-t{font-weight:600}.ds-m{color:#555c64}.ds-plate:hover .ds-t{text-decoration:underline;text-decoration-color:#0b84cf}.ds-plate:focus-visible{outline:2px solid #0b84cf;outline-offset:6px}"
+    },
+    {
+      "name": "Facts Table",
+      "kind": "custom",
+      "refersTo": "facts",
+      "description": "Ruled definition rows; values in the condensed face.",
+      "html": "<dl class=\"ds-facts\"><div><dt>Alvará nº</dt><dd>4511</dd></div><div><dt>Sede</dt><dd>Quarteira, Algarve</dd></div><div><dt>Desde</dt><dd>1985</dd></div></dl>",
+      "css": ".ds-facts{margin:0;width:360px;font-family:'Sofia Sans Variable','Sofia Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums lining-nums}.ds-facts div{display:grid;grid-template-columns:minmax(6.5rem,34%) 1fr;gap:1rem;padding:.7rem 0;align-items:baseline;border-top:1px solid rgb(18 20 23 / .16)}.ds-facts div:last-child{border-bottom:1px solid rgb(18 20 23 / .16)}.ds-facts dt{font-size:.9375rem;color:#555c64}.ds-facts dd{margin:0;font-family:'Sofia Sans Condensed Variable','Sofia Sans Condensed',sans-serif;font-weight:680;font-size:1.3rem;line-height:1.2;color:#121417}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Builder's Bill of Quantities",
+    "overview": "The site is the document a serious Portuguese builder hands over: a mapa de quantidades. Services are numbered articles (1–6, sub-items 1.1…), works are plates in Anexo A (A.01–A.13), the company facts are a filled table, and the quote form writes its own A4 \"Pedido de orçamento\" sheet as the visitor types. Everything reads as paper, ink and pen: a cool sheet-white ground, 1px ink rules as the grammar, a blue pen for anything that is a number, a link or an active item.\n\nDensity is that of a working document, not a brochure: tight rows, tabular lining numerals everywhere, condensed display type set large. Colour is almost absent; state is drawn with 45° section hatching, the way cut elements are drawn on construction plans. The single loud mark is a hand-drawn yellow highlighter band, reserved for the primary action and the newest filled row on the quote sheet.\n\nMotion is document motion only: table rules draw left to right once on first view (900ms, 55ms stagger, first 24 rules), annex plates open with a clip-path wipe (1100ms). Nothing else moves; reduced motion leaves everything in its final state.",
+    "keyCharacteristics": [
+      "Ink rules (1px) as the structural grammar; no cards, no radius anywhere.",
+      "Every service, work and quote row carries a durable article code in blue pen.",
+      "Hatching, not tint, for hover, selected and current states.",
+      "One highlighter band per view: the primary action (or the newest quote row).",
+      "Photographs are annex plates with registration corner marks and a caption row."
+    ],
+    "rules": [
+      {
+        "name": "The Pen Rule",
+        "body": "Blue appears only where a pen would write: codes, numbers, links, the current item, focus. Never as a fill for panels or buttons.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Highlighter Rule",
+        "body": "The yellow band marks exactly one thing per view: the primary action (echoed only by the quote cell of the mobile action bar), or the newest quote row. It is always the irregular marker polygon, never a clean rectangle.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Tabular lining numerals are on for the whole world (`tnum`, `lnum`). Numbers must align down a column like a real quantity sheet.",
+        "section": "typography"
+      },
+      {
+        "name": "The Column Head Rule",
+        "body": "Uppercase tracked text exists only as the header row of a table. It never sits above a heading as a label.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper-Only Shadow Rule",
+        "body": "A shadow is allowed only on something that is a sheet of paper. Buttons, plates, nav and panels stay flat.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do give every service, work and quote row a durable code (1, 1.1, A.01) and use it as the anchor.",
+      "Do separate content with 1px rules; close totals with a 3px double ink rule.",
+      "Do draw hover, selected and current states with 45° hatching (ink, or pen for selected).",
+      "Do use pen-text (not the lighter pen) for any blue text.",
+      "Do keep tabular lining numerals on; set numbers in the condensed face.",
+      "Do keep all corners square, inputs included."
+    ],
+    "donts": [
+      "Don't put the highlighter on more than one element per view (the mobile action bar's quote cell excepted), or draw it as a rectangle.",
+      "Don't use blue as a panel or button fill.",
+      "Don't add shadows to anything that is not a sheet of paper.",
+      "Don't introduce a serif or monospace face.",
+      "Don't set uppercase tracked labels above headings; uppercase is for table column heads only.",
+      "Don't animate anything beyond the rule draw, the plate wipe and the highlighter sweep."
+    ]
+  }
+}

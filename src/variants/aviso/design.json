@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T20:30:58+00:00",
+  "title": "Design System: Civilsul · Aviso de Obra",
+  "extensions": {
+    "colorMeta": {
+      "hoarding": {
+        "role": "neutral",
+        "displayName": "Galvanised Hoarding",
+        "canonical": "oklch(89.8% 0.006 128.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 128.5)",
+          "oklch(26.4% 0.004 128.5)",
+          "oklch(37.9% 0.005 128.5)",
+          "oklch(49.3% 0.005 128.5)",
+          "oklch(60.7% 0.006 128.5)",
+          "oklch(72.1% 0.005 128.5)",
+          "oklch(83.6% 0.005 128.5)",
+          "oklch(95.0% 0.004 128.5)"
+        ]
+      },
+      "hoarding-rib": {
+        "role": "neutral",
+        "displayName": "Hoarding Rib",
+        "canonical": "oklch(86.0% 0.008 132.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 132.4)",
+          "oklch(26.4% 0.006 132.4)",
+          "oklch(37.9% 0.006 132.4)",
+          "oklch(49.3% 0.007 132.4)",
+          "oklch(60.7% 0.007 132.4)",
+          "oklch(72.1% 0.007 132.4)",
+          "oklch(83.6% 0.006 132.4)",
+          "oklch(95.0% 0.005 132.4)"
+        ]
+      },
+      "enamel": {
+        "role": "neutral",
+        "displayName": "White Enamel",
+        "canonical": "oklch(100.0% 0.0 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0 89.9)",
+          "oklch(26.4% 0.0 89.9)",
+          "oklch(37.9% 0.0 89.9)",
+          "oklch(49.3% 0.0 89.9)",
+          "oklch(60.7% 0.0 89.9)",
+          "oklch(72.1% 0.0 89.9)",
+          "oklch(83.6% 0.0 89.9)",
+          "oklch(95.0% 0.0 89.9)"
+        ]
+      },
+      "hem": {
+        "role": "neutral",
+        "displayName": "Banner Hem",
+        "canonical": "oklch(96.0% 0.004 106.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 106.5)",
+          "oklch(26.4% 0.003 106.5)",
+          "oklch(37.9% 0.003 106.5)",
+          "oklch(49.3% 0.004 106.5)",
+          "oklch(60.7% 0.004 106.5)",
+          "oklch(72.1% 0.004 106.5)",
+          "oklch(83.6% 0.003 106.5)",
+          "oklch(95.0% 0.003 106.5)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Sign Ink",
+        "canonical": "oklch(17.8% 0.0 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0 89.9)",
+          "oklch(26.4% 0.0 89.9)",
+          "oklch(37.9% 0.0 89.9)",
+          "oklch(49.3% 0.0 89.9)",
+          "oklch(60.7% 0.0 89.9)",
+          "oklch(72.1% 0.0 89.9)",
+          "oklch(83.6% 0.0 89.9)",
+          "oklch(95.0% 0.0 89.9)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "oklch(36.8% 0.006 145.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 145.4)",
+          "oklch(26.4% 0.005 145.4)",
+          "oklch(37.9% 0.005 145.4)",
+          "oklch(49.3% 0.006 145.4)",
+          "oklch(60.7% 0.006 145.4)",
+          "oklch(72.1% 0.006 145.4)",
+          "oklch(83.6% 0.005 145.4)",
+          "oklch(95.0% 0.005 145.4)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "oklch(46.4% 0.006 145.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 145.5)",
+          "oklch(26.4% 0.004 145.5)",
+          "oklch(37.9% 0.005 145.5)",
+          "oklch(49.3% 0.006 145.5)",
+          "oklch(60.7% 0.006 145.5)",
+          "oklch(72.1% 0.006 145.5)",
+          "oklch(83.6% 0.005 145.5)",
+          "oklch(95.0% 0.004 145.5)"
+        ]
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "Soft Rule",
+        "canonical": "oklch(83.8% 0.008 132.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 132.4)",
+          "oklch(26.4% 0.006 132.4)",
+          "oklch(37.9% 0.006 132.4)",
+          "oklch(49.3% 0.007 132.4)",
+          "oklch(60.7% 0.008 132.4)",
+          "oklch(72.1% 0.007 132.4)",
+          "oklch(83.6% 0.006 132.4)",
+          "oklch(95.0% 0.005 132.4)"
+        ]
+      },
+      "blue": {
+        "role": "primary",
+        "displayName": "Municipal Blue",
+        "canonical": "oklch(59.3% 0.147 245.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.094 245.2)",
+          "oklch(26.4% 0.108 245.2)",
+          "oklch(37.9% 0.121 245.2)",
+          "oklch(49.3% 0.135 245.2)",
+          "oklch(60.7% 0.146 245.2)",
+          "oklch(72.1% 0.133 245.2)",
+          "oklch(83.6% 0.119 245.2)",
+          "oklch(95.0% 0.106 245.2)"
+        ]
+      },
+      "blue-ink": {
+        "role": "primary",
+        "displayName": "Link Blue",
+        "canonical": "oklch(51.8% 0.129 245.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 245.7)",
+          "oklch(26.4% 0.094 245.7)",
+          "oklch(37.9% 0.106 245.7)",
+          "oklch(49.3% 0.118 245.7)",
+          "oklch(60.7% 0.128 245.7)",
+          "oklch(72.1% 0.116 245.7)",
+          "oklch(83.6% 0.105 245.7)",
+          "oklch(95.0% 0.093 245.7)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Safety Yellow",
+        "canonical": "oklch(88.1% 0.181 94.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.116 94.0)",
+          "oklch(26.4% 0.132 94.0)",
+          "oklch(37.9% 0.149 94.0)",
+          "oklch(49.3% 0.165 94.0)",
+          "oklch(60.7% 0.18 94.0)",
+          "oklch(72.1% 0.163 94.0)",
+          "oklch(83.6% 0.147 94.0)",
+          "oklch(95.0% 0.13 94.0)"
+        ]
+      },
+      "yellow-2": {
+        "role": "secondary",
+        "displayName": "Deep Safety Yellow",
+        "canonical": "oklch(84.7% 0.173 92.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.111 92.3)",
+          "oklch(26.4% 0.127 92.3)",
+          "oklch(37.9% 0.143 92.3)",
+          "oklch(49.3% 0.159 92.3)",
+          "oklch(60.7% 0.172 92.3)",
+          "oklch(72.1% 0.157 92.3)",
+          "oklch(83.6% 0.141 92.3)",
+          "oklch(95.0% 0.125 92.3)"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error Red",
+        "canonical": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.117 29.5)",
+          "oklch(26.4% 0.133 29.5)",
+          "oklch(37.9% 0.15 29.5)",
+          "oklch(49.3% 0.166 29.5)",
+          "oklch(60.7% 0.181 29.5)",
+          "oklch(72.1% 0.164 29.5)",
+          "oklch(83.6% 0.148 29.5)",
+          "oklch(95.0% 0.131 29.5)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page H1s in Overpass 900."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Board titles, list items, service names."
+      },
+      "band": {
+        "displayName": "Band",
+        "purpose": "Text in the blue municipal header band."
+      },
+      "field-value": {
+        "displayName": "Field value",
+        "purpose": "The filled value of a legal field."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Intros."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 64ch measure."
+      },
+      "label": {
+        "displayName": "Field label",
+        "purpose": "Uppercase legal field name directly above its value."
+      }
+    },
+    "shadows": [
+      {
+        "name": "board",
+        "value": "0 2px 2px rgb(0 0 0 / 0.16), 0 14px 28px -14px rgb(0 0 0 / 0.42)",
+        "purpose": "Full boards and the open mobile menu."
+      },
+      {
+        "name": "plate",
+        "value": "0 1px 1px rgb(0 0 0 / 0.1), 0 6px 14px -8px rgb(0 0 0 / 0.45)",
+        "purpose": "Header strip, lonas, caption tags, small panels."
+      },
+      {
+        "name": "action-bar",
+        "value": "0 -6px 18px -10px rgb(0 0 0 / 0.4)",
+        "purpose": "Fixed mobile action bar."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All transitions."
+      },
+      {
+        "name": "bolt-settle",
+        "value": "translateY(-14px)→0, 560ms",
+        "purpose": "Board settles once on first view."
+      },
+      {
+        "name": "screw-turn",
+        "value": "rotate -90deg→0, 620ms, 140ms delay",
+        "purpose": "Screw heads turn a quarter as the board settles."
+      },
+      {
+        "name": "hazard-slide",
+        "value": "background-position, 400ms",
+        "purpose": "Hazard stripes slide on hover."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "xl",
+        "value": "72rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Hazard Plate Button",
+      "kind": "button",
+      "refersTo": "button-hazard",
+      "description": "Primary quote action: yellow plate inside a black/yellow hazard-striped frame.",
+      "html": "<a class=\"ds-hazard\" href=\"#\"><span>Pedir orçamento</span></a>",
+      "css": ".ds-hazard{display:inline-flex;align-items:stretch;min-height:3.5rem;padding:7px;border:2px solid #111;background:repeating-linear-gradient(-45deg,#111 0 11px,#ffd400 11px 22px);background-size:200% 100%;color:#111;text-decoration:none;font-family:'Overpass Variable','Overpass',system-ui,sans-serif;transition:background-position 400ms cubic-bezier(.16,1,.3,1)}.ds-hazard>span{display:flex;align-items:center;gap:.6rem;background:#ffd400;border:2px solid #111;padding:.6rem 1.15rem;font-weight:850;font-size:1.0625rem;line-height:1.1;transition:background-color 200ms cubic-bezier(.16,1,.3,1)}.ds-hazard:hover{background-position:31px 0}.ds-hazard:hover>span{background:#f5c800}.ds-hazard:focus-visible{outline:3px solid #111;outline-offset:3px}"
+    },
+    {
+      "name": "Enamel Plate Button",
+      "kind": "button",
+      "refersTo": "button-plate",
+      "description": "Secondary action: white plate with 2px ink border; inverts on hover.",
+      "html": "<a class=\"ds-plate-btn\" href=\"#\">WhatsApp</a>",
+      "css": ".ds-plate-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3.5rem;padding:.6rem 1.15rem;border:2px solid #111;background:#fff;color:#111;font-family:'Overpass Variable','Overpass',system-ui,sans-serif;font-weight:800;font-size:1.0625rem;line-height:1.1;text-decoration:none;transition:background-color 200ms,color 200ms}.ds-plate-btn:hover{background:#111;color:#fff}.ds-plate-btn:focus-visible{outline:3px solid #111;outline-offset:3px}"
+    },
+    {
+      "name": "Permit Board",
+      "kind": "card",
+      "refersTo": "board",
+      "description": "White enamel board, 2px ink border, inner fillet, four screws, optional blue header band, legal field rows.",
+      "html": "<div class=\"ds-board\"><svg class=\"ds-screw\" viewBox=\"0 0 16 16\" style=\"transform:rotate(23deg)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#d4d6d2\" stroke=\"#111\" stroke-width=\"1.2\"/><path d=\"M3.4 5.2 A5.3 5.3 0 0 1 10.8 3.5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.1\" opacity=\".85\"/><path d=\"M3.3 8h9.4\" stroke=\"#111\" stroke-width=\"1.7\" stroke-linecap=\"square\"/></svg><svg class=\"ds-screw\" viewBox=\"0 0 16 16\" style=\"transform:rotate(-38deg)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#d4d6d2\" stroke=\"#111\" stroke-width=\"1.2\"/><path d=\"M3.4 5.2 A5.3 5.3 0 0 1 10.8 3.5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.1\" opacity=\".85\"/><path d=\"M3.3 8h9.4\" stroke=\"#111\" stroke-width=\"1.7\" stroke-linecap=\"square\"/></svg><svg class=\"ds-screw\" viewBox=\"0 0 16 16\" style=\"transform:rotate(64deg)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#d4d6d2\" stroke=\"#111\" stroke-width=\"1.2\"/><path d=\"M3.4 5.2 A5.3 5.3 0 0 1 10.8 3.5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.1\" opacity=\".85\"/><path d=\"M3.3 8h9.4\" stroke=\"#111\" stroke-width=\"1.7\" stroke-linecap=\"square\"/></svg><svg class=\"ds-screw\" viewBox=\"0 0 16 16\" style=\"transform:rotate(-12deg)\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#d4d6d2\" stroke=\"#111\" stroke-width=\"1.2\"/><path d=\"M3.4 5.2 A5.3 5.3 0 0 1 10.8 3.5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.1\" opacity=\".85\"/><path d=\"M3.3 8h9.4\" stroke=\"#111\" stroke-width=\"1.7\" stroke-linecap=\"square\"/></svg><p class=\"ds-band\">Civilsul · Construtora do Sul, Lda.</p><dl class=\"ds-fields\"><div><dt>Alvará nº</dt><dd>4511</dd></div><div><dt>Sede</dt><dd>Quarteira, Algarve</dd></div></dl></div>",
+      "css": ".ds-board{position:relative;width:420px;background:#fff;border:2px solid #111;box-shadow:0 2px 2px rgb(0 0 0 / 0.16), 0 14px 28px -14px rgb(0 0 0 / 0.42);color:#111;font-family:'Overpass Variable','Overpass',system-ui,sans-serif;font-variant-numeric:tabular-nums}.ds-board::after{content:'';position:absolute;inset:5px;border:1px solid rgb(17 17 17 / .22);pointer-events:none}.ds-screw{position:absolute;width:26px;height:26px;z-index:2}.ds-screw:nth-of-type(1){top:9px;left:9px}.ds-screw:nth-of-type(2){top:9px;right:9px}.ds-screw:nth-of-type(3){bottom:9px;left:9px}.ds-screw:nth-of-type(4){bottom:9px;right:9px}.ds-band{margin:0;background:#0b84cf;color:#fff;border-bottom:2px solid #111;padding:.8rem 3rem .7rem;font-weight:800;font-size:1.25rem;line-height:1.2}.ds-fields{margin:0;padding:1.5rem 3rem 2.5rem}.ds-fields div{padding:.85rem 0;border-top:1px solid #c8cbc6}.ds-fields div:first-child{border-top:0;padding-top:0}.ds-fields dt{font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1.2;color:#575a57}.ds-fields dd{margin:.3rem 0 0;font-size:1.25rem;font-weight:700;line-height:1.3}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Square white field, 2px ink border, 3px blue outline on focus.",
+      "html": "<label class=\"ds-f\"><span>Nome</span><input class=\"ds-input\" placeholder=\"O seu nome\"></label>",
+      "css": ".ds-f{display:grid;gap:.4rem;font-family:'Overpass Variable','Overpass',system-ui,sans-serif;font-weight:700;color:#111}.ds-input{min-height:3.25rem;padding:.7rem .9rem;border:2px solid #111;border-radius:0;background:#fff;color:#111;font:inherit;font-weight:600;font-size:1.0625rem}.ds-input::placeholder{color:#575a57;font-weight:400}.ds-input:focus-visible{outline:3px solid #0b84cf;outline-offset:0}.ds-input[aria-invalid='true']{border-color:#b42318;box-shadow:inset 0 0 0 1px #b42318}"
+    },
+    {
+      "name": "Choice Option",
+      "kind": "chip",
+      "refersTo": "option-checked",
+      "description": "Boxed option; hoarding grey on hover, inverted to ink when checked.",
+      "html": "<label class=\"ds-opt\"><input type=\"radio\" name=\"o\" checked>Moradia</label><label class=\"ds-opt\"><input type=\"radio\" name=\"o\">Apartamento</label>",
+      "css": ".ds-opt{position:relative;display:inline-flex;align-items:center;min-height:3.25rem;padding:.6rem 1rem;margin:.3rem;border:2px solid #111;background:#fff;color:#111;font-family:'Overpass Variable','Overpass',system-ui,sans-serif;font-weight:700;cursor:pointer;transition:background-color 150ms,color 150ms}.ds-opt input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}.ds-opt:hover{background:#dcdeda}.ds-opt:has(input:checked){background:#111;color:#fff}.ds-opt:has(input:focus-visible){outline:3px solid #111;outline-offset:3px}"
+    },
+    {
+      "name": "Header Strip Nav",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Nav links on the bolted white strip; soft-rule underline on hover, blue when current.",
+      "html": "<nav class=\"ds-strip\"><a href=\"#\">Serviços</a><a href=\"#\" aria-current=\"page\">Obras</a><a href=\"#\">Empresa</a><span class=\"ds-lang\">EN</span></nav>",
+      "css": ".ds-strip{display:flex;align-items:center;gap:.25rem;min-height:4.25rem;padding:.5rem 2.75rem;background:#fff;border:2px solid #111;box-shadow:0 1px 1px rgb(0 0 0 / 0.1), 0 6px 14px -8px rgb(0 0 0 / 0.45);font-family:'Overpass Variable','Overpass',system-ui,sans-serif;}.ds-strip a{display:inline-flex;align-items:center;min-height:44px;padding:3px .7rem 0;font-weight:700;color:#111;text-decoration:none;border-bottom:3px solid transparent}.ds-strip a:hover{border-bottom-color:#c8cbc6}.ds-strip a[aria-current='page']{border-bottom-color:#0b84cf}.ds-strip a:focus-visible{outline:3px solid #111;outline-offset:3px}.ds-lang{display:inline-grid;place-items:center;min-width:2.1rem;height:1.6rem;margin-left:1rem;border:2px solid #111;font-size:.8125rem;font-weight:800;letter-spacing:.04em}.ds-lang:hover{background:#111;color:#fff}"
+    },
+    {
+      "name": "Lona Work Banner",
+      "kind": "card",
+      "refersTo": "lona",
+      "description": "Work photo as an eyeleted site banner with a bolted caption tag.",
+      "html": "<a class=\"ds-lona\" href=\"#\"><span class=\"ds-photo\"></span><span class=\"ds-tag\"><span class=\"ds-tt\">Construção de moradia</span><span class=\"ds-tm\">Algarve</span></span></a>",
+      "css": ".ds-lona{position:relative;display:block;width:360px;height:260px;padding:12px;background:#f2f2ef;border:1px solid rgb(0 0 0 / .14);box-shadow:0 1px 1px rgb(0 0 0 / 0.1), 0 6px 14px -8px rgb(0 0 0 / 0.45);color:#111;text-decoration:none;font-family:'Overpass Variable','Overpass',system-ui,sans-serif;}.ds-lona::before,.ds-lona::after{content:'';position:absolute;left:0;right:0;height:12px;background:radial-gradient(circle at 6px 6px,#fff 0 1.6px,#8b8f8a 1.8px 3.2px,#4c504b 3.4px 3.9px,transparent 4.2px) 0 0/96px 12px repeat-x}.ds-lona::before{top:0}.ds-lona::after{bottom:0}.ds-photo{display:block;height:100%;background:#cfd2cd}.ds-tag{position:absolute;left:24px;bottom:24px;background:#fff;border:2px solid #111;box-shadow:0 1px 1px rgb(0 0 0 / 0.1), 0 6px 14px -8px rgb(0 0 0 / 0.45);padding:.7rem 2.35rem .75rem}.ds-tt{display:block;font-size:1.0625rem;font-weight:800;line-height:1.2}.ds-tm{display:block;margin-top:.2rem;font-size:.875rem;color:#575a57}.ds-lona:hover .ds-tt{text-decoration:underline;text-decoration-thickness:2px}.ds-lona:focus-visible{outline:3px solid #111;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Permit Board on the Hoarding",
+    "overview": "Every page is the aviso de obra that hangs on every construction site in Portugal: a white enamel panel bolted to galvanised hoarding, its legal fields filled with Civilsul's real facts (who builds, permit 4511, since 1985, Quarteira). The ground is the hoarding itself, a light grey with a faint vertical corrugation; content lives on square white boards with a 2px ink border, an inner enamel fillet and four drawn screw heads. Key boards carry a blue municipal header band.\n\nThe voice is signage, not marketing: Overpass (the Portuguese road-sign face) set heavy, field labels in small uppercase above large values, square pictogram icons with 2px strokes and square caps. Photographs are printed site banners (lonas) with eyelets along the hem, stretched on the hoarding, each with a small bolted caption plate. Safety yellow with black 45° hazard stripes marks the primary action and nothing else.\n\nBoards are physically bolted on: on first view a board settles with a 14px drop (560ms) while its screws turn a quarter (620ms, 140ms delay). Transform only, once; reduced motion shows them static.",
+    "keyCharacteristics": [
+      "Grey corrugated hoarding ground, white enamel boards, 2px ink borders, square corners.",
+      "Four drawn screw heads per board (two per strip or caption plate).",
+      "Legal field grammar: uppercase label over a bold value.",
+      "Hazard stripes only on the primary quote action.",
+      "Real photos as eyeleted banners, never as overlays behind text."
+    ],
+    "rules": [
+      {
+        "name": "The Hazard Rule",
+        "body": "Yellow-and-black stripes mean \"the primary action\". One hazard plate per view (plus the quote cell of the mobile bar); never decorative, never on a secondary action.",
+        "section": "colors"
+      },
+      {
+        "name": "The Band Rule",
+        "body": "Blue is a band or a link, never a button fill.",
+        "section": "colors"
+      },
+      {
+        "name": "The Field Label Rule",
+        "body": "An uppercase label is a legal field name and always names the value directly beneath it (Alvará nº, Sede, Telefone). It is never a free-floating kicker above a section heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bolted Rule",
+        "body": "Only things that are physically fixed to the hoarding (boards, strips, plates, banners) get a shadow. Buttons, inputs and text never do.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put content on white enamel boards with 2px ink borders and drawn screws.",
+      "Do present facts as field rows: uppercase label (0.8125rem, 700, +0.04em) over a bold value.",
+      "Do keep every corner square, inputs and buttons included.",
+      "Do show photos as eyeleted lonas or full-bleed banners with a bolted caption plate.",
+      "Do use blue-ink, not the lighter blue, for link text."
+    ],
+    "donts": [
+      "Don't use hazard stripes for anything but the primary quote action.",
+      "Don't fill buttons with blue.",
+      "Don't place text directly over a photo with a gradient overlay; text sits on a board bolted over the photo.",
+      "Don't use an uppercase field label as a kicker above a heading.",
+      "Don't add shadows to buttons, inputs or text; only bolted objects cast them.",
+      "Don't animate anything other than the bolt-on settle, the screw quarter-turn and small hover shifts."
+    ]
+  }
+}

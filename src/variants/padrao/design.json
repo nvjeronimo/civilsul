@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T20:31:32+00:00",
+  "title": "Design System: Civilsul · Padrão do setor",
+  "extensions": {
+    "colorMeta": {
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(100.0% 0.0 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0 89.9)",
+          "oklch(26.4% 0.0 89.9)",
+          "oklch(37.9% 0.0 89.9)",
+          "oklch(49.3% 0.0 89.9)",
+          "oklch(60.7% 0.0 89.9)",
+          "oklch(72.1% 0.0 89.9)",
+          "oklch(83.6% 0.0 89.9)",
+          "oklch(95.0% 0.0 89.9)"
+        ]
+      },
+      "stone": {
+        "role": "neutral",
+        "displayName": "Warm Stone",
+        "canonical": "oklch(96.1% 0.004 91.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 91.4)",
+          "oklch(26.4% 0.003 91.4)",
+          "oklch(37.9% 0.003 91.4)",
+          "oklch(49.3% 0.004 91.4)",
+          "oklch(60.7% 0.004 91.4)",
+          "oklch(72.1% 0.004 91.4)",
+          "oklch(83.6% 0.003 91.4)",
+          "oklch(95.0% 0.003 91.4)"
+        ]
+      },
+      "stone-2": {
+        "role": "neutral",
+        "displayName": "Deeper Stone",
+        "canonical": "oklch(92.2% 0.007 88.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 88.6)",
+          "oklch(26.4% 0.005 88.6)",
+          "oklch(37.9% 0.006 88.6)",
+          "oklch(49.3% 0.006 88.6)",
+          "oklch(60.7% 0.007 88.6)",
+          "oklch(72.1% 0.006 88.6)",
+          "oklch(83.6% 0.006 88.6)",
+          "oklch(95.0% 0.005 88.6)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Deep Navy Ink",
+        "canonical": "oklch(22.1% 0.039 258.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.025 258.3)",
+          "oklch(26.4% 0.029 258.3)",
+          "oklch(37.9% 0.032 258.3)",
+          "oklch(49.3% 0.036 258.3)",
+          "oklch(60.7% 0.039 258.3)",
+          "oklch(72.1% 0.036 258.3)",
+          "oklch(83.6% 0.032 258.3)",
+          "oklch(95.0% 0.028 258.3)"
+        ]
+      },
+      "ink-hover": {
+        "role": "neutral",
+        "displayName": "Ink Hover",
+        "canonical": "oklch(29.1% 0.049 258.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.031 258.3)",
+          "oklch(26.4% 0.036 258.3)",
+          "oklch(37.9% 0.04 258.3)",
+          "oklch(49.3% 0.045 258.3)",
+          "oklch(60.7% 0.049 258.3)",
+          "oklch(72.1% 0.044 258.3)",
+          "oklch(83.6% 0.04 258.3)",
+          "oklch(95.0% 0.035 258.3)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "oklch(40.5% 0.035 256.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.022 256.6)",
+          "oklch(26.4% 0.025 256.6)",
+          "oklch(37.9% 0.029 256.6)",
+          "oklch(49.3% 0.032 256.6)",
+          "oklch(60.7% 0.035 256.6)",
+          "oklch(72.1% 0.031 256.6)",
+          "oklch(83.6% 0.028 256.6)",
+          "oklch(95.0% 0.025 256.6)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "oklch(50.4% 0.03 259.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.019 259.0)",
+          "oklch(26.4% 0.022 259.0)",
+          "oklch(37.9% 0.025 259.0)",
+          "oklch(49.3% 0.028 259.0)",
+          "oklch(60.7% 0.03 259.0)",
+          "oklch(72.1% 0.027 259.0)",
+          "oklch(83.6% 0.025 259.0)",
+          "oklch(95.0% 0.022 259.0)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "oklch(88.8% 0.008 91.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 91.5)",
+          "oklch(26.4% 0.006 91.5)",
+          "oklch(37.9% 0.007 91.5)",
+          "oklch(49.3% 0.008 91.5)",
+          "oklch(60.7% 0.008 91.5)",
+          "oklch(72.1% 0.008 91.5)",
+          "oklch(83.6% 0.007 91.5)",
+          "oklch(95.0% 0.006 91.5)"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "oklch(81.1% 0.012 89.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 89.7)",
+          "oklch(26.4% 0.008 89.7)",
+          "oklch(37.9% 0.01 89.7)",
+          "oklch(49.3% 0.011 89.7)",
+          "oklch(60.7% 0.011 89.7)",
+          "oklch(72.1% 0.01 89.7)",
+          "oklch(83.6% 0.009 89.7)",
+          "oklch(95.0% 0.008 89.7)"
+        ]
+      },
+      "blue": {
+        "role": "primary",
+        "displayName": "Algarve Blue",
+        "canonical": "oklch(59.3% 0.147 245.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.094 245.2)",
+          "oklch(26.4% 0.108 245.2)",
+          "oklch(37.9% 0.121 245.2)",
+          "oklch(49.3% 0.135 245.2)",
+          "oklch(60.7% 0.146 245.2)",
+          "oklch(72.1% 0.133 245.2)",
+          "oklch(83.6% 0.119 245.2)",
+          "oklch(95.0% 0.106 245.2)"
+        ]
+      },
+      "blue-ink": {
+        "role": "primary",
+        "displayName": "Link Blue",
+        "canonical": "oklch(51.8% 0.129 245.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 245.7)",
+          "oklch(26.4% 0.094 245.7)",
+          "oklch(37.9% 0.106 245.7)",
+          "oklch(49.3% 0.118 245.7)",
+          "oklch(60.7% 0.128 245.7)",
+          "oklch(72.1% 0.116 245.7)",
+          "oklch(83.6% 0.105 245.7)",
+          "oklch(95.0% 0.093 245.7)"
+        ]
+      },
+      "blue-on-ink": {
+        "role": "primary",
+        "displayName": "Sky on Navy",
+        "canonical": "oklch(77.4% 0.109 236.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.07 236.6)",
+          "oklch(26.4% 0.08 236.6)",
+          "oklch(37.9% 0.09 236.6)",
+          "oklch(49.3% 0.099 236.6)",
+          "oklch(60.7% 0.108 236.6)",
+          "oklch(72.1% 0.098 236.6)",
+          "oklch(83.6% 0.088 236.6)",
+          "oklch(95.0% 0.078 236.6)"
+        ]
+      },
+      "blue-wash": {
+        "role": "primary",
+        "displayName": "Blue Wash",
+        "canonical": "oklch(97.5% 0.011 234.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 234.8)",
+          "oklch(26.4% 0.008 234.8)",
+          "oklch(37.9% 0.009 234.8)",
+          "oklch(49.3% 0.01 234.8)",
+          "oklch(60.7% 0.011 234.8)",
+          "oklch(72.1% 0.01 234.8)",
+          "oklch(83.6% 0.009 234.8)",
+          "oklch(95.0% 0.008 234.8)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Logo Yellow",
+        "canonical": "oklch(88.1% 0.181 94.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.116 94.0)",
+          "oklch(26.4% 0.132 94.0)",
+          "oklch(37.9% 0.149 94.0)",
+          "oklch(49.3% 0.165 94.0)",
+          "oklch(60.7% 0.18 94.0)",
+          "oklch(72.1% 0.163 94.0)",
+          "oklch(83.6% 0.147 94.0)",
+          "oklch(95.0% 0.13 94.0)"
+        ]
+      },
+      "yellow-hover": {
+        "role": "secondary",
+        "displayName": "Soft Yellow",
+        "canonical": "oklch(90.7% 0.162 97.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.104 97.0)",
+          "oklch(26.4% 0.119 97.0)",
+          "oklch(37.9% 0.133 97.0)",
+          "oklch(49.3% 0.148 97.0)",
+          "oklch(60.7% 0.161 97.0)",
+          "oklch(72.1% 0.146 97.0)",
+          "oklch(83.6% 0.132 97.0)",
+          "oklch(95.0% 0.117 97.0)"
+        ]
+      },
+      "on-ink-2": {
+        "role": "neutral",
+        "displayName": "Mist on Navy",
+        "canonical": "oklch(85.8% 0.018 256.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 256.3)",
+          "oklch(26.4% 0.013 256.3)",
+          "oklch(37.9% 0.014 256.3)",
+          "oklch(49.3% 0.016 256.3)",
+          "oklch(60.7% 0.017 256.3)",
+          "oklch(72.1% 0.016 256.3)",
+          "oklch(83.6% 0.014 256.3)",
+          "oklch(95.0% 0.013 256.3)"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error Red",
+        "canonical": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.117 29.5)",
+          "oklch(26.4% 0.133 29.5)",
+          "oklch(37.9% 0.15 29.5)",
+          "oklch(49.3% 0.166 29.5)",
+          "oklch(60.7% 0.181 29.5)",
+          "oklch(72.1% 0.164 29.5)",
+          "oklch(83.6% 0.148 29.5)",
+          "oklch(95.0% 0.131 29.5)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home hero H1 only, white over the photo."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page H1s."
+      },
+      "headline-sm": {
+        "displayName": "Headline small",
+        "purpose": "Section H2s."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "H3s and card titles."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Intros, max 40rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose, max 42rem."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Meta and breadcrumbs."
+      },
+      "note": {
+        "displayName": "Note",
+        "purpose": "Mandatory call-cost note under phone numbers."
+      }
+    },
+    "shadows": [
+      {
+        "name": "header-scrolled",
+        "value": "0 6px 24px -10px rgba(15, 27, 45, 0.22), 0 1px 0 rgba(15, 27, 45, 0.06)",
+        "purpose": "Sticky header after scroll; the only elevation."
+      },
+      {
+        "name": "input-focus-halo",
+        "value": "0 0 0 3px rgba(11, 132, 207, 0.22)",
+        "purpose": "Focused text fields (state ring, not elevation)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Hero settle, reveals, arrows, image hovers."
+      },
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Control state transitions (buttons, fields, header)."
+      },
+      {
+        "name": "hero-settle",
+        "value": "scale 1.06→1, 1.6s",
+        "purpose": "Hero photo on load."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity + translateY(12px), 900ms",
+        "purpose": "Below-the-fold sections, once."
+      },
+      {
+        "name": "filter-transition",
+        "value": "View Transitions, group 480ms, old/new 280ms",
+        "purpose": "Works filter."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "60rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "xl",
+        "value": "80rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one yellow element: the quote button.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Pedir orçamento</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.625rem;min-height:3.25rem;padding:0 1.5rem;border-radius:14px;border:1.5px solid transparent;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.005em;line-height:1.2;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color 180ms cubic-bezier(0.25, 1, 0.5, 1),border-color 180ms cubic-bezier(0.25, 1, 0.5, 1),transform 180ms cubic-bezier(0.25, 1, 0.5, 1)}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}.ds-btn-primary{background:#ffd400;color:#0f1b2d}.ds-btn-primary:hover{background:#ffe04d}"
+    },
+    {
+      "name": "Dark Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "Navy secondary action.",
+      "html": "<a class=\"ds-btn-dark\" href=\"#\">Ver todas as obras</a>",
+      "css": ".ds-btn-dark{display:inline-flex;align-items:center;justify-content:center;gap:.625rem;min-height:3.25rem;padding:0 1.5rem;border-radius:14px;border:1.5px solid transparent;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.005em;line-height:1.2;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color 180ms cubic-bezier(0.25, 1, 0.5, 1),border-color 180ms cubic-bezier(0.25, 1, 0.5, 1),transform 180ms cubic-bezier(0.25, 1, 0.5, 1)}.ds-btn-dark:active{transform:translateY(1px)}.ds-btn-dark:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}.ds-btn-dark{background:#0f1b2d;color:#fff}.ds-btn-dark:hover{background:#1c2c44}"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Outlined tertiary action.",
+      "html": "<a class=\"ds-btn-line\" href=\"#\">WhatsApp</a>",
+      "css": ".ds-btn-line{display:inline-flex;align-items:center;justify-content:center;gap:.625rem;min-height:3.25rem;padding:0 1.5rem;border-radius:14px;border:1.5px solid transparent;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.005em;line-height:1.2;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color 180ms cubic-bezier(0.25, 1, 0.5, 1),border-color 180ms cubic-bezier(0.25, 1, 0.5, 1),transform 180ms cubic-bezier(0.25, 1, 0.5, 1)}.ds-btn-line:active{transform:translateY(1px)}.ds-btn-line:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}.ds-btn-line{background:transparent;color:#0f1b2d;border-color:#c4c1b9}.ds-btn-line:hover{border-color:#0f1b2d}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Rounded field with blue border and halo on focus.",
+      "html": "<label class=\"ds-field\"><span>Localidade</span><input class=\"ds-input\" placeholder=\"Ex.: Loulé\"></label>",
+      "css": ".ds-field{display:grid;gap:.5rem;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;font-weight:700;color:#0f1b2d}.ds-input{width:320px;min-height:3.25rem;padding:.75rem 1rem;border:1.5px solid #c4c1b9;border-radius:14px;background:#fff;font:inherit;font-weight:450;font-size:1.0625rem;color:#0f1b2d;transition:border-color 160ms cubic-bezier(0.25, 1, 0.5, 1),box-shadow 160ms cubic-bezier(0.25, 1, 0.5, 1)}.ds-input::placeholder{color:#6b7483}.ds-input:hover{border-color:#3d4a5c}.ds-input:focus-visible{outline:none;border-color:#0b84cf;box-shadow:0 0 0 3px rgba(11,132,207,.22)}"
+    },
+    {
+      "name": "Choice",
+      "kind": "chip",
+      "refersTo": "choice-checked",
+      "description": "Boxed radio choice; blue border, wash and filled mark when checked.",
+      "html": "<label class=\"ds-choice\"><input type=\"radio\" name=\"c\" checked><span class=\"ds-cb\"><span class=\"ds-mk\"></span>Construção nova</span></label><label class=\"ds-choice\"><input type=\"radio\" name=\"c\"><span class=\"ds-cb\"><span class=\"ds-mk\"></span>Remodelação</span></label>",
+      "css": ".ds-choice{position:relative;display:block;width:280px;margin-bottom:.75rem;cursor:pointer;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;}.ds-choice input{position:absolute;opacity:0;inset:0;margin:0}.ds-cb{display:flex;align-items:center;gap:.875rem;min-height:3.5rem;padding:.875rem 1rem;border:1.5px solid #c4c1b9;border-radius:14px;background:#fff;font-weight:600;color:#0f1b2d;transition:border-color 160ms,background-color 160ms,box-shadow 160ms}.ds-mk{width:1.25rem;height:1.25rem;border-radius:50%;border:1.75px solid #c4c1b9;background:#fff}.ds-choice:hover .ds-cb{border-color:#3d4a5c}.ds-choice input:checked+.ds-cb{border-color:#0b84cf;background:#f0f8fd;box-shadow:inset 0 0 0 1px #0b84cf}.ds-choice input:checked+.ds-cb .ds-mk{border-color:#0b84cf;box-shadow:inset 0 0 0 5px #0b84cf}.ds-choice input:focus-visible+.ds-cb{outline:2px solid #0b84cf;outline-offset:3px}"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "Works filter pill; navy when pressed.",
+      "html": "<div class=\"ds-filter\"><button aria-pressed=\"true\">Todas</button><button aria-pressed=\"false\">Moradias</button><button aria-pressed=\"false\">Remodelações</button></div>",
+      "css": ".ds-filter{display:flex;flex-wrap:wrap;gap:.5rem}.ds-filter button{min-height:44px;padding:0 1.125rem;border-radius:999px;border:1.5px solid #c4c1b9;background:#fff;color:#0f1b2d;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;font-size:.9375rem;font-weight:650;cursor:pointer;transition:background-color 180ms,border-color 180ms,color 180ms}.ds-filter button:hover{border-color:#0f1b2d}.ds-filter button[aria-pressed='true']{background:#0f1b2d;border-color:#0f1b2d;color:#fff}.ds-filter button:focus-visible{outline:2px solid #0b84cf;outline-offset:3px}"
+    },
+    {
+      "name": "Header Nav",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Scrolled white header; underline scales in on hover, blue for current page.",
+      "html": "<nav class=\"ds-hdr\"><a href=\"#\">Serviços</a><a href=\"#\" aria-current=\"page\">Obras</a><a href=\"#\">Empresa</a><a href=\"#\">Contactos</a></nav>",
+      "css": ".ds-hdr{display:flex;gap:.25rem;align-items:center;height:5rem;padding:0 1.5rem;background:#fff;box-shadow:0 6px 24px -10px rgba(15,27,45,.22),0 1px 0 rgba(15,27,45,.06);font-family:'Manrope Variable','Manrope',system-ui,sans-serif;}.ds-hdr a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 .875rem;color:#0f1b2d;font-weight:600;font-size:.9875rem;text-decoration:none}.ds-hdr a::after{content:'';position:absolute;left:.875rem;right:.875rem;bottom:8px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 280ms cubic-bezier(.16,1,.3,1)}.ds-hdr a:hover::after,.ds-hdr a[aria-current='page']::after{transform:scaleX(1)}.ds-hdr a[aria-current='page']::after{background:#0b84cf}.ds-hdr a:focus-visible{outline:2px solid #0b84cf;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Work Card",
+      "kind": "card",
+      "refersTo": "work-card",
+      "description": "Rounded photo, title and meta; no card chrome.",
+      "html": "<a class=\"ds-wcard\" href=\"#\"><span class=\"ds-ph\"></span><span class=\"ds-wt\">Construção de moradia</span><span class=\"ds-wm\">Algarve · Construção</span></a>",
+      "css": ".ds-wcard{display:flex;flex-direction:column;width:320px;color:#0f1b2d;text-decoration:none;font-family:'Manrope Variable','Manrope',system-ui,sans-serif;}.ds-ph{aspect-ratio:4/3;border-radius:14px;background:#e7e5e0;transition:transform 900ms cubic-bezier(.16,1,.3,1)}.ds-wt{padding-top:1rem;font-size:1.125rem;font-weight:700;letter-spacing:-.012em;line-height:1.3}.ds-wm{margin-top:.25rem;color:#5a6576;font-size:.9375rem;font-weight:500}.ds-wcard:hover .ds-wt{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:.2em}.ds-wcard:focus-visible{outline:2px solid #0b84cf;outline-offset:6px;border-radius:14px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Architect's Portfolio Builder",
+    "overview": "The builder website a visitor expects, finished at the craft level of premium European residential builders and architecture studios. Convention is the commitment: a full-bleed finished house with a clear promise, trust facts, six services as photo-led tiles, featured works, a four-step process, the company, a closing quote band and a complete footer. No irony and no smuggled quirk; the quality is in proportion, whitespace and exactness.\n\nWhite and a soft warm stone alternate section by section under a deep navy ink. Brand blue is a functional accent (links, focus, icons, rules). The logo yellow belongs to the primary button alone. Manrope set heavy and tight carries the headlines; generous 14px radii soften images, buttons and panels.\n\nMotion is quiet and single-grammar (exponential ease-out `cubic-bezier(0.16, 1, 0.3, 1)`): the hero photo settles 1.06 → 1 over 1.6s; the header turns from transparent to white with a soft shadow on scroll; below-the-fold sections fade up 12px once (only elements JS marks off-screen, so nothing hides without JS); the works filter uses View Transitions (480ms group). Reduced motion disables all of it.",
+    "keyCharacteristics": [
+      "Photography first: real client photos, large, 14px radius.",
+      "White / stone alternation instead of borders or cards to separate sections.",
+      "Navy ink, blue for function, yellow for the one primary action.",
+      "Heavy, tightly tracked Manrope headings over calm 450-weight body.",
+      "One shadow in the whole system: the scrolled sticky header."
+    ],
+    "rules": [
+      {
+        "name": "The One Yellow Rule",
+        "body": "Yellow appears only on the primary quote button (and its cell in the mobile bar). Never as a highlight, badge, icon or background.",
+        "section": "colors"
+      },
+      {
+        "name": "The Readable Blue Rule",
+        "body": "Any blue text uses blue-ink; the brand blue is for rings, strokes and fills that are not text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Legal Tracking Rule",
+        "body": "Negative tracking stops at -0.03em; headings are tight, never crushed.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Shadow Rule",
+        "body": "Only the scrolled header casts a shadow. Cards, images, buttons and panels stay flat.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do lead with real client photography at generous sizes, 14px radius.",
+      "Do alternate white and stone section grounds instead of boxing content.",
+      "Do keep spacing on the 8px grid and sections at clamp(5–8rem).",
+      "Do use blue-ink for any blue text and the brand blue for rings, icons and marks.",
+      "Do keep motion to the single ease-out grammar and switch it off for reduced motion."
+    ],
+    "donts": [
+      "Don't use yellow for anything but the primary quote button.",
+      "Don't add shadows to cards, images or buttons; only the scrolled header has one.",
+      "Don't track headings tighter than -0.03em.",
+      "Don't replace service photos with icon cards.",
+      "Don't introduce a second typeface."
+    ]
+  }
+}
