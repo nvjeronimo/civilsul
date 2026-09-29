@@ -178,6 +178,7 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
         <dl class="qt__dl" data-summary>
           {preview.map((k) => <div data-filled="false"><dt>{k}</dt><dd>{q.empty}</dd></div>)}
         </dl>
+        <p class="qt__todo small muted">A preencher: as linhas aparecem à medida que responde.</p>
       </div>
       <div class="qt__direct">
         <p class="small muted">{C.orCall}</p>
@@ -304,7 +305,9 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
   .qt__dl > :global(div) { display: grid; gap: 0.1rem; padding: 0.55rem 0; border-top: 1px solid var(--hair); font-size: var(--t-small); }
   .qt__dl :global(dt) { color: var(--fg-2); font-size: var(--t-tag); }
   .qt__dl :global(dd) { overflow-wrap: anywhere; font-weight: 600; }
-  .qt__dl :global([data-filled='false'] dd) { color: var(--fg-2); font-weight: 400; }
+  .qt__dl :global([data-filled='false']) { display: none; }
+  .qt__todo { margin: 0; padding: 0.55rem 0; border-top: 1px dashed var(--hair); }
+  .qt__dl:not(:has([data-filled='false'])) + .qt__todo { display: none; }
   .qt__direct { display: grid; gap: 0.75rem; }
   .qt__direct a { font-size: 1.15rem; display: inline-flex; min-height: 36px; align-items: center; }
 </style>
