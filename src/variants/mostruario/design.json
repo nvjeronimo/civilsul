@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T21:52:00+00:00",
+  "title": "Design System: Civilsul · Mostruário",
+  "extensions": {
+    "colorMeta": {
+      "board": {
+        "role": "neutral",
+        "displayName": "Mounting Board",
+        "canonical": "oklch(23.3% 0.004 164.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 164.7)",
+          "oklch(26.4% 0.003 164.7)",
+          "oklch(37.9% 0.003 164.7)",
+          "oklch(49.3% 0.004 164.7)",
+          "oklch(60.7% 0.004 164.7)",
+          "oklch(72.1% 0.003 164.7)",
+          "oklch(83.6% 0.003 164.7)",
+          "oklch(95.0% 0.003 164.7)"
+        ]
+      },
+      "board-2": {
+        "role": "neutral",
+        "displayName": "Board Shade",
+        "canonical": "oklch(27.7% 0.006 156.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 156.8)",
+          "oklch(26.4% 0.005 156.8)",
+          "oklch(37.9% 0.005 156.8)",
+          "oklch(49.3% 0.006 156.8)",
+          "oklch(60.7% 0.006 156.8)",
+          "oklch(72.1% 0.005 156.8)",
+          "oklch(83.6% 0.005 156.8)",
+          "oklch(95.0% 0.004 156.8)"
+        ]
+      },
+      "lime": {
+        "role": "neutral",
+        "displayName": "Lime White",
+        "canonical": "oklch(97.2% 0.004 106.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 106.5)",
+          "oklch(26.4% 0.003 106.5)",
+          "oklch(37.9% 0.004 106.5)",
+          "oklch(49.3% 0.004 106.5)",
+          "oklch(60.7% 0.004 106.5)",
+          "oklch(72.1% 0.004 106.5)",
+          "oklch(83.6% 0.003 106.5)",
+          "oklch(95.0% 0.003 106.5)"
+        ]
+      },
+      "lime-2": {
+        "role": "neutral",
+        "displayName": "Lime Shade",
+        "canonical": "oklch(93.9% 0.007 106.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 106.5)",
+          "oklch(26.4% 0.006 106.5)",
+          "oklch(37.9% 0.006 106.5)",
+          "oklch(49.3% 0.007 106.5)",
+          "oklch(60.7% 0.007 106.5)",
+          "oklch(72.1% 0.006 106.5)",
+          "oklch(83.6% 0.006 106.5)",
+          "oklch(95.0% 0.005 106.5)"
+        ]
+      },
+      "field": {
+        "role": "neutral",
+        "displayName": "Field White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.4% 0.000 89.9)",
+          "oklch(37.9% 0.000 89.9)",
+          "oklch(49.3% 0.000 89.9)",
+          "oklch(60.7% 0.000 89.9)",
+          "oklch(72.1% 0.000 89.9)",
+          "oklch(83.6% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(23.3% 0.004 164.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 164.7)",
+          "oklch(26.4% 0.003 164.7)",
+          "oklch(37.9% 0.003 164.7)",
+          "oklch(49.3% 0.004 164.7)",
+          "oklch(60.7% 0.004 164.7)",
+          "oklch(72.1% 0.003 164.7)",
+          "oklch(83.6% 0.003 164.7)",
+          "oklch(95.0% 0.003 164.7)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "oklch(42.3% 0.007 153.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 153.6)",
+          "oklch(26.4% 0.006 153.6)",
+          "oklch(37.9% 0.007 153.6)",
+          "oklch(49.3% 0.007 153.6)",
+          "oklch(60.7% 0.007 153.6)",
+          "oklch(72.1% 0.007 153.6)",
+          "oklch(83.6% 0.006 153.6)",
+          "oklch(95.0% 0.005 153.6)"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Tag Grey",
+        "canonical": "oklch(79.1% 0.008 139.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 139.4)",
+          "oklch(26.4% 0.007 139.4)",
+          "oklch(37.9% 0.008 139.4)",
+          "oklch(49.3% 0.008 139.4)",
+          "oklch(60.7% 0.008 139.4)",
+          "oklch(72.1% 0.008 139.4)",
+          "oklch(83.6% 0.007 139.4)",
+          "oklch(95.0% 0.006 139.4)"
+        ]
+      },
+      "sun": {
+        "role": "primary",
+        "displayName": "Sticker Yellow",
+        "canonical": "oklch(91.5% 0.191 101.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.141 101.0)",
+          "oklch(26.4% 0.164 101.0)",
+          "oklch(37.9% 0.181 101.0)",
+          "oklch(49.3% 0.190 101.0)",
+          "oklch(60.7% 0.190 101.0)",
+          "oklch(72.1% 0.181 101.0)",
+          "oklch(83.6% 0.164 101.0)",
+          "oklch(95.0% 0.141 101.0)"
+        ]
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "Link Blue on Lime",
+        "canonical": "oklch(51.8% 0.129 245.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.095 245.7)",
+          "oklch(26.4% 0.110 245.7)",
+          "oklch(37.9% 0.122 245.7)",
+          "oklch(49.3% 0.128 245.7)",
+          "oklch(60.7% 0.128 245.7)",
+          "oklch(72.1% 0.122 245.7)",
+          "oklch(83.6% 0.110 245.7)",
+          "oklch(95.0% 0.095 245.7)"
+        ]
+      },
+      "blue-b": {
+        "role": "secondary",
+        "displayName": "Link Blue on Board",
+        "canonical": "oklch(76.4% 0.110 239.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.081 239.1)",
+          "oklch(26.4% 0.095 239.1)",
+          "oklch(37.9% 0.104 239.1)",
+          "oklch(49.3% 0.110 239.1)",
+          "oklch(60.7% 0.110 239.1)",
+          "oklch(72.1% 0.104 239.1)",
+          "oklch(83.6% 0.095 239.1)",
+          "oklch(95.0% 0.081 239.1)"
+        ]
+      },
+      "hair-b": {
+        "role": "neutral",
+        "displayName": "Board Hairline",
+        "canonical": "#ffffff22"
+      },
+      "hair-b2": {
+        "role": "neutral",
+        "displayName": "Board Firm Hairline",
+        "canonical": "#ffffff40"
+      },
+      "hair-l": {
+        "role": "neutral",
+        "displayName": "Lime Hairline",
+        "canonical": "#1c1e1d1f"
+      },
+      "hair-l2": {
+        "role": "neutral",
+        "displayName": "Lime Firm Hairline",
+        "canonical": "#1c1e1d40"
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Error Red",
+        "canonical": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.134 29.5)",
+          "oklch(26.4% 0.156 29.5)",
+          "oklch(37.9% 0.172 29.5)",
+          "oklch(49.3% 0.181 29.5)",
+          "oklch(60.7% 0.181 29.5)",
+          "oklch(72.1% 0.172 29.5)",
+          "oklch(83.6% 0.156 29.5)",
+          "oklch(95.0% 0.134 29.5)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home H1 only, max 14ch."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page-head H1s and the closing call H2."
+      },
+      "headline-sm": {
+        "displayName": "Headline small",
+        "purpose": "Section heads and service-family titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "H3s, service rows, process steps."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Section and page intros, fg-2, max 40em."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, max 68ch."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Crumbs, spec labels, item lists, filter buttons."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "The printed sample tag: refs, captions, fact strips. Always below what it labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "mounted-board",
+        "value": "0 1px 0 rgb(255 255 255 / 0.05), 0 12px 22px -14px rgb(0 0 0 / 0.75)",
+        "purpose": "Chips and blank swatches at rest on charcoal."
+      },
+      {
+        "name": "lifted-board",
+        "value": "0 24px 38px -20px rgb(0 0 0 / 0.8)",
+        "purpose": "Opened chip on charcoal, with translateY(-3px)."
+      },
+      {
+        "name": "mounted-lime",
+        "value": "0 1px 1px rgb(28 30 29 / 0.08), 0 12px 20px -14px rgb(28 30 29 / 0.4)",
+        "purpose": "Chips at rest on lime."
+      },
+      {
+        "name": "lifted-lime",
+        "value": "0 22px 34px -20px rgb(28 30 29 / 0.55)",
+        "purpose": "Opened chip on lime."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The only easing (expo-out)."
+      },
+      {
+        "name": "open",
+        "value": "700ms",
+        "purpose": "Sample to house: crop object-position + scale to the full photo, frame lift."
+      },
+      {
+        "name": "tag-swap",
+        "value": "opacity 450ms + translateY 700ms",
+        "purpose": "Material line crossfades to 'Aplicado em' + work title."
+      },
+      {
+        "name": "wall-resolve",
+        "value": "IntersectionObserver 0.55, 350ms hold, once",
+        "purpose": "Works wall chips resolve from crop to house on entering the viewport."
+      },
+      {
+        "name": "nav-underline",
+        "value": "scaleX 0→1, 400ms",
+        "purpose": "Header link hover and current page."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "no transitions; full photos",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "700px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "lg",
+        "value": "1000px"
+      },
+      {
+        "name": "xl",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (on board)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The quote action on charcoal: lime fill, charcoal text, the yellow sticker dot.",
+      "html": "<div class=\"ds-b\"><a class=\"ds-btn-p\" href=\"#\"><span class=\"ds-dot\" aria-hidden=\"true\"></span>Pedir orçamento</a></div>",
+      "css": ".ds-b{background:#1c1e1d;padding:24px}.ds-dot{display:inline-block;flex:none;width:.7rem;height:.7rem;border-radius:50%;background:#ffe500;box-shadow:0 0 0 1.5px #1c1e1d}.ds-btn-p{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:50px;padding:.7rem 1.35rem;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;font-weight:620;font-size:1rem;line-height:1.2;text-decoration:none;cursor:pointer;border-radius:0;transition:background-color 200ms cubic-bezier(.16,1,.3,1),border-color 200ms cubic-bezier(.16,1,.3,1);background:#f6f6f3;color:#1c1e1d;border:1px solid #f6f6f3}.ds-btn-p:hover{background:color-mix(in srgb,#f6f6f3 86%,#1c1e1d)}.ds-btn-p:focus-visible{outline:2px solid #6bbcf1;outline-offset:3px}"
+    },
+    {
+      "name": "Primary Button (on lime)",
+      "kind": "button",
+      "refersTo": "button-primary-on-lime",
+      "description": "The same primary role on lime: ink fill, lime text.",
+      "html": "<div class=\"ds-l\"><a class=\"ds-btn-pl\" href=\"#\">Ver o serviço <svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4.5 12h14.5M13.5 6.5 19 12l-5.5 5.5\"/></svg></a></div>",
+      "css": ".ds-l{background:#f6f6f3;padding:24px}.ds-btn-pl{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:50px;padding:.7rem 1.35rem;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;font-weight:620;font-size:1rem;line-height:1.2;text-decoration:none;cursor:pointer;border-radius:0;transition:background-color 200ms cubic-bezier(.16,1,.3,1),border-color 200ms cubic-bezier(.16,1,.3,1);background:#1c1e1d;color:#f6f6f3;border:1px solid #1c1e1d}.ds-btn-pl svg{width:1.2rem;height:1.2rem}.ds-btn-pl:hover{background:color-mix(in srgb,#1c1e1d 86%,#f6f6f3)}.ds-btn-pl:focus-visible{outline:2px solid #0a6dad;outline-offset:3px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action: transparent with a firm hairline; border darkens on hover.",
+      "html": "<div class=\"ds-b2\"><a class=\"ds-btn-o\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4.3 19.7 5.5 16A7.9 7.9 0 1 1 8.3 18.6Z\"/><path d=\"M9 10.6h6M9 13.4h3.8\"/></svg>Falar por WhatsApp</a></div>",
+      "css": ".ds-b2{background:#1c1e1d;padding:24px}.ds-btn-o{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:50px;padding:.7rem 1.35rem;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;font-weight:620;font-size:1rem;line-height:1.2;text-decoration:none;cursor:pointer;border-radius:0;transition:background-color 200ms cubic-bezier(.16,1,.3,1),border-color 200ms cubic-bezier(.16,1,.3,1);background:transparent;color:#f6f6f3;border:1px solid #ffffff40}.ds-btn-o svg{width:1.2rem;height:1.2rem}.ds-btn-o:hover{border-color:#f6f6f3}.ds-btn-o:focus-visible{outline:2px solid #6bbcf1;outline-offset:3px}"
+    },
+    {
+      "name": "Sample Chip",
+      "kind": "custom",
+      "refersTo": "sample-chip-tag",
+      "description": "Signature: a CSS crop of a real work photo with a printed tag below; opens to the full house on hover or focus.",
+      "html": "<div class=\"ds-b3\"><a class=\"ds-chip\" href=\"#\"><span class=\"ds-chip__f\"><span class=\"ds-chip__img\"></span></span><span class=\"ds-chip__tag\"><span class=\"ds-chip__ref\"><span>Ref. S-01</span><span>Moradias</span></span><span class=\"ds-chip__sw\"><span class=\"ds-chip__mat\">Revestimento em madeira</span><span class=\"ds-chip__work\"><span class=\"ds-chip__ap\">Aplicado em</span> Construção de moradia</span></span></span></a></div>",
+      "css": ".ds-b3{background:#1c1e1d;padding:24px;max-width:300px}.ds-chip{display:grid;gap:.7rem;color:#f6f6f3;text-decoration:none;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif}.ds-chip__f{position:relative;display:block;overflow:hidden;aspect-ratio:1;background:#262927;box-shadow:0 1px 0 rgb(255 255 255/.05),0 12px 22px -14px rgb(0 0 0/.75);transition:box-shadow 700ms cubic-bezier(.16,1,.3,1),transform 700ms cubic-bezier(.16,1,.3,1)}.ds-chip__f::after{content:'';position:absolute;inset:0;border:1px solid #ffffff22}.ds-chip__img{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#8a5a36 0 14px,#9c6a42 14px 15px,#7a4e2e 15px 30px);transform:scale(3);transform-origin:55% 32%;transition:transform 700ms cubic-bezier(.16,1,.3,1)}.ds-chip__tag{display:grid;gap:.15rem;padding:.45rem 0 .5rem;border-top:1px solid #ffffff40;border-bottom:1px solid #ffffff22;font-size:.8125rem;line-height:1.35}.ds-chip__ref{display:flex;justify-content:space-between;gap:.75rem;color:#b8bcb7;font-weight:500;font-size:.78rem;letter-spacing:.01em;font-variant-numeric:tabular-nums}.ds-chip__sw{display:grid;font-size:.9375rem;font-weight:620;line-height:1.3}.ds-chip__sw>*{grid-area:1/1;transition:opacity 450ms cubic-bezier(.16,1,.3,1),transform 700ms cubic-bezier(.16,1,.3,1)}.ds-chip__work{opacity:0;transform:translateY(.5em)}.ds-chip__ap{color:#b8bcb7;font-weight:500}.ds-chip:hover .ds-chip__img,.ds-chip:focus-visible .ds-chip__img{transform:scale(1)}.ds-chip:hover .ds-chip__f,.ds-chip:focus-visible .ds-chip__f{box-shadow:0 24px 38px -20px rgb(0 0 0/.8);transform:translateY(-3px)}.ds-chip:hover .ds-chip__mat,.ds-chip:focus-visible .ds-chip__mat{opacity:0;transform:translateY(-.5em)}.ds-chip:hover .ds-chip__work,.ds-chip:focus-visible .ds-chip__work{opacity:1;transform:none}.ds-chip:focus-visible{outline:none}.ds-chip:focus-visible .ds-chip__f{outline:2px solid #6bbcf1;outline-offset:3px}"
+    },
+    {
+      "name": "Blank Swatch",
+      "kind": "card",
+      "refersTo": "board",
+      "description": "Sample with no photo: charcoal card, dashed inner slot, printed text at the bottom.",
+      "html": "<div class=\"ds-l2\"><span class=\"ds-sw\"><span class=\"ds-sw__p\"><strong>Obras públicas</strong><span>Sem fotografia no portefólio</span></span></span></div>",
+      "css": ".ds-l2{background:#f6f6f3;padding:24px;max-width:280px}.ds-sw{position:relative;display:grid;align-items:end;aspect-ratio:1;padding:1.1rem 1.2rem;background:#1c1e1d;color:#f6f6f3;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;box-shadow:0 1px 1px rgb(28 30 29/.08),0 12px 20px -14px rgb(28 30 29/.4)}.ds-sw::before{content:'';position:absolute;inset:.6rem;border:1px dashed #ffffff40}.ds-sw__p{position:relative;display:grid;gap:.15rem;line-height:1.25}.ds-sw__p strong{font-weight:680;font-size:1.05rem;letter-spacing:-.01em}.ds-sw__p span{color:#b8bcb7;font-size:.8125rem}"
+    },
+    {
+      "name": "Spec Tag",
+      "kind": "card",
+      "refersTo": "lime",
+      "description": "Company facts as one sample tag: sticker-dot head, label/value rows on hairlines.",
+      "html": "<div class=\"ds-l3\"><div class=\"ds-spec\"><p class=\"ds-spec__h\"><span class=\"ds-dot\" aria-hidden=\"true\"></span>Ficha da empresa</p><dl><div><dt>Desde</dt><dd>1985</dd></div><div><dt>Alvará</dt><dd>nº 4511</dd></div><div><dt>Sede</dt><dd>Quarteira</dd></div></dl></div></div>",
+      "css": ".ds-l3{background:#f6f6f3;padding:24px;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;color:#1c1e1d}.ds-dot{display:inline-block;flex:none;width:.7rem;height:.7rem;border-radius:50%;background:#ffe500;box-shadow:0 0 0 1.5px #1c1e1d}.ds-spec{border:1px solid #1c1e1d40;background:#f6f6f3;max-width:30rem}.ds-spec__h{display:flex;align-items:center;gap:.65rem;margin:0;padding:1rem 1.25rem;border-bottom:1px solid #1c1e1d40;font-weight:650}.ds-spec dl{margin:0}.ds-spec dl>div{display:grid;grid-template-columns:minmax(8.5rem,.8fr) 1.2fr;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid #1c1e1d1f}.ds-spec dl>div:last-child{border-bottom:0}.ds-spec dt{color:#4b4f4c;font-size:.9375rem}.ds-spec dd{margin:0;font-weight:620;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Field-white square input on lime; blue border and ring on focus.",
+      "html": "<div class=\"ds-l4\"><label class=\"ds-fl\">Localidade da obra<input class=\"ds-in\" type=\"text\" placeholder=\"Ex.: Loulé\"></label></div>",
+      "css": ".ds-l4{background:#f6f6f3;padding:24px;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;color:#1c1e1d}.ds-fl{display:grid;gap:.6rem;font-weight:620;font-size:1.05rem;max-width:26rem}.ds-in{width:100%;min-height:52px;padding:.75rem .9rem;border:1px solid #1c1e1d40;border-radius:0;background:#fff;color:#1c1e1d;font:inherit;font-weight:420;font-size:1.0625rem;transition:border-color 200ms cubic-bezier(.16,1,.3,1),box-shadow 200ms cubic-bezier(.16,1,.3,1)}.ds-in::placeholder{color:#6a6e6b}.ds-in:hover{border-color:#4b4f4c}.ds-in:focus-visible{outline:none;border-color:#0a6dad;box-shadow:0 0 0 1px #0a6dad}"
+    },
+    {
+      "name": "Option",
+      "kind": "input",
+      "refersTo": "option",
+      "description": "Square white option box with a round radio that fills with the sun sticker when chosen.",
+      "html": "<div class=\"ds-l5\"><label class=\"ds-opt\"><input type=\"radio\" name=\"ds-o\" checked><span class=\"ds-opt__i\"></span>Nos próximos 3 meses</label><label class=\"ds-opt\"><input type=\"radio\" name=\"ds-o\"><span class=\"ds-opt__i\"></span>Ainda sem data</label></div>",
+      "css": ".ds-l5{background:#f6f6f3;padding:24px;display:grid;gap:.6rem;max-width:22rem;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif;color:#1c1e1d}.ds-opt{position:relative;display:flex;align-items:center;gap:.75rem;min-height:52px;padding:.6rem .9rem;border:1px solid #1c1e1d40;background:#fff;cursor:pointer;font-weight:540;line-height:1.3}.ds-opt input{position:absolute;opacity:0;width:1px;height:1px}.ds-opt__i{flex:none;width:1.1rem;height:1.1rem;border-radius:50%;border:1px solid #4b4f4c;display:grid;place-items:center}.ds-opt__i::after{content:'';width:.62rem;height:.62rem;border-radius:50%;background:#ffe500;box-shadow:0 0 0 1px #1c1e1d;transform:scale(0);transition:transform 300ms cubic-bezier(.16,1,.3,1)}.ds-opt:hover{border-color:#4b4f4c}.ds-opt:has(input:checked){border-color:#1c1e1d;box-shadow:inset 0 0 0 1px #1c1e1d;font-weight:620}.ds-opt:has(input:checked) .ds-opt__i::after{transform:scale(1)}.ds-opt:has(input:focus-visible){outline:2px solid #0a6dad;outline-offset:2px}"
+    },
+    {
+      "name": "Header Nav",
+      "kind": "nav",
+      "refersTo": "board",
+      "description": "Charcoal header: text links with a hairline underline that draws in from the left; small primary quote button.",
+      "html": "<div class=\"ds-hd\"><span class=\"ds-hd__n\">Civilsul</span><nav><a href=\"#\" aria-current=\"page\">Serviços</a><a href=\"#\">Obras</a><a href=\"#\">Empresa</a><a href=\"#\">Contactos</a></nav><a class=\"ds-hd__q\" href=\"#\"><span class=\"ds-dot\" aria-hidden=\"true\"></span>Pedir orçamento</a></div>",
+      "css": ".ds-hd{display:flex;align-items:center;gap:1.5rem;min-height:76px;padding:0 24px;background:#1c1e1d;color:#f6f6f3;border-bottom:1px solid #ffffff22;font-family:'Schibsted Grotesk Variable','Schibsted Grotesk',system-ui,sans-serif}.ds-dot{display:inline-block;flex:none;width:.7rem;height:.7rem;border-radius:50%;background:#ffe500;box-shadow:0 0 0 1.5px #1c1e1d}.ds-hd__n{font-weight:780;font-size:1.45rem;letter-spacing:-.03em;margin-right:auto}.ds-hd nav{display:flex;gap:.25rem}.ds-hd nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 .8rem;color:#f6f6f3;font-weight:560;text-decoration:none}.ds-hd nav a::after{content:'';position:absolute;left:.8rem;right:.8rem;bottom:6px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 400ms cubic-bezier(.16,1,.3,1)}.ds-hd nav a:hover::after,.ds-hd nav a[aria-current]::after{transform:scaleX(1)}.ds-hd nav a:focus-visible{outline:2px solid #6bbcf1;outline-offset:3px}.ds-hd__q{display:inline-flex;align-items:center;gap:.6rem;min-height:44px;padding:.5rem 1rem;background:#f6f6f3;color:#1c1e1d;font-weight:620;font-size:.95rem;text-decoration:none}.ds-hd__q:hover{background:color-mix(in srgb,#f6f6f3 86%,#1c1e1d)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Showroom Sample Board",
+    "overview": "The site is the material board in a good builder's showroom. Every service is shown as physical samples: square or 4:5 photographic chips cut, in CSS, from Civilsul's own finished works (timber cladding, pool water, terracotta roof, lime-white wall with a blue band, patterned floor tile, blue facade), each mounted with a hairline frame and a small printed tag beneath it: \"Ref. S-01\", the material as seen in the photo, and \"Aplicado em\" + the work it came from. Touch a sample and it opens into the whole house. The proof is material, not adjectives.\n\nTwo grounds alternate by section: a charcoal mounting board for the first viewport, page heads, the home services list, the closing call and the footer; a lime-white reading ground for works, company, process, trades and the quote. Colour is otherwise withheld so the photographs carry it. The logo's yellow appears only as a small round sticker; the logo's blue appears only as links and focus.\n\nMotion is one gesture: sample to house. The crop animates out to the full photograph inside the same frame (700ms, expo-out) while the tag swaps the material line for the work title. On the works wall each sample resolves to the house once as it enters the viewport. Reduced motion shows full photographs with no transitions.",
+    "keyCharacteristics": [
+      "Sample chips (crop + hairline frame + printed tag below) are the primary unit on every page.",
+      "Two grounds, charcoal board and lime white, alternate by section and re-point every colour role.",
+      "One family (Schibsted Grotesk) for everything; the tag is the only small type and it sits under what it labels.",
+      "Square corners; the only circles are the sticker dot, list bullets and step numbers.",
+      "No new rasters: every image is a real work photo, cropped by `object-position` + `scale`."
+    ],
+    "rules": [
+      {
+        "name": "The Sticker Rule",
+        "body": "Yellow is only ever a small round dot or the fill inside a small round/square mark. It says \"this is the one to press\" or \"this is chosen\". It never fills a button, panel or band.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ground Swap Rule",
+        "body": "Components never hard-code board or lime colours; they use the local roles that `.board` and `.lime` set, so the same chip, button or spec tag works on either ground.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tag Below Rule",
+        "body": "Small type labels things from underneath, like a printed sample tag. Nothing small and tracked sits above a heading; there is no uppercase anywhere in this world.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sample-Only Shadow Rule",
+        "body": "Only a physical sample casts a shadow. Buttons, panels, tags and navigation stay flat; the input focus ring and the checked option's inset line are outlines, not elevation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** cut every sample from a real work photo in CSS (focal point x/y, scale, and a \"house\" framing hx/hy); keep the material line to what is visible in the photo.",
+      "**Do** put the tag under the sample, with a ref code, and link it to the work it came from.",
+      "**Do** use the local roles (`--fg`, `--fg-2`, `--hair`, `--link`, `--rest`, `--lift`) so components work on both grounds.",
+      "**Do** use blue for links and focus only, and the text-safe value for the ground you are on.",
+      "**Do** keep the sample-to-house transition at 700ms on the shared expo-out curve, and show full photos under reduced motion.",
+      "**Do** use a blank swatch rather than a mismatched photo when no real work fits."
+    ],
+    "donts": [
+      "**Don't** generate, stock or re-export images for samples; crops are CSS only.",
+      "**Don't** use yellow as a fill for buttons, panels or text; it is a sticker.",
+      "**Don't** add shadows to anything that is not a sample.",
+      "**Don't** use uppercase or tracked labels above headings; small type sits below.",
+      "**Don't** round corners on rectangles; circles are for the dot, bullets and step numbers.",
+      "**Don't** add a second serif, monospace or display face."
+    ]
+  }
+}
