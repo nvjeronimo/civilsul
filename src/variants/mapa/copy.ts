@@ -93,7 +93,7 @@ export const C = {
   contents: { pt: 'Índice', en: 'Index' },
   total: { pt: 'Total', en: 'Total' },
   totalLine: (lang: Lang, arts: number, items: number, plates: number) =>
-    lang === 'pt' ? `${arts} artigos · ${items} itens · ${plates} pranchas em anexo` : `${arts} items · ${items} sub-items · ${plates} plates in annex`,
+    lang === 'pt' ? `${arts} artigos · ${plates} pranchas em anexo` : `${arts} items · ${plates} plates in annex`,
   aboutLead: {
     pt: 'Construtora do Sul, Lda., com sede em Quarteira. Alvará nº 4511 desde 1985; obras no Algarve e no restante país.',
     en: 'Construtora do Sul, Lda., based in Quarteira. Construction permit nº 4511 since 1985; working in the Algarve and across Portugal.',

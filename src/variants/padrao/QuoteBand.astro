@@ -61,7 +61,7 @@ const quoteHref = href(V, lang, 'quote') + (tipo ? `?tipo=${tipo}` : '');
   @media (min-width: 64rem) {
     .band__panel { grid-template-columns: 1.15fr 1fr; }
     .band__panel--text { grid-template-columns: 1fr; }
-    .band__panel--text .band__text { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s12); align-items: end; }
+    .band__panel--text .band__text { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s12); align-items: start; }
     .band__panel--text .band__b > .btn-row { margin-top: 0; }
   }
   .band__text { padding: clamp(2rem, 1rem + 4vw, 4.5rem); }

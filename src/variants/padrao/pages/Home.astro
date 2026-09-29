@@ -237,6 +237,9 @@ const bandPhoto = band.photos[0];
   .fband__more { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 650; font-size: var(--fs-small); color: #e8edf3; }
   .fband__cap a:hover .fband__t { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
   .fband :focus-visible { outline-color: #fff; }
+  @media (max-width: 59.99rem) {
+    .fband__cap { padding-top: 5rem; background: linear-gradient(0deg, rgba(10, 18, 31, 0.94) 0%, rgba(10, 18, 31, 0.88) 55%, rgba(10, 18, 31, 0.5) 80%, rgba(10, 18, 31, 0) 100%); }
+  }
   .company__text .lead { margin-top: var(--s3); color: var(--ink); }
   .company__team { margin-top: var(--s2); color: var(--ink-2); max-width: 40rem; }
   .company__text .more { margin-top: var(--s3); }

@@ -73,7 +73,9 @@ const { lang } = Astro.props;
     .grid { grid-template-columns: repeat(3, 1fr); gap: var(--s6) var(--s4); }
     /* Mosaico só com todas as obras visíveis; filtrado volta a três colunas iguais */
     .grid:not(.is-filtered) :global(.cell) { grid-column: var(--c); grid-row: var(--r); }
-    .grid:not(.is-filtered) :global(.cell--lg .wcard__ph) { flex: 1 1 auto; aspect-ratio: auto; min-height: 24rem; }
+    /* A grande não impõe altura: preenche exatamente as duas linhas das pequenas (foto em cover) */
+    .grid:not(.is-filtered) :global(.cell--lg .wcard__ph) { position: relative; flex: 1 1 0; aspect-ratio: auto; min-height: 0; }
+    .grid:not(.is-filtered) :global(.cell--lg .wcard__ph picture) { position: absolute; inset: 0; }
     .grid:not(.is-filtered) :global(.cell--wide .wcard__ph) { aspect-ratio: 21 / 9; }
   }
 </style>
