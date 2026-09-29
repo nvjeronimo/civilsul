@@ -1,0 +1,36 @@
+---
+// Serviço sem obra fotografada (obras públicas): painel navy com o facto verificável (alvará), em vez de uma foto que o representaria mal.
+import Icon from './Icon.astro';
+import { UI, type Lang } from '../../lib/site';
+import type { Service } from '../../content/services';
+
+interface Props { lang: Lang; service: Service; mini?: boolean; class?: string }
+const { lang, service, mini = false, class: cls } = Astro.props;
+const ui = UI[lang];
+---
+{mini ? (
+  <span class:list={['spanel spanel--mini', cls]} aria-hidden="true"><Icon name="permit" size={26} /></span>
+) : (
+  <div class:list={['spanel', cls]}>
+    <Icon name="permit" size={40} class="spanel__icon" />
+    <div class="spanel__body">
+      <p class="spanel__fact">{ui.permit}</p>
+      <p class="spanel__text">{service.short[lang]}</p>
+      <p class="spanel__since">{ui.since}</p>
+    </div>
+  </div>
+)}
+
+<style>
+  .spanel {
+    display: flex; flex-direction: column; justify-content: space-between; gap: var(--s4);
+    width: 100%; height: 100%; min-height: 14rem; padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: var(--radius); background: var(--ink); color: var(--on-ink-2);
+    background-image: linear-gradient(135deg, rgba(11, 132, 207, 0.22) 0%, rgba(11, 132, 207, 0) 55%);
+  }
+  .spanel :global(.spanel__icon) { color: #6cc0f2; }
+  .spanel__fact { color: #fff; font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .spanel__text { margin-top: var(--s1); font-size: 1.0625rem; color: #e8edf3; max-width: 26ch; }
+  .spanel__since { margin-top: var(--s2); font-size: var(--fs-small); font-weight: 650; color: var(--on-ink-2); }
+  .spanel--mini { display: grid; place-items: center; min-height: 0; padding: 0; color: #6cc0f2; }
+</style>

@@ -42,7 +42,8 @@ if (page === 'home') {
   jsonLd.push(crumb([[C.home[lang], href(V, lang, 'home')], [ui.nav.works, href(V, lang, 'works')], [w.title[lang], href(V, lang, 'works', w.slug[lang])]]));
 } else if (page === 'services' && id) {
   const s = serviceById(id);
-  image = await og(workById(SERVICE_PHOTO[s.id]).photos[0].src);
+  const pid = SERVICE_PHOTO[s.id];
+  image = pid ? await og(workById(pid).photos[0].src) : undefined;
   const url = href(V, lang, 'services', s.slug[lang]);
   jsonLd.push(crumb([[C.home[lang], href(V, lang, 'home')], [ui.nav.services, href(V, lang, 'services')], [s.title[lang], url]]));
   jsonLd.push({

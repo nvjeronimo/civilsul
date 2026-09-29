@@ -4,6 +4,7 @@ import Icon from '../Icon.astro';
 import PageIntro from '../PageIntro.astro';
 import WorkCard from '../WorkCard.astro';
 import QuoteBand from '../QuoteBand.astro';
+import ServicePanel from '../ServicePanel.astro';
 import { UI, href, whatsapp, type Lang } from '../../../lib/site';
 import { SERVICES, serviceById } from '../../../content/services';
 import { workById } from '../../../content/works';
@@ -14,7 +15,8 @@ const { lang, id } = Astro.props;
 const ui = UI[lang];
 const s = serviceById(id);
 const works = s.works.filter((id) => id !== SERVICE_PHOTO[s.id]).map(workById);
-const lead = workById(SERVICE_PHOTO[s.id]).photos[0];
+const leadId = SERVICE_PHOTO[s.id];
+const lead = leadId ? workById(leadId).photos[0] : null;
 const tipo = SERVICE_QUOTE[s.id];
 const others = SERVICES.filter((x) => x.id !== s.id);
 ---
@@ -24,7 +26,7 @@ const others = SERVICES.filter((x) => x.id !== s.id);
     <a class="btn btn--line" href={whatsapp(lang)} target="_blank" rel="noopener"><Icon name="chat" size={20} />{C.whatsappCta[lang]}</a>
   </div>
   <div slot="media" class="ph lead-ph">
-    <Picture src={lead.src} formats={['avif', 'webp']} widths={[640, 960, 1280, 1600]} sizes="(min-width: 64rem) 46vw, 100vw" alt={lead.alt[lang]} loading="eager" fetchpriority="high" decoding="async" />
+    {!lead ? <ServicePanel lang={lang} service={s} /> : <Picture src={lead.src} formats={['avif', 'webp']} widths={[640, 960, 1280, 1600]} sizes="(min-width: 64rem) 46vw, 100vw" alt={lead.alt[lang]} loading="eager" fetchpriority="high" decoding="async" />}
   </div>
 </PageIntro>
 
@@ -37,7 +39,7 @@ const others = SERVICES.filter((x) => x.id !== s.id);
   </div>
 </section>
 
-<section class="section" aria-labelledby="rel-title">
+{works.length > 0 && <section class="section" aria-labelledby="rel-title">
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div><h2 id="rel-title">{ui.related}</h2></div>
@@ -47,18 +49,19 @@ const others = SERVICES.filter((x) => x.id !== s.id);
       {works.map((w) => <WorkCard work={w} lang={lang} />)}
     </div>
   </div>
-</section>
+</section>}
 
-<section class="section section--tight others-sec" aria-labelledby="others-title">
+<section class:list={['section section--tight', { 'others-sec': works.length > 0 }]} aria-labelledby="others-title">
   <div class="wrap">
     <h2 id="others-title" class="others__h">{C.otherServices[lang]}</h2>
     <ul class="others">
       {others.map((o) => {
-        const p = workById(SERVICE_PHOTO[o.id]).photos[0];
+        const pid = SERVICE_PHOTO[o.id];
+        const p = pid ? workById(pid).photos[0] : null;
         return (
           <li>
             <a href={href(V, lang, 'services', o.slug[lang])}>
-              <span class="ph others__ph"><Picture src={p.src} formats={['avif', 'webp']} widths={[160, 320]} sizes="80px" alt="" loading="lazy" decoding="async" /></span>
+              <span class="ph others__ph">{p ? <Picture src={p.src} formats={['avif', 'webp']} widths={[160, 320]} sizes="80px" alt="" loading="lazy" decoding="async" /> : <ServicePanel lang={lang} service={o} mini />}</span>
               <span class="others__t">{o.title[lang]}</span>
               <Icon name="arrow-right" size={18} />
             </a>

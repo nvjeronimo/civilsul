@@ -1,0 +1,25 @@
+---
+// Prancha tipográfica: usada quando um artigo não tem fotografias publicadas. Mostra um facto (alvará), nunca uma foto.
+import { SITE, UI, type Lang } from '../../lib/site';
+import { C } from './copy';
+interface Props { lang: Lang; ratio?: string; compact?: boolean }
+const { lang, ratio = '4 / 3', compact = false } = Astro.props;
+---
+<figure class:list={['plate', 'tplate', compact && 'tplate--sm']} style={`--ratio:${ratio}`}>
+  <span class="plate__frame">
+    <span class="plate__media tplate__body">
+      <span class="tplate__k">{UI[lang].permit.replace(/\s*nº.*$/, '')}</span>
+      <span class="tplate__v">nº {SITE.permit}</span>
+      <span class="tplate__s">{C.facts.since[lang]} {SITE.since}</span>
+    </span>
+  </span>
+  <figcaption class="plate__cap"><span class="plate__code">—</span><span class="plate__title">{C.noPhotos[lang]}</span><span class="plate__meta"></span></figcaption>
+</figure>
+<style is:global>
+  .tplate__body { display: grid; align-content: end; gap: 0.25rem; padding: clamp(1rem, 0.5rem + 2vw, 2.5rem); background: var(--sheet); background-image: var(--hatch); border: 1px solid var(--rule-2); }
+  .tplate__k { font-size: var(--t-small); color: var(--ink-2); font-weight: 650; }
+  .tplate__v { font-family: var(--f-disp); font-weight: 800; font-size: clamp(3rem, 2rem + 4vw, 6rem); line-height: 0.9; color: var(--pen-text); }
+  .tplate__s { font-family: var(--f-disp); font-weight: 700; font-size: 1.3rem; }
+  .tplate--sm .tplate__v { font-size: clamp(2rem, 1.4rem + 1.6vw, 3rem); }
+  .tplate--sm .tplate__s { font-size: 1.05rem; }
+</style>

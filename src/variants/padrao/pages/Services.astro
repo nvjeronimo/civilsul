@@ -4,6 +4,7 @@ import Icon from '../Icon.astro';
 import PageIntro from '../PageIntro.astro';
 import QuoteBand from '../QuoteBand.astro';
 import Trades from '../Trades.astro';
+import ServicePanel from '../ServicePanel.astro';
 import { UI, href, type Lang } from '../../../lib/site';
 import { SERVICES } from '../../../content/services';
 import { workById } from '../../../content/works';
@@ -18,12 +19,13 @@ const ui = UI[lang];
 <section class="svc-list" aria-label={ui.nav.services}>
   <div class="wrap">
     {SERVICES.map((s, i) => {
-      const p = workById(SERVICE_PHOTO[s.id]).photos[0];
+      const pid = SERVICE_PHOTO[s.id];
+      const p = pid ? workById(pid).photos[0] : null;
       const url = href(V, lang, 'services', s.slug[lang]);
       return (
         <article class:list={['svc', { 'svc--flip': i % 2 === 1 }]} data-reveal aria-labelledby={`svc-${s.id}`}>
           <div class="ph svc__ph">
-            <Picture src={p.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes="(min-width: 64rem) 46vw, 100vw" alt={p.alt[lang]} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+            {p ? <Picture src={p.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes="(min-width: 64rem) 46vw, 100vw" alt={p.alt[lang]} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" /> : <ServicePanel lang={lang} service={s} />}
           </div>
           <div class="svc__text">
             <h2 id={`svc-${s.id}`}><a href={url}>{s.title[lang]}</a></h2>

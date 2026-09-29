@@ -3,6 +3,7 @@
 // O tipo de obra escolhe-se por amostras recortadas das obras; o resumo é uma única etiqueta "Ref. do pedido".
 import { Picture } from 'astro:assets';
 import Icon from '../Icon.astro';
+import Swatch from '../Swatch.astro';
 import { SITE, UI, CALL_NOTE, href } from '../../../lib/site';
 import { WORK_TYPES, PROPERTY, TIMING, PROJECT_STATE, Q } from '../../../content/quote';
 import { workById } from '../../../content/works';
@@ -52,7 +53,7 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
       <p class="qf__nojs muted">{C.noJs}</p>
 
       <fieldset data-step>
-        <legend tabindex="-1"><span class="qf__of">{C.step} 1 {C.of} 4</span>{q.steps[0]}</legend>
+        <legend tabindex="-1">{q.steps[0]}</legend>
         <fieldset class="field">
           <legend class="qf__q">{q.type}</legend>
           <div class="types">
@@ -60,15 +61,15 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
               <label class="ts" style={t.s ? `--cx:${t.s.x}%;--cy:${t.s.y}%;--s:${t.s.s};--hx:${t.s.hx}%;--hy:${t.s.hy}%` : undefined}>
                 <input type="radio" name="type" value={t.id} data-text={t.label.pt} />
                 <span class:list={['chip__frame', 'ts__frame', !t.s && 'ts__frame--blank']}>
+                  {!t.s && <span aria-hidden="true" class="ts__swwrap"><Swatch title={t.label.pt} class="ts__sw" /></span>}
                   {t.photo && (
                     <Picture class="chip__img" src={t.photo.src} alt="" formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 900px) 520px, 480px" loading="lazy" decoding="async" />
                   )}
-                  {!t.s && <span class="ts__blank">{C.blank}</span>}
                   <span class="dot ts__dot" aria-hidden="true"></span>
                 </span>
                 <span class="ts__tag">
-                  <span class="ts__ref">{t.s ? `${C.ref} ${t.s.code}` : `${C.ref} S-00`}</span>
-                  <span class="ts__l">{t.label.pt}</span>
+                  {t.s && <span class="ts__ref">{C.ref} {t.s.code}</span>}
+                  <span class:list={['ts__l', !t.s && 'vh']}>{t.label.pt}</span>
                 </span>
               </label>
             ))}
@@ -78,7 +79,7 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
       </fieldset>
 
       <fieldset data-step>
-        <legend tabindex="-1"><span class="qf__of">{C.step} 2 {C.of} 4</span>{q.steps[1]}</legend>
+        <legend tabindex="-1">{q.steps[1]}</legend>
         <fieldset class="field">
           <legend class="qf__q">{q.property}</legend>
           <div class="opts">
@@ -102,7 +103,7 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
       </fieldset>
 
       <fieldset data-step>
-        <legend tabindex="-1"><span class="qf__of">{C.step} 3 {C.of} 4</span>{q.steps[2]}</legend>
+        <legend tabindex="-1">{q.steps[2]}</legend>
         <fieldset class="field">
           <legend class="qf__q">{q.timing}</legend>
           <div class="opts">
@@ -127,7 +128,7 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
       </fieldset>
 
       <fieldset data-step>
-        <legend tabindex="-1"><span class="qf__of">{C.step} 4 {C.of} 4</span>{q.steps[3]}</legend>
+        <legend tabindex="-1">{q.steps[3]}</legend>
         <div class="field">
           <label class="qf__q" for="q-name">{q.name}</label>
           <input id="q-name" name="name" type="text" autocomplete="name" aria-describedby="e-name" />
@@ -172,7 +173,6 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
 
     <aside class="qt" aria-labelledby="qt-h">
       <div class="qt__tag">
-        <span class="qt__hole" aria-hidden="true"></span>
         <p class="qt__head"><span class="dot" aria-hidden="true"></span><span id="qt-h">{C.quoteRef}</span></p>
         <p class="qt__sub small muted">{q.summary} · {C.quoteTagNote}</p>
         <dl class="qt__dl" data-summary>
@@ -220,7 +220,6 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
   .qf fieldset[data-step] > legend { display: grid; gap: 0.35rem; float: left; width: 100%; margin-bottom: 0.5rem; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.2rem); font-weight: 740; letter-spacing: -0.03em; line-height: 1.1; }
   .qf fieldset[data-step] > legend:focus { outline: none; }
   .qf fieldset[data-step] > legend + * { clear: both; }
-  .qf__of { font-size: var(--t-tag); color: var(--fg-2); font-weight: 500; letter-spacing: 0; }
   .field { display: grid; gap: 0.6rem; }
   .qf__q { font-weight: 620; font-size: 1.05rem; padding: 0; margin-bottom: 0.2rem; }
   fieldset.field > legend { margin-bottom: 0.8rem; }
@@ -247,8 +246,8 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
   .ts { position: relative; display: grid; align-content: start; gap: 0.6rem; cursor: pointer; }
   .ts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .ts__frame { aspect-ratio: 1; }
-  .ts__frame--blank { display: grid; place-items: center; background: var(--lime-2); }
-  .ts__blank { font-size: var(--t-small); color: var(--fg-2); }
+  .ts__frame--blank { background: var(--board); }
+  .ts__frame--blank :global(.ts__sw) { position: absolute; inset: 0; box-shadow: none; }
   .ts__dot { position: absolute; top: 0.6rem; right: 0.6rem; width: 0.95rem; height: 0.95rem; opacity: 0; transform: scale(0.4); transition: opacity 250ms var(--ease), transform 450ms var(--ease); }
   .ts__tag { display: grid; gap: 0.15rem; padding-top: 0.5rem; border-top: 1px solid var(--hair); }
   .ts__ref { font-size: var(--t-tag); color: var(--fg-2); }
@@ -298,16 +297,14 @@ const preview = [q.type, q.property, q.place, q.area, q.timing, q.state, q.detai
 
   /* etiqueta do pedido */
   .qt { display: grid; gap: 1.5rem; }
-  .qt__tag { position: relative; padding: 1.75rem 1.4rem 1.25rem; border: 1px solid var(--hair-2); background: #fff; }
-  .qt__hole { position: absolute; top: 0.9rem; left: 50%; width: 0.8rem; height: 0.8rem; margin-left: -0.4rem; border-radius: 50%; border: 1px solid var(--hair-2); background: var(--lime); }
-  .qt__head { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem; font-weight: 720; font-size: 1.35rem; letter-spacing: -0.02em; }
+  .qt__tag { position: relative; padding: 1.4rem 1.4rem 1.25rem; border: 1px solid var(--hair-2); background: #fff; }
+  .qt__head { display: flex; align-items: center; gap: 0.6rem; font-weight: 720; font-size: 1.35rem; letter-spacing: -0.02em; }
   .qt__sub { margin: 0.25rem 0 1rem; }
   .qt__dl { display: grid; }
-  .qt__dl > :global(div) { display: grid; grid-template-columns: 9rem 1fr; gap: 0.75rem; padding: 0.5rem 0; border-top: 1px solid var(--hair); font-size: var(--t-small); }
-  .qt__dl :global(dt) { color: var(--fg-2); }
+  .qt__dl > :global(div) { display: grid; gap: 0.1rem; padding: 0.55rem 0; border-top: 1px solid var(--hair); font-size: var(--t-small); }
+  .qt__dl :global(dt) { color: var(--fg-2); font-size: var(--t-tag); }
   .qt__dl :global(dd) { overflow-wrap: anywhere; font-weight: 600; }
   .qt__dl :global([data-filled='false'] dd) { color: var(--fg-2); font-weight: 400; }
-  @media (max-width: 420px) { .qt__dl > :global(div) { grid-template-columns: 1fr; gap: 0.1rem; } }
   .qt__direct { display: grid; gap: 0.75rem; }
   .qt__direct a { font-size: 1.15rem; display: inline-flex; min-height: 36px; align-items: center; }
 </style>

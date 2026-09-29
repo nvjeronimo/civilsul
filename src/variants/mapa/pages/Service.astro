@@ -2,6 +2,7 @@
 import Plate from '../Plate.astro';
 import Icon from '../Icon.astro';
 import Close from '../Close.astro';
+import TextPlate from '../TextPlate.astro';
 import { UI, href, type Lang } from '../../../lib/site';
 import { SERVICES, serviceById } from '../../../content/services';
 import { workById, KINDS } from '../../../content/works';
@@ -12,7 +13,7 @@ const { lang, id } = Astro.props;
 const u = UI[lang];
 const s = serviceById(id);
 const works = s.works.map(workById);
-const lead = works[0];
+const lead = works[0] as (typeof works)[number] | undefined;
 const related = works.slice(1);
 const kindOf = (k: string) => KINDS.find((x) => x.id === k)!.label[lang];
 const others = SERVICES.filter((x) => x.id !== id);
@@ -27,8 +28,10 @@ const others = SERVICES.filter((x) => x.id !== id);
         <p class="lead">{s.intro[lang]}</p>
         <a class="cta" href={href('mapa', lang, 'quote') + '?tipo=' + TIPO[s.id]}>{C.serviceCta[lang]}<Icon name="arrow" /></a>
       </div>
-      <Plate src={lead.photos[0].src} alt={lead.photos[0].alt[lang]} code={lead.code} title={lead.title[lang]} meta={lead.place}
-        href={href('mapa', lang, 'works', lead.slug[lang])} sizes="(min-width: 900px) 52vw, 100vw" widths={[640, 960, 1280, 1680]} eager ratio="4 / 3" />
+      {lead
+        ? <Plate src={lead.photos[0].src} alt={lead.photos[0].alt[lang]} code={lead.code} title={lead.title[lang]} meta={lead.place}
+            href={href('mapa', lang, 'works', lead.slug[lang])} sizes="(min-width: 900px) 52vw, 100vw" widths={[640, 960, 1280, 1680]} eager ratio="4 / 3" />
+        : <TextPlate lang={lang} />}
     </div>
   </header>
 
@@ -44,16 +47,15 @@ const others = SERVICES.filter((x) => x.id !== id);
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="rel-h">
+  {related.length > 0 && <section class="sec" aria-labelledby="rel-h">
     <div class="sechead"><h2 id="rel-h">{u.related}</h2></div>
-    {related.length === 0 && <p class="muted">{C.noRelated[lang]}</p>}
     <div class="rel">
       {related.map((w) => (
         <Plate src={w.photos[0].src} alt={w.photos[0].alt[lang]} code={w.code} title={w.title[lang]} meta={w.place}
           href={href('mapa', lang, 'works', w.slug[lang])} sizes="(min-width: 1100px) 31vw, (min-width: 640px) 46vw, 100vw" widths={[480, 720, 960]} ratio="1 / 1" />
       ))}
     </div>
-  </section>
+  </section>}
 
   <section class="sec" aria-labelledby="oth-h">
     <div class="sechead"><h2 id="oth-h">{C.otherServices[lang]}</h2></div>

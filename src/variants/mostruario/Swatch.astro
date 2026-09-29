@@ -1,0 +1,9 @@
+---
+// Amostra em branco: cartão carvão com contorno tracejado e o texto impresso. Sem fotografia.
+// Usada onde nenhuma obra do portefólio pode representar o serviço (Obras públicas) e para "Outro trabalho".
+interface Props { title: string; sub?: string; ratio?: 'sq' | 'wide'; class?: string }
+const { title, sub, ratio = 'sq', class: cls } = Astro.props;
+---
+<span class:list={['swatch', `swatch--${ratio}`, cls]}>
+  <span class="swatch__print"><strong>{title}</strong>{sub && <span>{sub}</span>}</span>
+</span>

@@ -93,13 +93,13 @@ export const C = {
 } satisfies Record<string, T | Record<string, T>>;
 
 /** Fotografia que representa cada serviço (obra real associada). */
-export const SERVICE_PHOTO: Record<string, string> = {
+/** Obras públicas não tem fotografia: nenhuma obra do portefólio está identificada como obra pública. */
+export const SERVICE_PHOTO: Partial<Record<string, string>> = {
   moradias: 'vale-del-rey',
   reconstrucao: 'monte-do-pocinho',
   remodelacoes: 'maison-amarande',
   piscinas: 'arranjos-exteriores-piscina',
   telhados: 'remodelacao-moradia',
-  'obras-publicas': 'reconstrucao-edificio',
 };
 
 /** ?tipo= do pedido de orçamento por serviço. */

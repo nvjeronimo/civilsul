@@ -1,5 +1,6 @@
 ---
 import Chip from '../Chip.astro';
+import Swatch from '../Swatch.astro';
 import Icon from '../Icon.astro';
 import Final from '../Final.astro';
 import { UI, href, whatsapp } from '../../../lib/site';
@@ -32,7 +33,7 @@ const quote = `${href(V, 'pt', 'quote')}?tipo=${TIPO[id]}`;
       </div>
     </div>
     <div class="sv__lead">
-      <Chip sample={lead} w={[440, 360]} eager dot />
+      {lead ? <Chip sample={lead} w={[440, 360]} eager dot /> : <Swatch title={C.family[id]} sub={C.publicSub} />}
     </div>
   </div>
 </header>
@@ -45,9 +46,13 @@ const quote = `${href(V, 'pt', 'quote')}?tipo=${TIPO[id]}`;
     </div>
     <div>
       <h2 class="sv__h2" id="rel-h">{u.related}</h2>
-      <ul class="wall sv__wall" aria-labelledby="rel-h">
-        {related.map((r) => <li><Chip sample={r} ratio="pt" w={[250, 170]} open /></li>)}
-      </ul>
+      {related.length > 0 ? (
+        <ul class="wall sv__wall" aria-labelledby="rel-h">
+          {related.map((r) => <li><Chip sample={r} ratio="pt" w={[250, 170]} open /></li>)}
+        </ul>
+      ) : (
+        <p class="sv__none">{C.noRelated}</p>
+      )}
     </div>
   </div>
 </section>
@@ -57,7 +62,7 @@ const quote = `${href(V, 'pt', 'quote')}?tipo=${TIPO[id]}`;
     <h2 id="oth-h" class="sv__h2">{C.otherServices}</h2>
     <ul class="oth">
       {others.map((o) => (
-        <li><a href={href(V, 'pt', 'services', o.slug.pt)}><span class="oth__c">{leadSample(o.id).code}</span><span>{o.title.pt}</span><Icon name="arrow" /></a></li>
+        <li><a href={href(V, 'pt', 'services', o.slug.pt)}><span>{o.title.pt}</span><Icon name="arrow" /></a></li>
       ))}
     </ul>
   </div>
@@ -81,12 +86,12 @@ const quote = `${href(V, 'pt', 'quote')}?tipo=${TIPO[id]}`;
   @media (min-width: 1000px) { .sv__body { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 5rem; } }
   .oth { display: grid; border-top: 1px solid var(--hair-2); }
   .oth a {
-    display: grid; grid-template-columns: 3.5rem 1fr auto; align-items: center; gap: 1rem; min-height: 64px; padding: 0.75rem 0;
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; min-height: 64px; padding: 0.75rem 0;
     border-bottom: 1px solid var(--hair); color: var(--fg); font-weight: 620; font-size: 1.15rem; text-decoration: none;
   }
-  .oth .oth__c { font-size: var(--t-tag); color: var(--fg-2); font-weight: 500; }
+  .sv__none { color: var(--fg-2); max-width: 52ch; padding-top: 1rem; border-top: 1px solid var(--hair); }
   .oth .ic { color: var(--fg-2); transition: transform 400ms var(--ease); }
-  .oth a:hover span:nth-child(2) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .oth a:hover span:nth-child(1) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
   .oth a:hover .ic { transform: translateX(4px); color: var(--fg); }
   @media (min-width: 900px) { .oth { grid-template-columns: 1fr 1fr; column-gap: 3rem; } }
 </style>

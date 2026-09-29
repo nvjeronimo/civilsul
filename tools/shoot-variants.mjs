@@ -6,11 +6,11 @@ const CHROME = path.join(os.homedir(), 'Library/Caches/ms-playwright/chromium_he
 const b = await chromium.launch({ executablePath: CHROME });
 for (const v of ['mapa', 'mostruario', 'padrao']) {
   for (const [w, h, label, dpr] of [[1440, 900, 'desktop', 1], [390, 844, 'mobile', 2]]) {
-    const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: w < 500, hasTouch: w < 500, deviceScaleFactor: dpr, reducedMotion: 'reduce' });
+    const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: w < 500, hasTouch: w < 500, deviceScaleFactor: dpr, reducedMotion: v === 'mostruario' ? 'no-preference' : 'reduce' });
     const p = await ctx.newPage();
     await p.goto(`http://localhost:${port}/civilsul/${v}/`, { waitUntil: 'networkidle' });
     await p.evaluate(() => document.fonts.ready);
-    await p.waitForTimeout(600);
+    await p.waitForTimeout(v === 'mostruario' ? 2000 : 600);
     await p.screenshot({ path: `src/assets/proposta/${v}-${label}.png` });
     await ctx.close();
   }

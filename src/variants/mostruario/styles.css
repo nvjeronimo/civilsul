@@ -43,6 +43,8 @@
 
 /* ---- Fundos ---- */
 .board {
+  --rest: 0 1px 0 rgb(255 255 255 / 0.05), 0 12px 22px -14px rgb(0 0 0 / 0.75);
+  --lift: 0 24px 38px -20px rgb(0 0 0 / 0.8);
   --bg: var(--board);
   --fg: var(--lime);
   --fg-2: var(--paper-2);
@@ -54,6 +56,8 @@
   color: var(--lime);
 }
 .lime {
+  --rest: 0 1px 1px rgb(28 30 29 / 0.08), 0 12px 20px -14px rgb(28 30 29 / 0.4);
+  --lift: 0 22px 34px -20px rgb(28 30 29 / 0.55);
   --bg: var(--lime);
   --fg: var(--ink);
   --fg-2: var(--ink-2);
@@ -143,7 +147,11 @@ main:focus { outline: none; }
 
 /* ---- Amostra (chip) ---- */
 .chip { display: grid; align-content: start; gap: 0.7rem; color: var(--fg); text-decoration: none; -webkit-tap-highlight-color: transparent; }
-.chip__frame { position: relative; display: block; overflow: hidden; aspect-ratio: 1; background: var(--board-2); transition: box-shadow var(--open) var(--ease), transform var(--open) var(--ease); }
+.chip__frame {
+  position: relative; display: block; overflow: hidden; aspect-ratio: 1; background: var(--board-2);
+  box-shadow: var(--rest);
+  transition: box-shadow var(--open) var(--ease), transform var(--open) var(--ease);
+}
 .chip--pt .chip__frame { aspect-ratio: 4 / 5; }
 .chip--wide .chip__frame { aspect-ratio: 16 / 10; }
 .chip__frame::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--hair); pointer-events: none; }
@@ -154,8 +162,8 @@ main:focus { outline: none; }
   transition: object-position var(--open) var(--ease), transform var(--open) var(--ease);
 }
 .chip__dot { position: absolute; top: 0.7rem; right: 0.7rem; width: 0.9rem; height: 0.9rem; z-index: 1; }
-.chip__tag { display: grid; gap: 0.2rem; padding-top: 0.55rem; border-top: 1px solid var(--hair); font-size: var(--t-tag); line-height: 1.35; }
-.chip__ref { display: flex; justify-content: space-between; gap: 0.75rem; color: var(--fg-2); font-weight: 500; }
+.chip__tag { display: grid; gap: 0.15rem; padding: 0.45rem 0 0.5rem; border-top: 1px solid var(--hair-2); border-bottom: 1px solid var(--hair); font-size: var(--t-tag); line-height: 1.35; }
+.chip__ref { display: flex; justify-content: space-between; gap: 0.75rem; color: var(--fg-2); font-weight: 500; font-size: 0.78rem; letter-spacing: 0.01em; }
 .chip__head { text-align: right; }
 .chip__swap { display: grid; font-size: 0.9375rem; font-weight: 620; line-height: 1.3; }
 .chip__swap > * { grid-area: 1 / 1; transition: opacity 450ms var(--ease), transform var(--open) var(--ease); }
@@ -167,17 +175,27 @@ main:focus { outline: none; }
 .chip.is-open .chip__img, .chip--open:not(.is-crop) .chip__img, .chip:focus-visible .chip__img { object-position: var(--hx) var(--hy); transform: scale(1); }
 .chip.is-open .chip__mat, .chip--open:not(.is-crop) .chip__mat, .chip:focus-visible .chip__mat { opacity: 0; transform: translateY(-0.5em); }
 .chip.is-open .chip__work, .chip--open:not(.is-crop) .chip__work, .chip:focus-visible .chip__work { opacity: 1; transform: none; }
-.chip.is-open .chip__frame, .chip:focus-visible .chip__frame { box-shadow: 0 22px 36px -22px rgb(0 0 0 / 0.7); transform: translateY(-3px); }
+.chip.is-open .chip__frame, .chip:focus-visible .chip__frame { box-shadow: var(--lift); transform: translateY(-3px); }
 .chip:focus-visible { outline: none; }
 .chip:focus-visible .chip__frame { outline: 2px solid var(--ring); outline-offset: 3px; }
 @media (hover: hover) {
   .chip:hover .chip__img { object-position: var(--hx) var(--hy); transform: scale(1); }
   .chip:hover .chip__mat { opacity: 0; transform: translateY(-0.5em); }
   .chip:hover .chip__work { opacity: 1; transform: none; }
-  a.chip:hover .chip__frame { box-shadow: 0 22px 36px -22px rgb(0 0 0 / 0.7); transform: translateY(-3px); }
+  a.chip:hover .chip__frame { box-shadow: var(--lift); transform: translateY(-3px); }
 }
-.lime .chip.is-open .chip__frame, .lime .chip:focus-visible .chip__frame { box-shadow: 0 20px 34px -22px rgb(28 30 29 / 0.55); }
-@media (hover: hover) { .lime a.chip:hover .chip__frame { box-shadow: 0 20px 34px -22px rgb(28 30 29 / 0.55); } }
+
+/* ---- Amostra em branco (sem fotografia) ---- */
+.swatch {
+  position: relative; display: grid; align-items: end; aspect-ratio: 1; padding: 1.1rem 1.2rem;
+  background: var(--board); color: var(--lime); box-shadow: var(--rest);
+}
+.swatch--wide { aspect-ratio: 16 / 10; }
+.swatch::before { content: ''; position: absolute; inset: 0.6rem; border: 1px dashed var(--hair-b2); pointer-events: none; }
+.swatch__print { position: relative; display: grid; gap: 0.15rem; line-height: 1.25; }
+.swatch__print strong { font-weight: 680; font-size: 1.05rem; letter-spacing: -0.01em; }
+.swatch--wide .swatch__print strong { font-size: clamp(1.3rem, 1rem + 1vw, 1.75rem); letter-spacing: -0.02em; }
+.swatch__print span { color: var(--paper-2); font-size: var(--t-tag); }
 
 /* ---- Parede de amostras ---- */
 .wall { display: grid; gap: 1.5rem 1.25rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }

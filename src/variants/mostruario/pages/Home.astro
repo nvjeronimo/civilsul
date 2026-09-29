@@ -10,7 +10,7 @@ import { SITE, UI, href, whatsapp } from '../../../lib/site';
 import { SERVICES } from '../../../content/services';
 import { KINDS, workById } from '../../../content/works';
 import { MISSION, TEAM } from '../../../content/company';
-import { leadSample } from '../samples';
+import { HERO_WALL, sampleByCode } from '../samples';
 import { C } from '../copy';
 
 const V = 'mostruario' as const;
@@ -31,18 +31,18 @@ const picks: { id: string; photo?: number; shape: 'land' | 'port' | 'half' }[] =
   <div class="wrap hero__grid">
     <div class="hero__copy">
       <h1 id="hero-h">{C.heroH}</h1>
-      <p class="lead">{C.heroLead}</p>
-      <div class="actions">
+      <p class="lead">{C.heroLead} <span class="hero__l2">{C.heroLead2}</span><span class="hero__l2m">{C.heroLead2m}</span></p>
+      <div class="actions hero__act">
         <a class="btn btn--primary" href={href(V, 'pt', 'quote')}><span class="dot" aria-hidden="true"></span>{u.nav.quote}</a>
-        <a class="btn" href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{C.heroWa}</a>
+        <a class="btn hero__wa" href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{C.heroWa}</a>
       </div>
-      <p class="hero__facts"><span>{u.since}</span><span>{u.permit}</span><span>{SITE.address.city}, {SITE.address.region}</span></p>
     </div>
     <ul class="wall wall--row hero__wall" aria-label={C.wallLabel}>
-      {SERVICES.map((s, i) => (
-        <li><Chip sample={leadSample(s.id)} head={C.family[s.id]} w={[235, 265]} eager={i < 3} dot={i === 0} /></li>
+      {HERO_WALL.map((h, i) => (
+        <li><Chip sample={sampleByCode(h.code)} head={C.family[h.family]} w={[235, 265]} eager={i < 3} dot={i === 0} /></li>
       ))}
     </ul>
+    <p class="hero__facts"><span>{u.since}</span><span>{u.permit}</span><span>{SITE.address.city}, {SITE.address.region}</span></p>
   </div>
 </section>
 
@@ -55,7 +55,6 @@ const picks: { id: string; photo?: number; shape: 'land' | 'port' | 'half' }[] =
     <ul class="fam">
       {SERVICES.map((s) => (
         <li>
-          <span class="fam__ref">{C.ref} {leadSample(s.id).code}</span>
           <div class="fam__t">
             <h3><a href={href(V, 'pt', 'services', s.slug.pt)}>{s.title.pt}</a></h3>
             <p>{s.short.pt}</p>
@@ -133,15 +132,28 @@ const picks: { id: string; photo?: number; shape: 'land' | 'port' | 'half' }[] =
 <Final />
 
 <style>
-  .hero { padding-block: clamp(2.5rem, 1rem + 4vw, 4.5rem) clamp(3rem, 1.5rem + 4vw, 5rem); }
-  .hero__grid { display: grid; gap: 3rem; align-items: center; }
+  .hero { padding-block: clamp(1.5rem, 0.5rem + 4vw, 4.5rem) clamp(2.5rem, 1.5rem + 4vw, 5rem); }
+  .hero__grid { display: grid; gap: 2rem; align-items: center; grid-template-areas: 'copy' 'wall' 'facts'; }
+  .hero__copy { grid-area: copy; }
+  .hero__wall { grid-area: wall; }
+  .hero__facts { grid-area: facts; }
+  .hero__l2m { display: none; }
+  @media (max-width: 699.98px) {
+    .hero .lead { margin: 1rem 0 1.5rem; font-size: 1.0625rem; }
+    .hero__l2 { display: none; }
+    .hero__l2m { display: inline; }
+    .hero__wa { display: none; }
+    .hero__facts { margin-top: 0 !important; }
+  }
   .hero h1 { font-size: var(--t-hero); letter-spacing: -0.04em; line-height: 0.98; max-width: 14ch; }
   .hero .lead { margin: 1.5rem 0 2rem; max-width: 34em; }
-  .hero__facts { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; margin-top: 2.25rem; padding-top: 0.9rem; border-top: 1px solid var(--hair); font-size: var(--t-tag); color: var(--fg-2); }
+  .hero__facts { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; margin-top: 0; padding-top: 0.9rem; border-top: 1px solid var(--hair); font-size: var(--t-tag); color: var(--fg-2); }
   .hero__facts span + span { position: relative; }
   @media (min-width: 1100px) {
     .hero { min-height: calc(100svh - var(--head-h)); display: grid; align-items: center; }
-    .hero__grid { grid-template-columns: minmax(0, 5.6fr) minmax(0, 6.4fr); gap: clamp(3rem, 4.5vw, 4.5rem); }
+    .hero__grid { grid-template-columns: minmax(0, 5.6fr) minmax(0, 6.4fr); grid-template-areas: 'copy wall' 'facts wall'; gap: 2.25rem clamp(3rem, 4.5vw, 4.5rem); align-items: end; }
+    .hero__copy { align-self: end; }
+    .hero__facts { align-self: start; }
   }
 
   .fams { border-top: 1px solid var(--hair); }
@@ -150,7 +162,6 @@ const picks: { id: string; photo?: number; shape: 'land' | 'port' | 'half' }[] =
     position: relative; display: grid; gap: 0.5rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--hair);
     grid-template-columns: 1fr auto; align-items: start;
   }
-  .fam__ref { grid-column: 1 / -1; font-size: var(--t-tag); color: var(--fg-2); }
   .fam__t h3 { font-size: var(--t-h3); }
   .fam__t h3 a { color: var(--fg); text-decoration: none; }
   .fam__t h3 a::after { content: ''; position: absolute; inset: 0; }
@@ -162,10 +173,9 @@ const picks: { id: string; photo?: number; shape: 'land' | 'port' | 'half' }[] =
   .fam li:has(a:focus-visible) { outline: 2px solid var(--ring); outline-offset: 4px; }
   .fam a:focus-visible { outline: none; }
   @media (min-width: 900px) {
-    .fam li { grid-template-columns: 7.5rem minmax(0, 1.1fr) minmax(0, 1fr) auto; align-items: baseline; padding: 1.75rem 0; }
-    .fam__ref { grid-column: 1; }
-    .fam__items { grid-column: 3; }
-    .fam__go { grid-row: 1; grid-column: 4; align-self: center; }
+    .fam li { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto; align-items: baseline; padding: 1.75rem 0; }
+    .fam__items { grid-column: 2; }
+    .fam__go { grid-row: 1; grid-column: 3; align-self: center; }
   }
 
   .plates { display: grid; gap: 2.5rem 1.5rem; margin-bottom: 2.5rem; }

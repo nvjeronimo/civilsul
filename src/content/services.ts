@@ -129,7 +129,8 @@ export const SERVICES: Service[] = [
       { pt: 'Urbanizações', en: 'Urban developments' },
     ],
     searches: { pt: 'Construtora de obras públicas no Algarve', en: 'Public works contractor in the Algarve' },
-    works: ['reconstrucao-edificio', 'fachada-portaldegenios'],
+    // O site atual não identifica nenhuma obra do portefólio como obra pública: não associar fotografias.
+    works: [],
   },
 ];
 

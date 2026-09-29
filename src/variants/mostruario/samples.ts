@@ -39,7 +39,7 @@ export const LEAD: Record<string, string> = {
   remodelacoes: 'S-03',
   piscinas: 'S-04',
   telhados: 'S-05',
-  'obras-publicas': 'S-06',
+  // Obras públicas: nenhuma obra do portefólio é identificada como obra pública → amostra só com texto.
 };
 
 /** Tipo de obra do pedido de orçamento → amostra (o "outro" fica em branco). */
@@ -53,13 +53,23 @@ export const TYPE_SAMPLE: Record<string, string | undefined> = {
 
 export const sampleByCode = (code: string) => SAMPLES.find((s) => s.code === code)!;
 export const sampleForWork = (id: string) => SAMPLES.find((s) => s.work === id)!;
-export const leadSample = (serviceId: string) => sampleByCode(LEAD[serviceId]);
+export const leadSample = (serviceId: string): Sample | undefined => (LEAD[serviceId] ? sampleByCode(LEAD[serviceId]) : undefined);
+
+/** Parede do primeiro ecrã: seis amostras reais, cada uma com a família da obra de onde vem. */
+export const HERO_WALL: { code: string; family: string }[] = [
+  { code: 'S-01', family: 'moradias' },
+  { code: 'S-02', family: 'reconstrucao' },
+  { code: 'S-03', family: 'remodelacoes' },
+  { code: 'S-04', family: 'piscinas' },
+  { code: 'S-05', family: 'telhados' },
+  { code: 'S-06', family: 'reconstrucao' },
+];
 export const workOf = (s: Sample): Work => workById(s.work);
 
 /** Amostras das obras relacionadas com um serviço, sem a principal. */
 export function familySamples(serviceId: string, works: string[], max = 3) {
   const lead = leadSample(serviceId);
-  return works.filter((w) => w !== lead.work).map(sampleForWork).slice(0, max);
+  return works.filter((w) => w !== lead?.work).map(sampleForWork).slice(0, max);
 }
 
 /** Pré-seleção do tipo de obra no pedido de orçamento a partir do serviço. */

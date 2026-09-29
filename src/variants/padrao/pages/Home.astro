@@ -4,6 +4,7 @@ import Icon from '../Icon.astro';
 import WorkCard from '../WorkCard.astro';
 import Process from '../Process.astro';
 import Facts from '../Facts.astro';
+import ServicePanel from '../ServicePanel.astro';
 import QuoteBand from '../QuoteBand.astro';
 import { UI, href, whatsapp, type Lang } from '../../../lib/site';
 import { SERVICES } from '../../../content/services';
@@ -64,12 +65,13 @@ const bandPhoto = band.photos[0];
 
     <ul class="tiles" data-reveal>
       {SERVICES.map((s, i) => {
-        const p = workById(SERVICE_PHOTO[s.id]).photos[0];
+        const pid = SERVICE_PHOTO[s.id];
+        const p = pid ? workById(pid).photos[0] : null;
         return (
           <li class:list={['tile', { 'tile--wide': i < 2 }]}>
             <a href={href(V, lang, 'services', s.slug[lang])}>
               <div class="ph tile__ph">
-                <Picture src={p.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes={i < 2 ? '(min-width: 64rem) 46vw, 100vw' : '(min-width: 64rem) 23vw, (min-width: 36rem) 46vw, 100vw'} alt={p.alt[lang]} loading="lazy" decoding="async" />
+                {!p ? <ServicePanel lang={lang} service={s} /> : <Picture src={p.src} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes={i < 2 ? '(min-width: 64rem) 46vw, 100vw' : '(min-width: 64rem) 23vw, (min-width: 36rem) 46vw, 100vw'} alt={p.alt[lang]} loading="lazy" decoding="async" />}
               </div>
               <h3>{s.title[lang]}</h3>
               <p>{s.short[lang]}</p>

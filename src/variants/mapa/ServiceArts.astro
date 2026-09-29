@@ -2,6 +2,7 @@
 // Os seis artigos de serviço como mapa de trabalhos: Art. · Descrição (com sub-artigos 1.1…) · Un. · Qt. · Anexo.
 import Plate from './Plate.astro';
 import Icon from './Icon.astro';
+import TextPlate from './TextPlate.astro';
 import { SERVICES } from '../../content/services';
 import { WORKS, workById } from '../../content/works';
 import { href, type Lang } from '../../lib/site';
@@ -19,7 +20,7 @@ const H = headingLevel;
   </div>
   {SERVICES.map((s) => {
     const works = s.works.map(workById);
-    const lead = works.find((w) => !skip.includes(w.id)) ?? works[0];
+    const lead = works.find((w) => !skip.includes(w.id)) ?? works[0]; // pode não existir
     const link = href('mapa', lang, 'services', s.slug[lang]);
     return (
       <article class="art ru" id={`art-${s.code}`} aria-labelledby={`art-${s.code}-t`}>
@@ -34,13 +35,16 @@ const H = headingLevel;
           </ol>
           <p class="art__annex">
             {C.col.annex[lang]}:{' '}
+            {works.length === 0 && <span>{C.noPhotos[lang].toLowerCase()}</span>}
             {works.map((w, i) => (<>{i > 0 && ' · '}<a href={href('mapa', lang, 'works', w.slug[lang])} title={w.title[lang]}>{w.code}</a></>))}
           </p>
           {full && <a class="arrowlink" href={link}><span>{C.seeService[lang]} {s.code}</span><Icon name="arrow" /></a>}
         </div>
         <span class="art__qt" aria-hidden="true">{s.items.length}</span>
         <div class="art__photo">
-          <Plate src={lead.photos[0].src} alt={lead.photos[0].alt[lang]} href={link} sizes="(min-width: 900px) 24vw, 1px" widths={[400, 640, 900]} ratio="4 / 3" />
+          {lead
+            ? <Plate src={lead.photos[0].src} alt={lead.photos[0].alt[lang]} href={link} sizes="(min-width: 900px) 24vw, 1px" widths={[400, 640, 900]} ratio="4 / 3" />
+            : <TextPlate lang={lang} compact />}
         </div>
       </article>
     );

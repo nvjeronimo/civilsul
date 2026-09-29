@@ -91,6 +91,7 @@ export const C = {
   seeService: { pt: 'Ver artigo', en: 'Open item' },
   seeWork: { pt: 'Ver obra', en: 'Open project' },
   contents: { pt: 'Índice', en: 'Index' },
+  noPhotos: { pt: 'Sem fotografias publicadas', en: 'No photographs published' },
   total: { pt: 'Total', en: 'Total' },
   totalLine: (lang: Lang, arts: number, items: number, plates: number) =>
     lang === 'pt' ? `${arts} artigos · ${plates} pranchas em anexo` : `${arts} items · ${plates} plates in annex`,
