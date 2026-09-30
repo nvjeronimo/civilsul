@@ -73,7 +73,14 @@ address { font-style: normal; }
 .btn .ic { width: 20px; height: 20px; flex: none; }
 .btn--line { --bg: transparent; --fg: var(--ink); }
 .btn--line:hover { --bg: var(--ink); --fg: var(--ground); }
-.btn--lit:hover { --bg: #111315; }
+.btn--lit { overflow: hidden; }
+/* a ação principal atravessada pela luz: um feixe dourado translúcido ao ângulo da banda, de arestas suaves */
+.btn--lit::after {
+  background: linear-gradient(145deg, transparent 22%, rgb(226 179 74 / 0.42) 40%, rgb(226 179 74 / 0.42) 54%, transparent 72%) 0 0 / 220% 100% no-repeat, var(--bg);
+  transition: background-position 0.6s var(--ease), background-color 0.25s var(--ease);
+}
+.btn--lit:hover::after { background-position: 40% 0, 0 0; }
+.btn--rev::after { background: linear-gradient(145deg, transparent 22%, rgb(226 179 74 / 0.55) 40%, rgb(226 179 74 / 0.55) 54%, transparent 72%) 0 0 / 220% 100% no-repeat, var(--bg); }
 .btn--rev { --bg: var(--ground); --fg: var(--ink); border-color: var(--ground); }
 .btn--rev:hover { --bg: #fff; }
 .btn--line-rev { --fg: var(--ground); border-color: var(--hair-rev); }
@@ -131,6 +138,8 @@ address { font-style: normal; }
 .corte__ground { fill: none; stroke: var(--ink); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
 .corte__hatch { stroke: var(--ink); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
 .corte__clear { fill: var(--ground); }
+.corte--photo .corte__kitchen { display: none; }
+@media (max-width: 600px) { .corte--photo .corte__fo { display: none; } .corte--photo .corte__kitchen { display: inline; } }
 .corte__photo, .corte__photo picture, .corte__photo img { display: block; width: 100%; height: 100%; }
 .corte__photo img { object-fit: cover; object-position: 50% 60%; }
 .corte__labels { fill: var(--blue-ink); font: 650 calc(var(--cw) * 0.0125px) var(--body); letter-spacing: 0.12em; text-transform: uppercase; text-anchor: middle; }

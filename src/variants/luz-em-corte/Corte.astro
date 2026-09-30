@@ -15,12 +15,16 @@ const VIEWS: Record<View, [number, number, number, number]> = {
   moradias: [150, 270, 520, 430],
   reconstrucao: [560, 290, 460, 410],
   remodelacoes: [206, 330, 470, 330],
-  piscinas: [900, 500, 300, 200],
+  piscinas: [962, 520, 238, 180],
   telhados: [600, 280, 420, 240],
   'obras-publicas': [150, 520, 1040, 180],
 };
 const vb = VIEWS[view];
 const uid = 'c' + Math.random().toString(36).slice(2, 7);
+const peak = view === 'full' ? 0.26 : 0.3;
+// nos recortes, a luz nasce transparente no topo do recorte e só ganha corpo junto ao chão
+const g = view === 'full' ? [100, 560] : [584, 616];
+// nos recortes só fica a luz que chega ao chão (manchas de sol no pavimento)
 
 // Escada: 20 espelhos de 7 e 19 cobertores de 11, a subir para a esquerda de (610, 608) a (401, 468)
 let stair = 'M610 608';
@@ -36,12 +40,12 @@ const DESC: Record<View, string> = {
   moradias: 'Pormenor do corte: volume de dois pisos, da fundação à platibanda.',
   reconstrucao: 'Pormenor do corte: a ligação entre o volume de dois pisos e a ala térrea.',
   remodelacoes: 'Pormenor do corte: interior com escada entre pisos, sala e quarto.',
-  piscinas: 'Pormenor do corte: pátio com piscina enterrada e muro baixo, à saída da casa.',
+  piscinas: 'Pormenor do corte: pátio com piscina enterrada e muro baixo.',
   telhados: 'Pormenor do corte: telhado de duas águas com chaminé algarvia.',
   'obras-publicas': 'Pormenor do corte: fundações e terreno, a base de qualquer obra.',
 };
 ---
-<svg class:list={['corte', `corte--${view}`, cls]} viewBox={vb.join(' ')} role="img" aria-label={title ?? DESC[view]} style={`--cw:${vb[2]}`} preserveAspectRatio="xMidYMax meet">
+<svg class:list={['corte', `corte--${view}`, photo && 'corte--photo', cls]} viewBox={vb.join(' ')} role="img" aria-label={title ?? DESC[view]} style={`--cw:${vb[2]}`} preserveAspectRatio="xMidYMax meet">
   <defs>
     <pattern id={`${uid}-earth`} patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(45)">
       <line x1="0" y1="0" x2="0" y2="9" class="corte__hatch" />
@@ -52,17 +56,19 @@ const DESC: Record<View, string> = {
     <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y="620" width="1200" height="84">
       <rect x="0" y="620" width="1200" height="84" fill={`url(#${uid}-fade)`} />
     </mask>
-    <linearGradient id={`${uid}-sun`} gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="560">
+    <linearGradient id={`${uid}-sun`} gradientUnits="userSpaceOnUse" x1="0" y1={g[0]} x2="0" y2={g[1]}>
       <stop offset="0" stop-color="#e2b34a" stop-opacity="0.04" />
-      <stop offset="1" stop-color="#e2b34a" stop-opacity="0.26" />
+      <stop offset="1" stop-color="#e2b34a" stop-opacity={peak} />
     </linearGradient>
+    <clipPath id={`${uid}-floor`}><rect x="0" y="584" width="1200" height="36" /></clipPath>
+    <filter id={`${uid}-soft`} x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4" /></filter>
   </defs>
 
   <!-- terreno -->
   <rect x="0" y="620" width="1200" height="84" fill={`url(#${uid}-earth)`} mask={`url(#${uid}-m)`} />
 
   {photo && (
-    <foreignObject x="644" y="484" width="298" height="120">
+    <foreignObject class="corte__fo" x="644" y="484" width="298" height="120">
       <div xmlns="http://www.w3.org/1999/xhtml" class="corte__photo">
         <Picture src={photo.src} alt={photo.alt} formats={['avif', 'webp']} widths={[320, 480, 720, 960]} sizes="(min-width: 960px) 26vw, 80vw" loading="eager" fetchpriority="high" decoding="async" />
       </div>
@@ -73,7 +79,7 @@ const DESC: Record<View, string> = {
   <rect class="corte__clear" x="1010" y="608" width="90" height="62" />
 
   <!-- luz -->
-  <g fill={`url(#${uid}-sun)`}>
+  <g fill={`url(#${uid}-sun)`} filter={`url(#${uid}-soft)`} clip-path={view === 'full' ? undefined : `url(#${uid}-floor)`}>
     <path d="M857.6 100H908.8L640 436H626L488.4 608H451Z" />
     <path d="M1200 220L889.6 608H1104L1136 568L1200 488Z" />
   </g>
@@ -82,7 +88,7 @@ const DESC: Record<View, string> = {
   <g class="corte__thin">
     <path d="M232 608V586h8v10h74v-10h8v22M240 596v-4h74v4" />
     <circle cx="352" cy="409" r="5.5" /><path d="M344 468l2-28-3-17c5-5 13-5 18 0l-3 17 2 28M352 436v32" />
-    {!photo && <path d="M690 579h86M698 579v29M768 579v29M790 608v-40M790 588h14v20M864 480 850 540h46l-14-60M846 540h54M852 540v68M894 540v68" />}
+    <path class="corte__kitchen" d="M690 579h86M698 579v29M768 579v29M790 608v-40M790 588h14v20M864 480 850 540h46l-14-60M846 540h54M852 540v68M894 540v68" />
     <path d="M1012 616h86" />
     <path d="M400 468v-36M610 572 401 432" />
     <path d="M640 454 800 406 992 463" />
@@ -116,7 +122,7 @@ const DESC: Record<View, string> = {
       <text x="420" y="324">Terraço</text>
       <text x="272" y="404">Quarto</text>
       <text x="300" y="548">Sala</text>
-      {!photo && <text x="740" y="530">Cozinha</text>}
+      <text class="corte__kitchen" x="740" y="530">Cozinha</text>
       <text x="1068" y="560">Pátio</text>
       <text x="1055" y="650">Piscina</text>
     </g>
