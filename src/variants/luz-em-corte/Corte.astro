@@ -1,48 +1,110 @@
 ---
-// Corte ilustrativo de uma moradia algarvia (sem escala, sem cotas): volume de dois pisos com platibanda,
-// ampliação térrea de uma água. Poché a carvão, vidros a traço fino, e a luz do sol que entra
-// pelas duas aberturas com o mesmo ângulo. Uma fotografia real ocupa o piso térreo do volume alto.
-// As percentagens do .corte__room correspondem às coordenadas do viewBox (0 −40 720 488).
-import { Picture } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+// Corte construtivo de uma moradia algarvia, desenhado uma só vez e reutilizado em recortes.
+// Sem escala e sem cotas. Proporções pensadas a ~40 unidades por metro: paredes exteriores de 14, lajes de 12,
+// pé-direito de 3 m, platibanda de 0,9 m, degraus de 7 × 11. Volume de dois pisos com terraço e platibanda,
+// ala térrea com telhado de duas águas e chaminé, escada interior, pátio com muro baixo, terreno tracejado a 45°.
+// A luz do sol entra com o mesmo ângulo (≈51°) pela janela alta e pela porta do pátio.
+type View = 'full' | 'moradias' | 'reconstrucao' | 'remodelacoes' | 'piscinas' | 'telhados' | 'obras-publicas';
+interface Props { view?: View; labels?: boolean; class?: string; title?: string }
+const { view = 'full', labels = true, class: cls, title } = Astro.props;
 
-interface Props { photo: ImageMetadata; alt: string }
-const { photo, alt } = Astro.props;
+const VIEWS: Record<View, [number, number, number, number]> = {
+  full: [140, 100, 1060, 600],
+  moradias: [150, 270, 520, 430],
+  reconstrucao: [560, 290, 460, 410],
+  remodelacoes: [206, 330, 470, 330],
+  piscinas: [880, 400, 320, 300],
+  telhados: [600, 280, 420, 240],
+  'obras-publicas': [150, 520, 1040, 180],
+};
+const vb = VIEWS[view];
+const uid = 'c' + Math.random().toString(36).slice(2, 7);
+
+// Escada: 20 espelhos de 7 e 19 cobertores de 11, a subir para a esquerda de (610, 608) a (401, 468)
+let stair = 'M610 608';
+let x = 610, y = 608;
+for (let i = 0; i < 20; i++) {
+  y -= 7; stair += `V${y}`;
+  if (i < 19) { x -= 11; stair += `H${x}`; }
+}
+stair += `H401V486L583 608Z`;
+
+const DESC: Record<View, string> = {
+  full: 'Desenho em corte de uma moradia: volume de dois pisos com terraço e platibanda, escada interior, ala térrea com telhado de duas águas e chaminé, pátio com muro baixo e fundações no terreno. A luz do sol entra pela janela alta e pela porta do pátio.',
+  moradias: 'Pormenor do corte: volume de dois pisos, da fundação à platibanda.',
+  reconstrucao: 'Pormenor do corte: a ligação entre o volume de dois pisos e a ala térrea.',
+  remodelacoes: 'Pormenor do corte: interior com escada entre pisos, sala e quarto.',
+  piscinas: 'Pormenor do corte: pátio com pavimento e muro baixo, à saída da casa.',
+  telhados: 'Pormenor do corte: telhado de duas águas com chaminé algarvia.',
+  'obras-publicas': 'Pormenor do corte: fundações e terreno, a base de qualquer obra.',
+};
 ---
-<div class="corte">
-  <svg class="corte__svg" viewBox="0 -40 720 488" role="img" aria-label="Desenho em corte de uma moradia: dois pisos com cobertura em terraço e platibanda, e uma ampliação térrea com telhado de uma água. A luz do sol entra pela janela alta e pela porta envidraçada da ampliação.">
-    <defs>
-      <linearGradient id="lc-sun" gradientUnits="userSpaceOnUse" x1="0" y1="-40" x2="0" y2="240">
-        <stop offset="0" stop-color="#e2b34a" stop-opacity="0.06" />
-        <stop offset="1" stop-color="#e2b34a" stop-opacity="0.5" />
-      </linearGradient>
-    </defs>
-    <g class="corte__sun" fill="url(#lc-sun)">
-      <path d="M720 -30V20L560 220H546L523.6 248H497.6Z" />
-      <path d="M720 295L597.6 448H720Z" />
-    </g>
-    <g class="corte__poche">
-      <path d="M16 96h14v64H16zM16 210h14v90H16zM16 370h14v78H16zM546 96h14v74h-14zM546 220h14v110h-14zM670 264h14v76h-14z" />
-      <path d="M30 120h516v12H30zM30 248h516v12H30z" />
-      <path d="M560 232L700 262V274L560 244Z" />
-    </g>
-    <path class="corte__glass" d="M21 160V210M25 160V210M21 300V370M25 300V370M551 170V220M555 170V220M675 340V448M679 340V448" />
+<svg class:list={['corte', `corte--${view}`, cls]} viewBox={vb.join(' ')} role="img" aria-label={title ?? DESC[view]} style={`--cw:${vb[2]}`} preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <pattern id={`${uid}-earth`} patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="9" class="corte__hatch" />
+    </pattern>
+    <linearGradient id={`${uid}-fade`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" /><stop offset="0.55" stop-color="#fff" stop-opacity="0.7" /><stop offset="1" stop-color="#fff" stop-opacity="0" />
+    </linearGradient>
+    <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y="620" width="1200" height="84">
+      <rect x="0" y="620" width="1200" height="84" fill={`url(#${uid}-fade)`} />
+    </mask>
+    <linearGradient id={`${uid}-sun`} gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="560">
+      <stop offset="0" stop-color="#e2b34a" stop-opacity="0.04" />
+      <stop offset="1" stop-color="#e2b34a" stop-opacity="0.55" />
+    </linearGradient>
+  </defs>
+
+  <!-- terreno -->
+  <rect x="0" y="620" width="1200" height="84" fill={`url(#${uid}-earth)`} mask={`url(#${uid}-m)`} />
+
+  <!-- luz -->
+  <g fill={`url(#${uid}-sun)`}>
+    <path d="M857.6 100H908.8L640 436H626L488.4 608H451Z" />
+    <path d="M1200 220L889.6 608H1104L1136 568L1200 488Z" />
+  </g>
+
+  <!-- mobiliário e figura, a traço fino -->
+  <g class="corte__thin">
+    <path d="M232 608V586h8v10h74v-10h8v22M240 596v-4h74v4" />
+    <circle cx="352" cy="409" r="5.5" /><path d="M344 468l2-28-3-17c5-5 13-5 18 0l-3 17 2 28M352 436v32" />
+    <path d="M690 579h86M698 579v29M768 579v29M790 608v-40M790 588h14v20" />
+    <path d="M864 480 850 540h46l-14-60M846 540h54M852 540v68M894 540v68" />
+    <path d="M400 468v-36M610 572 401 432" />
+    <path d="M640 454 800 406 992 463" />
+    <path d="M214 330h412" />
+  </g>
+
+  <!-- poché: paredes, lajes, cobertura, fundações -->
+  <g class="corte__poche">
+    <path d="M200 302h14v70h-14zM200 436h14v68h-14zM200 572h14v36h-14zM192 436h8v5h-8zM192 572h8v5h-8z" />
+    <path d="M626 302h14v70h-14zM626 436h14v84h-14zM640 436h8v5h-8z" />
+    <path d="M196 296h22v6h-22zM622 296h22v6h-22z" />
+    <path d="M214 336h412v12H214zM214 468h186v12H214zM640 468h306v12H640zM200 608h760v12H200z" />
+    <path d="M946 468h14v52h-14z" />
+    <path d="M640 458 800 410v10l-160 48zM800 410l190 57v10l-190-57z" />
+    <path fill-rule="evenodd" d="M864 364h18v104h-18zM852 328h42v36h-42zM858 338v10h6v-10zM870 338v10h6v-10zM882 338v10h6v-10z" />
+    <path d="M846 328 873 312l27 16z" />
+    <path d={stair} />
+    <path d="M960 608h174v6H960zM1136 572h14v48h-14zM1132 568h22v4h-22z" />
+    <path d="M186 620h42v28h-42zM612 620h42v28h-42zM932 620h42v28h-42zM1128 620h30v16h-30z" />
+  </g>
+
+  <!-- juntas de lintéis (a cor do fundo sobre o poché) -->
+  <path class="corte__joint" d="M200 360h14M200 492h14M626 360h14M626 508h14M946 508h14" />
+  <!-- vidros -->
+  <path class="corte__glass" d="M205 372V436M209 372V436M205 504V572M209 504V572M631 372V436M635 372V436M951 520V608M955 520V608" />
+  <!-- linha do terreno -->
+  <path class="corte__ground" d="M0 620H1200" />
+
+  {labels && (
     <g class="corte__labels">
-      <text x="288" y="113">Cobertura</text>
-      <text x="288" y="196">Quarto</text>
-      <text x="612" y="404">Sala</text>
+      <text x="420" y="324">Terraço</text>
+      <text x="272" y="404">Quarto</text>
+      <text x="300" y="548">Sala</text>
+      <text x="740" y="530">Cozinha</text>
+      <text x="1050" y="596">Pátio</text>
     </g>
-  </svg>
-  <div class="corte__room">
-    <Picture
-      src={photo}
-      alt={alt}
-      formats={['avif', 'webp']}
-      widths={[400, 640, 900, 1200, 1500]}
-      sizes="(min-width: 960px) 42vw, 72vw"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    />
-  </div>
-</div>
+  )}
+</svg>

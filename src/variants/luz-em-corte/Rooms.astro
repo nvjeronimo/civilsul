@@ -1,0 +1,26 @@
+---
+// Obras como divisões de um corte: fotografias separadas por paredes (poché) e lajes. Cada divisão liga à obra.
+import { Picture } from 'astro:assets';
+import { KINDS, type Work } from '../../content/works';
+import { href } from '../../lib/site';
+interface Props { works: Work[]; filterable?: boolean; headingLevel?: 'h2' | 'h3' }
+const { works, filterable, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const kind = (w: Work) => KINDS.find((k) => k.id === w.kind)!.label.pt;
+const note = (w: Work) => [w.place, w.client].filter(Boolean).join(' · ');
+---
+<ul class="rooms">
+  {works.map((w) => (
+    <li class="rm" data-kind={filterable ? w.kind : undefined}>
+      <a class="rm__link" href={href('luz-em-corte', 'pt', 'works', w.slug.pt)}>
+        <div class="rm__photo">
+          <Picture src={w.photos[0].src} alt={w.photos[0].alt.pt} formats={['avif', 'webp']} widths={[400, 640, 900, 1200]} sizes="(min-width: 1100px) 30vw, (min-width: 640px) 48vw, 100vw" loading="lazy" decoding="async" />
+        </div>
+        <div class="rm__cap">
+          <H class="rm__t">{w.title.pt}</H>
+          <p class="rm__n">{kind(w)}{note(w) && <> · {note(w)}</>}</p>
+        </div>
+      </a>
+    </li>
+  ))}
+</ul>

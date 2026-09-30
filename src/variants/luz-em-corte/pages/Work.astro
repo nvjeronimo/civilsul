@@ -1,0 +1,46 @@
+---
+import { Picture } from 'astro:assets';
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, KINDS, workById } from '../../../content/works';
+import { serviceById } from '../../../content/services';
+import { HOME, TIPO } from '../copy';
+interface Props { id: string }
+const w = workById(Astro.props.id);
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+const i = WORKS.findIndex((x) => x.id === w.id);
+const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length];
+const next = WORKS[(i + 1) % WORKS.length];
+const svc = serviceById(w.service);
+const kind = KINDS.find((k) => k.id === w.kind)!.label.pt;
+const two = w.photos.length > 1;
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.works, href(V, 'pt', 'works')], [w.title.pt]]} title={w.title.pt}>
+  <dl class="wd__meta">
+    <div><dt>Tipo de obra</dt><dd>{kind}</dd></div>
+    {w.place && <div><dt>Local</dt><dd>{w.place}</dd></div>}
+    {w.client && <div><dt>Cliente</dt><dd>{w.client}</dd></div>}
+    <div><dt>Serviço</dt><dd><a href={href(V, 'pt', 'services', svc.slug.pt)}>{svc.title.pt}</a></dd></div>
+  </dl>
+</PageHead>
+
+<section class="wd" aria-label={u.photos}>
+  <div class="wrap">
+    <div class:list={['wd__rooms', two && 'wd__rooms--two']}>
+      {w.photos.map((p, n) => (
+        <figure class="wd__room">
+          <Picture src={p.src} alt={p.alt.pt} formats={['avif', 'webp']} widths={two ? [480, 800, 1200, 1600] : [640, 1000, 1400, 2000]} sizes={two ? '(min-width: 960px) 46vw, 100vw' : '(min-width: 1400px) 1300px, 100vw'} loading={n === 0 ? 'eager' : 'lazy'} fetchpriority={n === 0 ? 'high' : undefined} decoding="async" />
+        </figure>
+      ))}
+    </div>
+    <nav class="pn" aria-label="Outras obras">
+      <a href={href(V, 'pt', 'works', prev.slug.pt)} rel="prev"><Icon name="arrow-left" /><span><small>Obra anterior</small>{prev.title.pt}</span></a>
+      <a href={href(V, 'pt', 'works', next.slug.pt)} rel="next"><span><small>Obra seguinte</small>{next.title.pt}</span><Icon name="arrow" /></a>
+    </nav>
+  </div>
+</section>
+
+<Close title="Tem uma obra parecida em mente?" quote={`${href(V, 'pt', 'quote')}?tipo=${TIPO[w.service]}`} />

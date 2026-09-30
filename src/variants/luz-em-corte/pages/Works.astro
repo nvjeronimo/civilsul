@@ -1,0 +1,29 @@
+---
+import PageHead from '../PageHead.astro';
+import Rooms from '../Rooms.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, KINDS } from '../../../content/works';
+import { HOME } from '../copy';
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.works]]} title="Obras terminadas pela Civilsul." lead="Moradias construídas e reconstruídas, apartamentos remodelados, fachadas preservadas, piscinas e exteriores. As fotografias e legendas são as do portefólio atual." />
+
+<section class="wrap wx" aria-label="Obras">
+  <div class="filter" data-filter hidden>
+    <p class="filter__l" id="filter-l">Mostrar</p>
+    <div class="filter__b" role="group" aria-labelledby="filter-l">
+      <button type="button" data-k="all" aria-pressed="true">Todas</button>
+      {KINDS.map((k) => <button type="button" data-k={k.id} aria-pressed="false">{k.label.pt}</button>)}
+    </div>
+    <p class="filter__n num" data-count aria-live="polite">{WORKS.length} obras</p>
+  </div>
+  <Rooms works={WORKS} filterable headingLevel="h2" />
+</section>
+
+<Close />
+
+<script>
+  import '../filter.ts';
+</script>

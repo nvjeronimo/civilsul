@@ -1,0 +1,11 @@
+---
+import { PROCESS } from '../../content/company';
+interface Props { title?: string }
+const { title = 'Como começa uma obra connosco.' } = Astro.props;
+---
+<section class="proc wrap" aria-labelledby="proc-t">
+  <h2 id="proc-t">{title}</h2>
+  <ol class="proc__list">
+    {PROCESS.map((p) => <li><h3>{p.title.pt}</h3><p>{p.text.pt}</p></li>)}
+  </ol>
+</section>

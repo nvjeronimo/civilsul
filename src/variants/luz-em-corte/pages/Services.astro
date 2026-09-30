@@ -1,0 +1,32 @@
+---
+import PageHead from '../PageHead.astro';
+import Corte from '../Corte.astro';
+import Icon from '../Icon.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { HOME } from '../copy';
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.services]]} title="Serviços de construção civil no Algarve." lead="Da moradia nova à reparação do telhado, todos os trabalhos são feitos pela mesma empresa. Escolha o que precisa e veja as obras relacionadas.">
+  <Corte slot="aside" view="full" labels={false} />
+</PageHead>
+
+<section class="wrap sx" aria-label="Os seis serviços">
+  {SERVICES.map((s) => (
+    <article class="sx__row">
+      <div class="sx__draw"><Corte view={s.id as any} labels={false} /></div>
+      <div class="sx__text">
+        <h2><a href={href(V, 'pt', 'services', s.slug.pt)}>{s.title.pt}</a></h2>
+        <p class="sx__intro">{s.intro.pt}</p>
+        <ul class="sx__items">{s.items.map((i) => <li>{i.pt}</li>)}</ul>
+        <a class="link-arrow" href={href(V, 'pt', 'services', s.slug.pt)}>Ver {s.title.pt.charAt(0).toLowerCase() + s.title.pt.slice(1)}<Icon name="arrow" /></a>
+      </div>
+    </article>
+  ))}
+  <Trades title="Todos os trabalhos, como constam da lista da Civilsul" />
+</section>
+
+<Close title="Não sabe em que serviço cabe a sua obra?" lead="Descreva-nos o que quer fazer. Dizemos-lhe como a Civilsul a faria e preparamos o orçamento." />

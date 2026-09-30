@@ -1,0 +1,37 @@
+---
+import PageHead from '../PageHead.astro';
+import Corte from '../Corte.astro';
+import Process from '../Process.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href } from '../../../lib/site';
+import { MISSION, WHO, TEAM, TAGLINE } from '../../../content/company';
+import { HOME } from '../copy';
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.about]]} title="Uma construtora com alvará desde 1985." lead={`${TAGLINE.pt}.`}>
+  <figure slot="aside" class="ph__fig"><Corte view="moradias" /><figcaption>Pormenor do corte. Desenho ilustrativo, sem escala.</figcaption></figure>
+</PageHead>
+
+<section class="co wrap" aria-labelledby="co-t">
+  <div class="co__main">
+    <h2 id="co-t" class="vh">A empresa</h2>
+    <p class="co__lead">{MISSION.pt}</p>
+  </div>
+  <div class="co__side">
+    <dl class="facts-dl">
+      <div><dt>Empresa</dt><dd>{SITE.legalName}</dd></div>
+      <div><dt>Alvará</dt><dd class="num">nº {SITE.permit}</dd></div>
+      <div><dt>Em atividade</dt><dd class="num">desde {SITE.since}</dd></div>
+      <div><dt>Sede</dt><dd>{SITE.address.street}, <span class="num">{SITE.address.postal}</span> {SITE.address.city}</dd></div>
+      <div><dt>Onde trabalha</dt><dd>{u.area}</dd></div>
+    </dl>
+    <p>{WHO.pt}</p>
+    <p>{TEAM.pt}</p>
+  </div>
+</section>
+
+<Process />
+<section class="wrap ab-trades" aria-label="Trabalhos"><Trades /></section>
+<Close />

@@ -1,0 +1,55 @@
+---
+// Índice de serviços: seis linhas na parede, cada uma com a sua janela (obras públicas: a barra do alvará, sem foto).
+import { Picture } from 'astro:assets';
+import Wall from '../Wall.astro';
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { C } from '../copy';
+const V = 'cal-e-barra' as const;
+const u = UI.pt;
+---
+<Wall first label="t-page" size="s">
+  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services]]} title={C.servicesH} lede={C.servicesLead} />
+</Wall>
+
+<Wall label="t-lista" barra="ocre" size="s">
+  <h2 id="t-lista" class="vh">{u.nav.services}</h2>
+  <ul class="sx" role="list">
+    {SERVICES.map((s) => {
+      const w = s.works[0] ? workById(s.works[0]) : undefined;
+      const url = href(V, 'pt', 'services', s.slug.pt);
+      return (
+        <li class="sx__row" id={s.id}>
+          <a class="sx__win" href={url} tabindex="-1" aria-hidden="true">
+            {w ? (
+              <span class="win__glass">
+                <Picture src={w.photos[0].src} alt="" formats={['avif', 'webp']} widths={[360, 540, 720, 960]} sizes="(min-width: 900px) 24vw, calc(100vw - 32px)" loading="lazy" decoding="async" />
+              </span>
+            ) : (
+              <span class="sx__permit"><span>{u.permit}</span><small>{u.since}</small></span>
+            )}
+          </a>
+          <div class="sx__text">
+            <h3><a class="svc__link" href={url}>{s.title.pt}<Icon name="arrow" /></a></h3>
+            <p class="sx__short">{s.short.pt}</p>
+            <p class="sx__intro">{s.intro.pt}</p>
+          </div>
+          <ul class="sx__items" role="list" aria-label={`${C.includes}: ${s.title.pt}`}>
+            {s.items.map((i) => <li>{i.pt}</li>)}
+          </ul>
+        </li>
+      );
+    })}
+  </ul>
+</Wall>
+
+<Wall label="trabalhos-h" size="xs">
+  <Trades level="h2" />
+</Wall>
+
+<Close full={false} />

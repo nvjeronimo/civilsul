@@ -1,0 +1,14 @@
+---
+import PageHead from '../PageHead.astro';
+import Corte from '../Corte.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WHO } from '../../../content/company';
+import { HOME } from '../copy';
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.contact]]} title="Contactos." lead={WHO.pt}>
+  <Corte slot="aside" view="full" labels={false} />
+</PageHead>
+<Close title="Fale connosco sobre a sua obra." id="canais" />

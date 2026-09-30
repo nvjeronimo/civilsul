@@ -1,0 +1,18 @@
+---
+// Cabeçalho das páginas interiores: migalhas, título, entrada e (opcional) um recorte do corte à direita.
+interface Props { crumbs: [string, string?][]; title: string; lead?: string; wide?: boolean }
+const { crumbs, title, lead, wide } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+<header class:list={['ph', hasAside && 'ph--aside', wide && 'ph--wide']}>
+  <div class="wrap ph__grid">
+    <div class="ph__text">
+      <nav aria-label="Localização"><ol class="crumbs">{crumbs.map(([l, h]) => <li>{h ? <a href={h}>{l}</a> : <span aria-current="page">{l}</span>}</li>)}</ol></nav>
+      <h1>{title}</h1>
+      {lead && <p class="ph__lead">{lead}</p>}
+      <slot />
+    </div>
+    {hasAside && <div class="ph__aside"><slot name="aside" /></div>}
+  </div>
+</header>
+<div class="slab" aria-hidden="true"></div>

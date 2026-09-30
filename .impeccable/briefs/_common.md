@@ -35,7 +35,7 @@ One catch-all page `src/pages/<variant>/[...path].astro` using `getStaticPaths()
 - Motion: only the grammar in your contract, one orchestrated moment, exponential ease-out.
 
 ## Verify (bounded: max two capture rounds)
-1. Start your dev server in the background: `cd /Volumes/1TBHDD/Downloads-HDD/civilsul-redesign && VITE_CACHE=node_modules/.vite-<variant> npx astro dev --port <port> --ignore-lock` (mapa 4341, mostruario 4342, padrao 4343). Wait until it answers.
+1. Start your dev server in the background: `cd /Volumes/1TBHDD/Downloads-HDD/civilsul-redesign && VITE_CACHE=node_modules/.vite-<variant> npx astro dev --port <port> --ignore-lock` (mapa 4341, cal-e-barra 4344, luz-em-corte 4345, padrao 4343). Wait until it answers.
 2. `node tools/capture.mjs <variant> <port>` → screenshots in `.impeccable/review/<variant>/` plus per-page status/overflow/errors. Open the images (Read tool) and fix everything wrong in one batch; recapture once to confirm. Also click through the quote form once with Playwright or reason it through the contract.
 3. Run `/Users/nelsonjeronimo/.claude/skills/impeccable/scripts/impeccable detect --json src/variants/<variant> src/pages/<variant>` once and fix mechanical findings.
 4. Stop your dev server. Final message: what you built (files), any shared-file bugs found, remaining known issues. Keep it short.

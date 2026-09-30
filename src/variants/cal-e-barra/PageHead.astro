@@ -1,0 +1,15 @@
+---
+// Topo das páginas interiores: caminho, título, entrada. Vive dentro da primeira parede.
+interface Props { crumbs: [string, string?][]; title: string; lede?: string; id?: string }
+const { crumbs, title, lede, id = 't-page' } = Astro.props;
+---
+<div class="ph">
+  <nav class="crumbs" aria-label="Caminho">
+    <ol role="list">
+      {crumbs.map(([name, url]) => <li>{url ? <a href={url}>{name}</a> : <span aria-current="page">{name}</span>}</li>)}
+    </ol>
+  </nav>
+  <h1 id={id}>{title}</h1>
+  {lede && <p class="ph__lede">{lede}</p>}
+  <slot />
+</div>

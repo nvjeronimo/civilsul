@@ -1,0 +1,101 @@
+---
+// Proposta C "Luz em Corte": moldura comum (cabeçalho, rodapé, barra móvel e a banda de sol). Só PT.
+import '@fontsource-variable/sofia-sans-condensed/wght.css';
+import '@fontsource-variable/sofia-sans/wght.css';
+import './styles.css';
+import Head from '../../components/Head.astro';
+import Logo from '../../components/Logo.astro';
+import Icon from './Icon.astro';
+import { SITE, BASE, UI, CALL_NOTE, href, whatsapp, tel, type PageKey } from '../../lib/site';
+import type { RouteProps } from '../../lib/routes';
+import { meta } from '../../lib/meta';
+
+interface Props extends RouteProps { image?: string; jsonLd?: Record<string, unknown>[] }
+const { lang, page, id, image, jsonLd } = Astro.props;
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+const m = meta({ lang, page, id });
+const year = new Date().getFullYear();
+const wa = whatsapp('pt');
+const nav: { key: PageKey; label: string }[] = [
+  { key: 'services', label: u.nav.services },
+  { key: 'works', label: u.nav.works },
+  { key: 'about', label: u.nav.about },
+  { key: 'contact', label: u.nav.contact },
+];
+const cur = (k: PageKey) => (page === k ? (id ? 'true' : 'page') : undefined);
+---
+<html lang="pt-PT" class="lc">
+  <head>
+    <Head title={m.title} description={m.description} lang="pt" variant={V} page={page} id={id} image={image} jsonLd={jsonLd} themeColor="#F4F4F1" langs={['pt']} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{u.skip}</a>
+    <div class="sun" aria-hidden="true" data-sun><i class="sun__soft"></i><i class="sun__warm"></i></div>
+
+    <header class="hd">
+      <div class="wrap hd__row">
+        <a class="hd__brand" href={href(V, lang, 'home')} aria-label="Civilsul, página inicial" aria-current={page === 'home' ? 'page' : undefined}>
+          <Logo size="2rem" />
+          <span>Civilsul</span>
+        </a>
+        <nav class="hd__nav" id="menu" data-menu aria-label="Principal">
+          <ul>
+            {nav.map((n) => <li><a href={href(V, lang, n.key)} aria-current={cur(n.key)}>{n.label}</a></li>)}
+            <li class="hd__mq"><a href={href(V, lang, 'quote')} aria-current={cur('quote')}>{u.nav.quote}</a></li>
+          </ul>
+          <p class="hd__mphone"><a class="num" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></p>
+        </nav>
+        <div class="hd__phone">
+          <a class="num" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a>
+          <small>{CALL_NOTE.mobile.pt}</small>
+        </div>
+        <a class="btn btn--lit hd__cta" href={href(V, lang, 'quote')} aria-current={cur('quote')}>{u.nav.quote}</a>
+        <button class="hd__menu" type="button" aria-expanded="false" aria-controls="menu" hidden data-menu-btn>
+          <span data-open-l><Icon name="menu" />{u.menu}</span>
+          <span data-close-l hidden><Icon name="close" />{u.close}</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="ft">
+      <div class="wrap">
+        <div class="ft__grid">
+          <div class="ft__id">
+            <a class="ft__brand" href={href(V, lang, 'home')}><Logo tone="reverse" size="2rem" /><span>Civilsul</span></a>
+            <p><strong>{SITE.legalName}</strong><br />{u.permit} · {u.since}<br />{SITE.address.street}<br /><span class="num">{SITE.address.postal}</span> {SITE.address.city}, {SITE.address.region}</p>
+          </div>
+          <dl class="ft__chan">
+            <div><dt>Telemóvel</dt><dd><a class="num" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd></div>
+            {SITE.landlines.map((l) => <div><dt>Telefone fixo</dt><dd><a class="num" href={tel(l.tel)}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd></div>)}
+            <div><dt>{u.email}</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+          </dl>
+          <nav class="ft__nav" aria-label="Rodapé">
+            <ul>
+              {nav.map((n) => <li><a href={href(V, lang, n.key)}>{n.label}</a></li>)}
+              <li><a href={href(V, lang, 'quote')}>{u.nav.quote}</a></li>
+              <li><a href={wa} rel="noopener" target="_blank">{u.whatsapp}</a></li>
+              <li><a href={href(V, lang, 'privacy')} aria-current={cur('privacy')}>{u.privacy}</a></li>
+            </ul>
+          </nav>
+        </div>
+        <p class="ft__demo"><a href={BASE}>{u.demo}</a><span>© {year} {SITE.name}</span></p>
+      </div>
+    </footer>
+
+    <nav class="bar" aria-label="Contacto rápido">
+      <a href={tel(SITE.mobile.tel)} aria-label={`${u.call} ${SITE.mobile.display} (${CALL_NOTE.mobile.pt})`}><Icon name="phone" />{u.call}</a>
+      <a href={wa} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+      {page !== 'quote' && <a class="bar__q" href={href(V, lang, 'quote')}>Orçamento</a>}
+    </nav>
+
+    <script>
+      import './sun.ts';
+      import './menu.ts';
+    </script>
+  </body>
+</html>

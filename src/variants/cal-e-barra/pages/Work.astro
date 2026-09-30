@@ -1,0 +1,49 @@
+---
+// Página de obra: todas as fotografias como janelas grandes, ficha (tipo, local, cliente, serviço), obra anterior e seguinte na barra.
+import Wall from '../Wall.astro';
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import Win from '../Win.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, workById } from '../../../content/works';
+import { serviceById } from '../../../content/services';
+import { C, QUOTE_TYPE, kindLabel } from '../copy';
+interface Props { id: string }
+const { id } = Astro.props;
+const V = 'cal-e-barra' as const;
+const u = UI.pt;
+const w = workById(id);
+const s = serviceById(w.service);
+const i = WORKS.findIndex((x) => x.id === id);
+const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length];
+const next = WORKS[(i + 1) % WORKS.length];
+const spec: [string, string, string?][] = [
+  [C.kind, kindLabel(w.kind)],
+  ...(w.place ? [[C.place, w.place]] as [string, string][] : []),
+  ...(w.client ? [[C.client, w.client]] as [string, string][] : []),
+  [C.service, s.title.pt, href(V, 'pt', 'services', s.slug.pt)],
+];
+---
+<Wall first label="t-page" size="s">
+  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.works, href(V, 'pt', 'works')], [w.title.pt]]} title={w.title.pt}>
+    <dl class="spec">
+      {spec.map(([k, v, url]) => <div><dt>{k}</dt><dd>{url ? <a href={url}>{v}</a> : v}</dd></div>)}
+    </dl>
+  </PageHead>
+</Wall>
+
+<Wall label="t-fotos" size="m" body="wk">
+  <h2 id="t-fotos" class="vh">{u.photos}</h2>
+  <ul class:list={['wk__photos', w.photos.length > 1 && 'wk__photos--2']} role="list" style={w.photos.length > 1 ? `--cols: ${w.photos.map((p) => `${(p.src.width / p.src.height).toFixed(3)}fr`).join(' ')}` : undefined}>
+    {w.photos.map((_, n) => (
+      <li><Win work={w} photo={n} natural eager={n === 0} caption={false} widths={[640, 960, 1280, 1600, 2000]} sizes={w.photos.length > 1 ? '(min-width: 900px) 50vw, calc(100vw - 32px)' : '(min-width: 900px) 92vw, calc(100vw - 32px)'} /></li>
+    ))}
+  </ul>
+  <nav slot="barra" class="pn" aria-label="Outras obras">
+    <a href={href(V, 'pt', 'works', prev.slug.pt)} rel="prev"><Icon name="arrow-left" /><span><small>{C.prev}</small>{prev.title.pt}</span></a>
+    <a href={href(V, 'pt', 'works', next.slug.pt)} rel="next"><span><small>{C.next}</small>{next.title.pt}</span><Icon name="arrow" /></a>
+  </nav>
+</Wall>
+
+<Close full={false} title={C.workAsk} text={C.workAskP} tipo={QUOTE_TYPE[w.service]} />

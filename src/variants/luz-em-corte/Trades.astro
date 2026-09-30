@@ -1,0 +1,9 @@
+---
+import { TRADES } from '../../content/services';
+interface Props { title?: string }
+const { title = 'Lista completa de trabalhos' } = Astro.props;
+---
+<div class="trades" id="trabalhos">
+  <h3>{title}</h3>
+  <ul>{TRADES.map((t) => <li>{t.pt}</li>)}</ul>
+</div>

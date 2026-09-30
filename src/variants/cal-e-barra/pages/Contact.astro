@@ -1,0 +1,12 @@
+---
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { INVITE } from '../../../content/company';
+import { C } from '../copy';
+const V = 'cal-e-barra' as const;
+---
+<Close first h="h1" id="page" title={C.contactH} text={INVITE.pt}>
+  <nav slot="head" class="crumbs" aria-label="Caminho">
+    <ol role="list"><li><a href={href(V, 'pt', 'home')}>{C.home}</a></li><li><span aria-current="page">{UI.pt.nav.contact}</span></li></ol>
+  </nav>
+</Close>

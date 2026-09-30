@@ -1,0 +1,70 @@
+---
+// Página de serviço: título e entrada, o que inclui, obras deste serviço como janelas, pedido com ?tipo=, outros serviços.
+// Obras públicas não têm fotografia: a parede leva a barra do alvará, pintada, em vez de janelas.
+import Wall from '../Wall.astro';
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import Win from '../Win.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href } from '../../../lib/site';
+import { SERVICES, serviceById } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { C, QUOTE_TYPE } from '../copy';
+interface Props { id: string }
+const { id } = Astro.props;
+const V = 'cal-e-barra' as const;
+const u = UI.pt;
+const s = serviceById(id);
+const works = s.works.map(workById);
+const others = SERVICES.filter((x) => x.id !== id);
+const tipo = QUOTE_TYPE[id];
+const isPublic = works.length === 0;
+---
+<Wall first label="t-page" size={isPublic ? 'l' : 's'}>
+  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services, href(V, 'pt', 'services')], [s.title.pt]]} title={s.title.pt} lede={s.short.pt}>
+    <div class="sv__intro">
+      <p>{s.intro.pt}</p>
+      <div class="sv__inc">
+        <h2>{C.includes}</h2>
+        <ul role="list">{s.items.map((i) => <li>{i.pt}</li>)}</ul>
+      </div>
+    </div>
+    <a class="btn btn--anil sv__cta" href={`${href(V, 'pt', 'quote')}?tipo=${tipo}`}>{C.quoteFor}<Icon name="arrow" /></a>
+  </PageHead>
+  {isPublic && (
+    <div slot="barra" class="permit">
+      <p class="permit__big">{u.permit}</p>
+      <p class="permit__small">{SITE.legalName} · {u.since} · {u.area}</p>
+    </div>
+  )}
+</Wall>
+
+{isPublic ? (
+  <Wall label="t-publico" size="xs" barra="ocre">
+    <div class="sv__public">
+      <h2 id="t-publico">{s.title.pt}</h2>
+      <p>{C.publicNote}</p>
+      <p>{C.publicAsk}</p>
+    </div>
+  </Wall>
+) : (
+  <Wall label="t-obras-s" size="s" barra="ocre">
+    <h2 id="t-obras-s">{C.relatedWorks}</h2>
+    <ul class:list={['sv__works', `sv__works--${works.length % 3 === 0 || works.length === 5 ? 3 : 2}`]} role="list">
+      {works.map((w) => (
+        <li><Win work={w} meta="kind" sizes="(min-width: 900px) 33vw, calc(100vw - 32px)" href={href(V, 'pt', 'works', w.slug.pt)} /></li>
+      ))}
+    </ul>
+  </Wall>
+)}
+
+<Wall label="t-outros" size="xs">
+  <h2 id="t-outros">{C.otherServices}</h2>
+  <ul class="sv__others" role="list">
+    {others.map((o) => (
+      <li><a href={href(V, 'pt', 'services', o.slug.pt)}><span>{o.title.pt}</span><small>{o.short.pt}</small><Icon name="arrow" /></a></li>
+    ))}
+  </ul>
+</Wall>
+
+<Close full={false} tipo={tipo} />

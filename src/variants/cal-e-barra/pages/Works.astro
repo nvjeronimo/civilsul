@@ -1,0 +1,37 @@
+---
+// Índice de obras: as treze como janelas de igual abertura ao longo da parede, filtráveis por tipo.
+import Wall from '../Wall.astro';
+import PageHead from '../PageHead.astro';
+import Win from '../Win.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, KINDS } from '../../../content/works';
+import { C } from '../copy';
+const V = 'cal-e-barra' as const;
+const u = UI.pt;
+---
+<Wall first label="t-page" size="s">
+  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.works]]} title={C.worksH} lede={C.worksLead}>
+    <div class="filter" role="group" aria-label={C.filter} data-filter hidden>
+      <button type="button" data-k="all" aria-pressed="true">{C.filterAll}</button>
+      {KINDS.map((k) => <button type="button" data-k={k.id} aria-pressed="false">{k.label.pt}</button>)}
+    </div>
+  </PageHead>
+</Wall>
+
+<Wall label="t-lista" size="m">
+  <h2 id="t-lista" class="vh">{C.worksH}</h2>
+  <ul class="wx" role="list">
+    {WORKS.map((w, i) => (
+      <li data-kind={w.kind}>
+        <Win work={w} meta="kind" eager={i < 3} sizes="(min-width: 1100px) 31vw, (min-width: 600px) 46vw, calc(100vw - 32px)" href={href(V, 'pt', 'works', w.slug.pt)} />
+      </li>
+    ))}
+  </ul>
+</Wall>
+
+<Close full={false} />
+
+<script>
+  import '../filter.ts';
+</script>

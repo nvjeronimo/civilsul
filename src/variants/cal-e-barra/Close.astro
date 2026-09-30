@@ -1,0 +1,26 @@
+---
+// Remate de página: convite, ações e (versão completa) todos os canais. Uma parede com barra anil.
+import Wall from './Wall.astro';
+import Icon from './Icon.astro';
+import Channels from './Channels.astro';
+import { UI, href, whatsapp } from '../../lib/site';
+import { INVITE, PROCESS } from '../../content/company';
+import { C } from './copy';
+interface Props { full?: boolean; title?: string; text?: string; tipo?: string; id?: string; first?: boolean; h?: 'h1' | 'h2' }
+const { full = true, title = C.closeH, text = INVITE.pt, tipo, id = 'contactos', first = false, h = 'h2' } = Astro.props;
+const H = h;
+const quote = href('cal-e-barra', 'pt', 'quote') + (tipo ? `?tipo=${tipo}` : '');
+---
+<Wall id={id} label={`t-${id}`} first={first} size="m" body={full ? 'ct' : 'ct ct--compact'}>
+  <div class="ct__lead">
+    <slot name="head" />
+    <H id={`t-${id}`}>{title}</H>
+    <p>{text}</p>
+    {full && <p class="ct__tip">{PROCESS[0].text.pt}</p>}
+    <div class="ct__actions">
+      <a class="btn btn--anil" href={quote}>{UI.pt.nav.quote}<Icon name="arrow" /></a>
+      <a class="btn btn--line" href={whatsapp('pt')} target="_blank" rel="noopener"><Icon name="chat" />{UI.pt.whatsapp}</a>
+    </div>
+  </div>
+  {full && <Channels />}
+</Wall>

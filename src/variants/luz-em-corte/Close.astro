@@ -1,0 +1,35 @@
+---
+// Bloco final: o terreno por baixo da última laje. Contactos completos, cada número com a sua nota.
+import Icon from './Icon.astro';
+import { SITE, UI, CALL_NOTE, href, whatsapp, tel } from '../../lib/site';
+import { INVITE } from '../../content/company';
+interface Props { title?: string; lead?: string; quote?: string; id?: string; headingLevel?: 'h1' | 'h2' }
+const { title = 'Fale connosco sobre a sua obra.', lead = INVITE.pt, quote = href('luz-em-corte', 'pt', 'quote'), id = 'contactos', headingLevel = 'h2' } = Astro.props;
+const H = headingLevel;
+const u = UI.pt;
+---
+<section class="ct" id={id} aria-labelledby={`${id}-t`}>
+  <div class="wrap ct__grid">
+    <div class="ct__main">
+      <H id={`${id}-t`}>{title}</H>
+      <p class="ct__lead">{lead}</p>
+      <p class="ct__hint">Diga-nos o tipo de obra, onde fica e para quando a quer. Fotografias ou plantas ajudam a preparar a primeira conversa.</p>
+      <div class="ct__act">
+        <a class="btn btn--lit btn--rev" href={quote}>{u.nav.quote}<Icon name="arrow" /></a>
+        <a class="btn btn--line btn--line-rev" href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+      </div>
+    </div>
+    <dl class="ct__chan">
+      <div><dt>Telemóvel</dt><dd><a class="num ct__tel" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd></div>
+      {SITE.landlines.map((l) => <div><dt>Telefone fixo</dt><dd><a class="num ct__tel" href={tel(l.tel)}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd></div>)}
+      <div><dt>{u.email}</dt><dd><a class="ct__mail" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+      <div>
+        <dt>{u.address}</dt>
+        <dd>
+          <address>{SITE.address.street}<br /><span class="num">{SITE.address.postal}</span> {SITE.address.city}, {SITE.address.region}</address>
+          <a class="ct__map" href={SITE.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" />{u.directions}</a>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>

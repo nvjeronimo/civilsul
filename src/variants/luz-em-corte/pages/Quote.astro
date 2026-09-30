@@ -1,0 +1,131 @@
+---
+// Pedido de orçamento: marcação segundo o contrato de src/scripts/quote.ts. Sem JS, todos os passos visíveis e envio por email.
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import { SITE, UI, CALL_NOTE, href, tel, whatsapp } from '../../../lib/site';
+import { WORK_TYPES, PROPERTY, TIMING, PROJECT_STATE, Q } from '../../../content/quote';
+import { HOME, PREF } from '../copy';
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+const q = Q.pt;
+const prefs = (Object.keys(PREF) as (keyof typeof PREF)[]).map((id) => ({ id, label: PREF[id] }));
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.quote]]} title="Pedir orçamento." lead="Quatro passos curtos: a obra, o local, o prazo e o seu contacto. No fim, envia o pedido por WhatsApp ou por email, já escrito." />
+
+<section class="wrap qg">
+  <form class="qf" data-quote data-i18n={JSON.stringify(q)} data-wa={SITE.mobile.wa} data-email={SITE.email} action={`mailto:${SITE.email}`} method="post" enctype="text/plain">
+    <div class="qf__steps" data-progress>
+      <ol>{q.steps.map((s, i) => <li data-step-label><span class="num">{i + 1}</span><span>{s}</span></li>)}</ol>
+      <span class="qf__bar" aria-hidden="true"></span>
+    </div>
+
+    <fieldset data-step>
+      <legend tabindex="-1">{q.steps[0]}</legend>
+      <fieldset class="field">
+        <legend class="qf__q">{q.type}</legend>
+        <div class="opts">
+          {WORK_TYPES.map((o) => <label class="opt"><input type="radio" name="type" value={o.id} data-text={o.label.pt} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label.pt}</span></label>)}
+        </div>
+        <p class="err" data-error-for="type" hidden></p>
+      </fieldset>
+    </fieldset>
+
+    <fieldset data-step>
+      <legend tabindex="-1">{q.steps[1]}</legend>
+      <fieldset class="field">
+        <legend class="qf__q">{q.property}</legend>
+        <div class="opts">
+          {PROPERTY.map((o) => <label class="opt"><input type="radio" name="property" value={o.id} data-text={o.label.pt} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label.pt}</span></label>)}
+        </div>
+        <p class="err" data-error-for="property" hidden></p>
+      </fieldset>
+      <div class="row2">
+        <div class="field">
+          <label class="qf__q" for="q-place">{q.place}</label>
+          <input id="q-place" name="place" type="text" autocomplete="address-level2" placeholder={q.placeHint} aria-describedby="e-place" />
+          <p class="err" id="e-place" data-error-for="place" hidden></p>
+        </div>
+        <div class="field">
+          <label class="qf__q" for="q-area">{q.area} <span class="opt-l">{q.areaHint}</span></label>
+          <input id="q-area" name="area" type="number" inputmode="numeric" min="0" step="1" />
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset data-step>
+      <legend tabindex="-1">{q.steps[2]}</legend>
+      <fieldset class="field">
+        <legend class="qf__q">{q.timing}</legend>
+        <div class="opts">
+          {TIMING.map((o) => <label class="opt"><input type="radio" name="timing" value={o.id} data-text={o.label.pt} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label.pt}</span></label>)}
+        </div>
+        <p class="err" data-error-for="timing" hidden></p>
+      </fieldset>
+      <fieldset class="field">
+        <legend class="qf__q">{q.state} <span class="opt-l">Opcional</span></legend>
+        <div class="opts">
+          {PROJECT_STATE.map((o) => <label class="opt"><input type="radio" name="state" value={o.id} data-text={o.label.pt} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label.pt}</span></label>)}
+        </div>
+      </fieldset>
+      <div class="field">
+        <label class="qf__q" for="q-details">{q.details} <span class="opt-l">Opcional</span></label>
+        <textarea id="q-details" name="details" rows="5" placeholder={q.detailsHint}></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset data-step>
+      <legend tabindex="-1">{q.steps[3]}</legend>
+      <div class="field">
+        <label class="qf__q" for="q-name">{q.name}</label>
+        <input id="q-name" name="name" type="text" autocomplete="name" aria-describedby="e-name" />
+        <p class="err" id="e-name" data-error-for="name" hidden></p>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label class="qf__q" for="q-phone">{q.phone}</label>
+          <input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="e-phone" />
+          <p class="err" id="e-phone" data-error-for="phone" hidden></p>
+        </div>
+        <div class="field">
+          <label class="qf__q" for="q-email">{q.email}</label>
+          <input id="q-email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="e-email" />
+          <p class="err" id="e-email" data-error-for="email" hidden></p>
+        </div>
+      </div>
+      <fieldset class="field">
+        <legend class="qf__q">{q.contactPref}</legend>
+        <div class="opts opts--3">
+          {prefs.map((o) => <label class="opt"><input type="radio" name="pref" value={o.id} data-text={o.label} /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{o.label}</span></label>)}
+        </div>
+      </fieldset>
+      <div class="field">
+        <label class="consent"><input type="checkbox" name="consent" value="true" aria-describedby="e-consent" /><span class="opt__box" aria-hidden="true"><Icon name="check" /></span><span>{q.consent} <a href={href(V, 'pt', 'privacy')}>{u.privacy}</a></span></label>
+        <p class="err" id="e-consent" data-error-for="consent" hidden></p>
+      </div>
+      <p class="qf__note">{q.photosNote}</p>
+    </fieldset>
+
+    <div class="qf__nav">
+      <button class="btn btn--line" type="button" data-prev><Icon name="arrow-left" />{q.back}</button>
+      <button class="btn btn--lit" type="button" data-next>{q.next}<Icon name="arrow" /></button>
+      <button class="btn btn--lit" type="button" data-send="wa"><Icon name="chat" />{q.sendWa}</button>
+      <button class="btn btn--line" type="submit" data-send="email"><Icon name="mail" />{q.sendEmail}</button>
+    </div>
+    <p class="qf__status" data-status role="status" aria-live="polite"></p>
+    <p class="qf__draft">{q.draft}</p>
+  </form>
+
+  <aside class="qs" aria-labelledby="qs-t">
+    <h2 id="qs-t">{q.summary}</h2>
+    <dl class="qs__dl" data-summary></dl>
+    <div class="qs__alt">
+      <p>Prefere falar já?</p>
+      <p><a class="num" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></p>
+      <p><a href={whatsapp('pt')} rel="noopener" target="_blank">{u.whatsapp}</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+    </div>
+  </aside>
+</section>
+
+<script>
+  import '../../../scripts/quote.ts';
+</script>

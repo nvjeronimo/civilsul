@@ -1,0 +1,26 @@
+---
+// Uma obra como janela na parede: foto de cantos retos, legenda por baixo. Com href, a janela é uma ligação.
+import { Picture } from 'astro:assets';
+import type { Work } from '../../content/works';
+import { kindLabel } from './copy';
+interface Props { work: Work; photo?: number; sizes: string; href?: string; class?: string; eager?: boolean; meta?: 'place' | 'kind'; caption?: boolean; widths?: number[]; natural?: boolean }
+const { work, photo = 0, sizes, href, class: cls, eager = false, meta = 'place', caption = true, widths = [480, 720, 960, 1280, 1600], natural = false } = Astro.props;
+const ph = work.photos[photo];
+const who = work.place ?? work.client;
+const line = meta === 'kind' ? [kindLabel(work.kind), who].filter(Boolean).join(' · ') : who;
+const Tag = href ? 'a' : 'div';
+const port = ph.src.height > ph.src.width;
+---
+<figure class:list={['win', natural && (port ? 'win--port' : 'win--land'), cls]}>
+  <Tag class:list={['win__open', href && 'win__open--link']} href={href}>
+    <div class="win__glass" style={natural ? `aspect-ratio: ${ph.src.width} / ${ph.src.height}` : undefined}>
+      <Picture src={ph.src} alt={ph.alt.pt} formats={['avif', 'webp']} widths={widths} sizes={sizes} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding="async" />
+    </div>
+    {caption && (
+      <figcaption>
+        <span class="win__t">{work.title.pt}</span>
+        {line && <span class="win__m">{line}</span>}
+      </figcaption>
+    )}
+  </Tag>
+</figure>

@@ -1,0 +1,48 @@
+---
+import Wall from '../Wall.astro';
+import PageHead from '../PageHead.astro';
+import Win from '../Win.astro';
+import Trades from '../Trades.astro';
+import Process from '../Process.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href } from '../../../lib/site';
+import { workById } from '../../../content/works';
+import { MISSION, WHO, TEAM } from '../../../content/company';
+import { C } from '../copy';
+const V = 'cal-e-barra' as const;
+const u = UI.pt;
+const facts = [SITE.legalName, u.permit, u.since, C.seat, u.area];
+const a = workById('fachada-portaldegenios');
+const b = workById('monte-do-pocinho');
+---
+<Wall first label="t-page" size="l" body="co co--page">
+  <div class="co__text">
+    <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.about]]} title={C.aboutH} lede={C.aboutLead} />
+    <p class="co__lead">{MISSION.pt}</p>
+  </div>
+  <Win class="co__win" work={a} eager sizes="(min-width: 900px) 34vw, calc(100vw - 32px)" widths={[480, 720, 960, 1280]} href={href(V, 'pt', 'works', a.slug.pt)} />
+  <ul slot="barra" class="facts" role="list" aria-label="A empresa em factos">
+    {facts.map((f) => <li>{f}</li>)}
+  </ul>
+</Wall>
+
+<Wall label="t-who" size="s" barra="ocre" body="ab">
+  <div class="ab__col">
+    <h2 id="t-who">{C.whoH}</h2>
+    <p>{WHO.pt}</p>
+    <h2>{C.teamH}</h2>
+    <p>{TEAM.pt}</p>
+  </div>
+  <Win class="ab__win" work={b} sizes="(min-width: 900px) 55vw, calc(100vw - 32px)" href={href(V, 'pt', 'works', b.slug.pt)} />
+</Wall>
+
+<Wall label="t-processo" size="xs" body="pr">
+  <h2 id="t-processo">{C.processH}</h2>
+  <Process />
+</Wall>
+
+<Wall label="trabalhos-h" size="xs" barra="ocre">
+  <Trades level="h2" />
+</Wall>
+
+<Close full={false} />

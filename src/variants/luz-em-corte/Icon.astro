@@ -1,13 +1,18 @@
 ---
 // Ícones desenhados para esta variante: traço único de 1,6, pontas arredondadas, grelha de 24.
-interface Props { name: 'phone' | 'chat' | 'mail' | 'pin' | 'arrow'; class?: string }
+type Name = 'phone' | 'chat' | 'mail' | 'pin' | 'arrow' | 'arrow-left' | 'menu' | 'close' | 'check';
+interface Props { name: Name; class?: string }
 const { name, class: cls } = Astro.props;
-const P: Record<Props['name'], string> = {
+const P: Record<Name, string> = {
   phone: 'M6.6 3.5h2.6l1.4 3.9-1.9 1.3a11.5 11.5 0 0 0 6.6 6.6l1.3-1.9 3.9 1.4v2.6a1.8 1.8 0 0 1-1.9 1.8A15.6 15.6 0 0 1 4.8 5.4a1.8 1.8 0 0 1 1.8-1.9Z',
   chat: 'M4.5 6.2c0-1 .8-1.7 1.7-1.7h11.6c1 0 1.7.8 1.7 1.7v8.6c0 1-.8 1.7-1.7 1.7H10l-4.2 3v-3h.4c-1 0-1.7-.8-1.7-1.7Z',
   mail: 'M3.5 6.5h17v11h-17ZM3.5 7l8.5 6.5L20.5 7',
   pin: 'M12 20.5s-6-5.3-6-10.6a6 6 0 0 1 12 0c0 5.3-6 10.6-6 10.6ZM12 11.9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
   arrow: 'M4.5 12h14.5M13.5 6.5 19 12l-5.5 5.5',
+  'arrow-left': 'M19.5 12H5M10.5 6.5 5 12l5.5 5.5',
+  menu: 'M4 7.5h16M4 12h16M4 16.5h16',
+  close: 'M6 6l12 12M18 6 6 18',
+  check: 'M5 12.5 10 17.5 19 7',
 };
 ---
 <svg class:list={['ic', cls]} viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">

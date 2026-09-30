@@ -1,0 +1,102 @@
+---
+import { Picture } from 'astro:assets';
+import Corte from '../Corte.astro';
+import Icon from '../Icon.astro';
+import Rooms from '../Rooms.astro';
+import Close from '../Close.astro';
+import Process from '../Process.astro';
+import Trades from '../Trades.astro';
+import { SITE, UI, href, whatsapp } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { MISSION, WHO, TEAM } from '../../../content/company';
+
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+const vdr = workById('vale-del-rey');
+const selected = ['construcao-moradia', 'reconstrucao-edificio', 'monte-do-pocinho', 'fachada-portaldegenios', 'reconstrucao-ampliacao-moradia', 'maison-amarande', 'arranjos-exteriores-piscina', 'topazmoment', 'remodelacao-ampliacao-moradia'].map(workById);
+---
+<section class="hero wrap" aria-labelledby="hero-t">
+  <div class="hero__text">
+    <h1 id="hero-t">Construímos, reconstruímos e remodelamos no Algarve desde 1985.</h1>
+    <p class="hero__lead">Moradias de raiz, casas antigas refeitas e ampliadas, apartamentos remodelados, piscinas e obras públicas. A mesma empresa acompanha a obra da estrutura aos acabamentos.</p>
+    <div class="hero__act">
+      <a class="btn btn--lit" href={href(V, 'pt', 'quote')}>{u.nav.quote}<Icon name="arrow" /></a>
+      <a class="btn btn--line" href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+    </div>
+  </div>
+  <figure class="hero__draw">
+    <Corte />
+    <figcaption>Corte de uma moradia algarvia. Desenho ilustrativo, sem escala.</figcaption>
+  </figure>
+  <p class="facts"><span>{u.since}</span><span>{u.permit}</span><span>{SITE.address.city}, {SITE.address.region}</span></p>
+</section>
+
+<div class="slab" aria-hidden="true"></div>
+
+<section class="feat" aria-labelledby="feat-t">
+  <div class="wrap">
+    <div class="feat__rooms">
+      <a class="feat__a" href={href(V, 'pt', 'works', vdr.slug.pt)}>
+        <Picture src={vdr.photos[0].src} alt={vdr.photos[0].alt.pt} formats={['avif', 'webp']} widths={[640, 960, 1300, 1800]} sizes="(min-width: 960px) 62vw, 100vw" loading="lazy" decoding="async" />
+      </a>
+      <a class="feat__b" href={href(V, 'pt', 'works', vdr.slug.pt)} tabindex="-1" aria-hidden="true">
+        <Picture src={vdr.photos[1].src} alt="" formats={['avif', 'webp']} widths={[400, 700, 1000]} sizes="(min-width: 960px) 32vw, 50vw" loading="lazy" decoding="async" />
+      </a>
+    </div>
+    <div class="feat__cap">
+      <h2 id="feat-t"><a href={href(V, 'pt', 'works', vdr.slug.pt)}>{vdr.title.pt}</a></h2>
+      <p>Do desenho à casa feita: uma moradia existente, reconstruída e ampliada pela Civilsul.</p>
+    </div>
+  </div>
+</section>
+
+<section class="svc wrap" id="servicos" aria-labelledby="svc-t">
+  <div class="sec__head">
+    <h2 id="svc-t">Das fundações aos acabamentos, a mesma equipa.</h2>
+    <p>Seis frentes de trabalho, todas feitas pela Civilsul. Para uma casa nova, uma ampliação ou uma reparação no telhado, fala sempre com a mesma empresa.</p>
+  </div>
+  <ul class="svc__list">
+    {SERVICES.map((s) => (
+      <li class="svc__row">
+        <h3><a href={href(V, 'pt', 'services', s.slug.pt)}>{s.title.pt}<Icon name="arrow" /></a></h3>
+        <p class="svc__short">{s.short.pt}</p>
+        <ul class="svc__items">{s.items.map((i) => <li>{i.pt}</li>)}</ul>
+      </li>
+    ))}
+  </ul>
+  <Trades />
+</section>
+
+<section class="works" id="obras" aria-labelledby="works-t">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 id="works-t">Casas construídas, refeitas e remodeladas.</h2>
+      <p>Fotografias de obras terminadas pela Civilsul: moradias novas, reconstruções com ampliação, uma fachada preservada, interiores e exteriores.</p>
+    </div>
+    <Rooms works={selected} />
+    <p class="more"><a class="btn btn--line" href={href(V, 'pt', 'works')}>{u.allWorks}<Icon name="arrow" /></a></p>
+  </div>
+</section>
+
+<section class="co wrap" id="empresa" aria-labelledby="co-t">
+  <div class="co__main">
+    <h2 id="co-t">Uma construtora com alvará desde 1985.</h2>
+    <p class="co__lead">{MISSION.pt}</p>
+    <p class="co__more"><a href={href(V, 'pt', 'about')}>Sobre a empresa</a></p>
+  </div>
+  <div class="co__side">
+    <dl class="facts-dl">
+      <div><dt>Empresa</dt><dd>{SITE.legalName}</dd></div>
+      <div><dt>Alvará</dt><dd class="num">nº {SITE.permit}</dd></div>
+      <div><dt>Em atividade</dt><dd class="num">desde {SITE.since}</dd></div>
+      <div><dt>Sede</dt><dd>{SITE.address.city}, {SITE.address.region}</dd></div>
+      <div><dt>Onde trabalha</dt><dd>{u.area}</dd></div>
+    </dl>
+    <p>{WHO.pt}</p>
+    <p>{TEAM.pt}</p>
+  </div>
+</section>
+
+<Process />
+<Close />

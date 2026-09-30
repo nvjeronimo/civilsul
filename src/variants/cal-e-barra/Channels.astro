@@ -1,0 +1,36 @@
+---
+// Todos os canais, cada número com a sua nota de custo de chamada (DL 59/2021).
+import Icon from './Icon.astro';
+import { SITE, UI, CALL_NOTE } from '../../lib/site';
+import { C } from './copy';
+const u = UI.pt;
+---
+<dl class="ct__lines">
+  <div class="ct__line">
+    <dt>{C.mobile}</dt>
+    <dd>
+      <a class="num" href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a>
+      <small>{CALL_NOTE.mobile.pt}</small>
+    </dd>
+  </div>
+  <div class="ct__line">
+    <dt>{C.landline}</dt>
+    {SITE.landlines.map((l) => (
+      <dd>
+        <a class="num" href={`tel:${l.tel}`}>{l.display}</a>
+        <small>{CALL_NOTE.landline.pt}</small>
+      </dd>
+    ))}
+  </div>
+  <div class="ct__line">
+    <dt>{u.email}</dt>
+    <dd><a class="mail" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+  </div>
+  <div class="ct__line">
+    <dt>{u.address}</dt>
+    <dd>
+      <address>{SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}, {SITE.address.region}</address>
+      <a class="ct__map" href={SITE.mapsUrl} target="_blank" rel="noopener"><Icon name="pin" />{u.directions}</a>
+    </dd>
+  </div>
+</dl>

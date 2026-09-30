@@ -1,6 +1,7 @@
-# Cal e Barra (candidata B1) — sistema como construído
+# Cal e Barra (proposta B) — sistema como construído
 
-Só página inicial, só PT. `src/pages/cal-e-barra/index.astro` + `src/variants/cal-e-barra/**`.
+Site completo, só PT. Rota única `src/pages/cal-e-barra/[...path].astro` (`variantPaths(['pt'])`) + `src/variants/cal-e-barra/**`:
+`Layout.astro` (head, cabeçalho, rodapé, barra fixa móvel), `Wall.astro` (parede: platibanda + corpo + barra com slot), `PageHead.astro`, `Win.astro` (obra como janela), `Channels.astro`, `Close.astro` (remate de contacto), `Trades.astro`, `Process.astro`, `Crown.astro`, `Icon.astro`, `copy.ts`, scripts `barra.ts` / `menu.ts` / `filter.ts`, e `pages/` (Home, Services, Service, Works, Work, Quote, Contact, About, Privacy).
 
 ## Tese
 A página é uma casa algarvia em alçado. A parede é cal (`--cal`), cada secção termina numa barra pintada que ocupa toda a largura, e cada parede é rematada por uma platibanda em degrau que sobe da "rua" (`--rua`, o intervalo entre paredes). Não há adereços: nem azulejo, nem sol, nem texturas. A casa vive na estrutura, na cor e nas fotografias reais.
@@ -29,6 +30,15 @@ A página é uma casa algarvia em alçado. A parede é cal (`--cal`), cada secç
 - Serviços: título fixo à esquerda (sticky), seis linhas à direita, itens como frase ("Inclui …"), lista completa de trabalhos (`#trabalhos`) em 1/2/3 colunas.
 - Móvel: barra fixa anil com Ligar · WhatsApp · Orçamento (`#contactos`).
 
+## Páginas
+- Cada página é uma sequência de `Wall`: a primeira sem platibanda e com a barra que se pinta ao carregar (`barra--load`); as seguintes com platibanda e barra pintada ao entrar em vista.
+- A barra leva conteúdo quando serve: ligações de secção (home), factos (empresa), navegação obra anterior/seguinte (obra), o alvará (obras públicas).
+- Obras públicas não têm fotografia: a primeira parede termina numa barra anil alta com "Alvará nº 4511" pintado; no índice de serviços a janela desse serviço é um painel anil com o alvará.
+- Obra: fotografias na proporção natural; com duas fotos as colunas repartem-se pela proporção de cada uma para as alturas coincidirem.
+- Obras: filtro por KINDS (botões `aria-pressed`, escondido sem JS, `?tipo=` na URL).
+- Orçamento: contrato de `src/scripts/quote.ts` à letra; o indicador de passos é uma barra anil sobre a rua; o resumo é uma folha branca com filete anil; sem JS todos os passos visíveis e envio por mailto.
+- Cabeçalho: na home ocupa 5/12 da primeira vista; nas interiores é uma linha. Menu móvel em painel (botão com `aria-expanded`, Escape fecha e devolve o foco); sem JS a navegação fica visível.
+
 ## Movimento
 Um só momento: a barra pinta-se da esquerda para a direita (clip-path inset, 900ms, expo-out). A da primeira vista é animação CSS (termina pintada mesmo sem JS); as restantes só são "despintadas" pelo `barra.ts` se estiverem abaixo da dobra quando o script corre, e pintam ao entrar em vista. `prefers-reduced-motion`: tudo pintado, sem transições.
 
@@ -41,5 +51,6 @@ Nenhum raster novo. Todas as imagens são as fotografias reais do portefólio at
 ## Revisão final (2026-09-30, capturas em `.impeccable/review/cal-e-barra/`)
 - Sem overflow horizontal a 390; sem erros de consola além do script inline da barra de ferramentas de dev do Astro (só em dev).
 - `impeccable detect`: sem achados.
-- Monte do Pocinho (barra azul) passou para as Obras, janela 7/12 junto à Maison Amarande.
-- Veredito: a gramática (cal, barra, platibanda) lê-se como arquitetura e não como tema. Ponto fraco: as barras vazias (obras, contactos) repetem-se e dependem da pintura animada para ganhar sentido.
+- Monte do Pocinho (barra azul) nas Obras da home e na página Empresa.
+- Site completo verificado a 1440 e 390 (8 páginas da captura + obras públicas + privacidade): sem overflow; formulário percorrido com Playwright (pré-seleção ?tipo=, validação por passo, resumo, envio WhatsApp); menu e filtro testados.
+- Veredito: a gramática (cal, barra, platibanda) lê-se como arquitetura e não como tema. Ponto fraco: muitas barras anil vazias ao longo de páginas longas repetem-se e dependem da pintura animada para ganhar sentido.

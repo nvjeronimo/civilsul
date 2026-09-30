@@ -1,0 +1,12 @@
+---
+import PageHead from '../PageHead.astro';
+import { UI, href } from '../../../lib/site';
+import { PRIVACY } from '../../../content/privacy';
+import { HOME } from '../copy';
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.privacy]]} title="Política de privacidade." lead="Como a Civilsul trata os dados de um pedido de orçamento. Este site não usa cookies." />
+<section class="wrap prv">
+  {PRIVACY.pt.map((b) => <div class="prv__b"><h2>{b.h}</h2>{b.p.map((p) => <p>{p}</p>)}</div>)}
+</section>

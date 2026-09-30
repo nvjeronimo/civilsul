@@ -1,0 +1,135 @@
+---
+// Página inicial: a casa algarvia em alçado. Primeira vista em 5/12 + 7/12 com a barra anil no pé da vista.
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import Wall from '../Wall.astro';
+import Win from '../Win.astro';
+import Trades from '../Trades.astro';
+import Process from '../Process.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href, whatsapp } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { MISSION, WHO, TEAM } from '../../../content/company';
+import { C, includes } from '../copy';
+
+const V = 'cal-e-barra' as const;
+const u = UI.pt;
+const hero = workById('reconstrucao-ampliacao-moradia');
+const house = workById('vale-del-rey');
+
+// Obras na parede: span = colunas ocupadas em 12.
+const wins: { id: string; cls: string; span: number }[] = [
+  { id: 'vale-del-rey', cls: 'w1 land-wide', span: 8 },
+  { id: 'fachada-portaldegenios', cls: 'w2 port', span: 4 },
+  { id: 'maison-amarande', cls: 'w3 port', span: 4 },
+  { id: 'monte-do-pocinho', cls: 'w4 land', span: 7 },
+  { id: 'construcao-moradia', cls: 'w5 land', span: 6 },
+  { id: 'remodelacao-moradia', cls: 'w6 port', span: 4 },
+  { id: 'reconstrucao-edificio', cls: 'w7 port', span: 4 },
+  { id: 'arranjos-exteriores-piscina', cls: 'w8 land-wide', span: 8 },
+];
+const winSizes = (span: number) => `(min-width: 900px) ${Math.round((span / 12) * 100)}vw, calc(100vw - 32px)`;
+const facts = [SITE.legalName, u.permit, u.since, C.seat, u.area];
+---
+<section class="hero" aria-labelledby="t-hero">
+  <div class="hero__grid">
+    <div class="hero__text">
+      <h1 id="t-hero">Construímos, reconstruímos e remodelamos no Algarve desde 1985.</h1>
+      <p class="hero__lede">{C.heroLede}</p>
+    </div>
+    <figure class="hero__win win">
+      <a class="win__open win__open--link" href={href(V, 'pt', 'works', hero.slug.pt)}>
+        <div class="win__glass">
+          <Picture
+            src={hero.photos[0].src}
+            alt={hero.photos[0].alt.pt}
+            formats={['avif', 'webp']}
+            widths={[640, 960, 1280, 1600, 2000]}
+            sizes="(min-width: 900px) 56vw, calc(100vw - 32px)"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <figcaption><span class="win__m">{hero.title.pt}</span></figcaption>
+      </a>
+    </figure>
+  </div>
+  <div class="barra barra--hero barra--load" data-barra>
+    <div class="barra__in hero__barra">
+      <div class="hero__actions">
+        <a class="btn btn--cal" href={href(V, 'pt', 'quote')}>{u.nav.quote}<Icon name="arrow" /></a>
+        <a class="btn btn--line-cal" href={whatsapp('pt')} target="_blank" rel="noopener"><Icon name="chat" />{u.whatsapp}</a>
+      </div>
+      <ul class="hero__facts" role="list">
+        <li>{u.since}</li>
+        <li>{u.permit}</li>
+        <li>Quarteira, Algarve</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<Wall id="servicos" label="t-servicos" barra="ocre" size="s" body="svc">
+  <div class="svc__head">
+    <h2 id="t-servicos">{C.servicesHomeH}</h2>
+    <p>{C.servicesHomeP}</p>
+  </div>
+  <div class="svc__body">
+    <ul class="svc__rows" role="list">
+      {SERVICES.map((s) => (
+        <li class="svc__row">
+          <h3><a class="svc__link" href={href(V, 'pt', 'services', s.slug.pt)}>{s.title.pt}<Icon name="arrow" /></a></h3>
+          <div>
+            <p class="svc__short">{s.short.pt}</p>
+            <p class="svc__items">{includes(s.items.map((i) => i.pt))}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <Trades />
+  </div>
+  <a slot="barra" class="barra__link" href={href(V, 'pt', 'services')}>{C.allServices}<Icon name="arrow" /></a>
+</Wall>
+
+<Wall id="obras" label="t-obras" size="m">
+  <div class="obras__head">
+    <h2 id="t-obras">{C.worksHomeH}</h2>
+    <p>{C.worksHomeP}</p>
+  </div>
+  <ul class="obras" role="list">
+    {wins.map((w) => {
+      const work = workById(w.id);
+      return (
+        <li class={w.cls}>
+          <Win work={work} sizes={winSizes(w.span)} href={href(V, 'pt', 'works', work.slug.pt)} />
+        </li>
+      );
+    })}
+  </ul>
+  <a slot="barra" class="barra__link" href={href(V, 'pt', 'works')}>{C.allWorks}<Icon name="arrow" /></a>
+</Wall>
+
+<Wall id="empresa" label="t-empresa" size="l" body="co">
+  <div class="co__text">
+    <h2 id="t-empresa">{C.companyH}</h2>
+    <p class="co__lead">{MISSION.pt}</p>
+    <div class="co__cols">
+      <p>{WHO.pt}</p>
+      <p>{TEAM.pt}</p>
+    </div>
+    <p class="co__more"><a href={href(V, 'pt', 'about')}>{u.nav.about}<Icon name="arrow" /></a></p>
+  </div>
+  <Win class="co__win" work={house} photo={1} sizes="(min-width: 900px) 34vw, calc(100vw - 32px)" widths={[480, 720, 960, 1280]} href={href(V, 'pt', 'works', house.slug.pt)} />
+  <ul slot="barra" class="facts" role="list" aria-label="A empresa em factos">
+    {facts.map((f) => <li>{f}</li>)}
+  </ul>
+</Wall>
+
+<Wall id="processo" label="t-processo" barra="ocre" size="xs" body="pr">
+  <h2 id="t-processo">{C.processH}</h2>
+  <Process />
+</Wall>
+
+<Close />

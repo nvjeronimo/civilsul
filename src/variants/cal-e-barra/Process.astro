@@ -1,0 +1,12 @@
+---
+import { PROCESS } from '../../content/company';
+---
+<ol class="pr__steps" role="list">
+  {PROCESS.map((p, i) => (
+    <li>
+      <span class="pr__n" aria-hidden="true">{i + 1}</span>
+      <h3>{p.title.pt}</h3>
+      <p>{p.text.pt}</p>
+    </li>
+  ))}
+</ol>

@@ -1,0 +1,66 @@
+---
+import PageHead from '../PageHead.astro';
+import Corte from '../Corte.astro';
+import Icon from '../Icon.astro';
+import Rooms from '../Rooms.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href } from '../../../lib/site';
+import { SERVICES, serviceById } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { HOME, TIPO } from '../copy';
+interface Props { id: string }
+const s = serviceById(Astro.props.id);
+const V = 'luz-em-corte' as const;
+const u = UI.pt;
+const works = s.works.map(workById);
+const quote = `${href(V, 'pt', 'quote')}?tipo=${TIPO[s.id]}`;
+const others = SERVICES.filter((x) => x.id !== s.id);
+const pub = s.id === 'obras-publicas';
+---
+<PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.services, href(V, 'pt', 'services')], [s.title.pt]]} title={s.title.pt} lead={s.short.pt}>
+  <div class="ph__act">
+    <a class="btn btn--lit" href={quote}>{u.nav.quote}<Icon name="arrow" /></a>
+  </div>
+  <figure slot="aside" class="ph__fig">
+    <Corte view={s.id as any} />
+    <figcaption>Pormenor do corte. Desenho ilustrativo, sem escala.</figcaption>
+  </figure>
+</PageHead>
+
+<section class="wrap sd" aria-labelledby="sd-t">
+  <div class="sd__main">
+    <h2 id="sd-t" class="vh">O serviço</h2>
+    <p class="sd__intro">{s.intro.pt}</p>
+  </div>
+  <div class="sd__side">
+    <h2 class="sd__h">{u.includes}</h2>
+    <ul class="sd__items">{s.items.map((i) => <li>{i.pt}</li>)}</ul>
+  </div>
+</section>
+
+{pub ? (
+  <section class="pub" aria-labelledby="pub-t">
+    <div class="wrap">
+      <div class="pub__draw"><Corte view="obras-publicas" labels={false} /></div>
+      <div class="pub__grid">
+        <h2 id="pub-t">Alvará nº {SITE.permit}, desde {SITE.since}.</h2>
+        <p>O portefólio atual da Civilsul não identifica nenhuma obra pública em fotografia, por isso aqui não mostramos imagens. O que existe é o alvará de construção, mantido desde {SITE.since}, ao abrigo do qual a empresa executa obras públicas. Para uma empreitada, fale connosco diretamente.</p>
+      </div>
+    </div>
+  </section>
+) : (
+  <section class="works wrap" aria-labelledby="rel-t">
+    <div class="sec__head">
+      <h2 id="rel-t">{u.related}</h2>
+      <p>Obras terminadas pela Civilsul que passaram por este tipo de trabalho.</p>
+    </div>
+    <Rooms works={works} />
+  </section>
+)}
+
+<section class="wrap others" aria-labelledby="oth-t">
+  <h2 id="oth-t">Outros serviços</h2>
+  <ul>{others.map((o) => <li><a href={href(V, 'pt', 'services', o.slug.pt)}><span>{o.title.pt}</span><small>{o.short.pt}</small><Icon name="arrow" /></a></li>)}</ul>
+</section>
+
+<Close title={`Pedir orçamento: ${s.title.pt.toLowerCase()}.`} quote={quote} />

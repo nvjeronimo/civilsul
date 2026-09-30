@@ -1,0 +1,13 @@
+---
+import { TRADES } from '../../content/services';
+import { C } from './copy';
+interface Props { level?: 'h2' | 'h3' }
+const { level = 'h3' } = Astro.props;
+const H = level;
+---
+<div class="trades" id="trabalhos">
+  <H class="trades__h" id="trabalhos-h">{C.tradesH}</H>
+  <ul role="list">
+    {TRADES.map((t) => <li>{t.pt}</li>)}
+  </ul>
+</div>
