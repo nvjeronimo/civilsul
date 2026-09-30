@@ -73,20 +73,9 @@ address { font-style: normal; }
 .btn .ic { width: 20px; height: 20px; flex: none; }
 .btn--line { --bg: transparent; --fg: var(--ink); }
 .btn--line:hover { --bg: var(--ink); --fg: var(--ground); }
-/* a ação principal está numa mancha de sol: um paralelogramo de luz projetado para trás e para baixo */
-.btn--lit::before {
-  content: ''; position: absolute; z-index: -2;
-  inset: 10px -22px -14px -10px;
-  background: rgb(226 179 74 / 0.62);
-  clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
-  transition: translate 0.5s var(--ease);
-  pointer-events: none;
-}
 .btn--lit:hover { --bg: #111315; }
-.btn--lit:hover::before { translate: -6px 0; }
 .btn--rev { --bg: var(--ground); --fg: var(--ink); border-color: var(--ground); }
 .btn--rev:hover { --bg: #fff; }
-.btn--rev::before { background: var(--gold); }
 .btn--line-rev { --fg: var(--ground); border-color: var(--hair-rev); }
 .btn--line-rev:hover { --bg: var(--ground); --fg: var(--ink); }
 .btn[hidden] { display: none; }
@@ -141,6 +130,9 @@ address { font-style: normal; }
 .corte__joint { fill: none; stroke: var(--ground); stroke-width: 0.75; vector-effect: non-scaling-stroke; opacity: 0.7; }
 .corte__ground { fill: none; stroke: var(--ink); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
 .corte__hatch { stroke: var(--ink); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+.corte__clear { fill: var(--ground); }
+.corte__photo, .corte__photo picture, .corte__photo img { display: block; width: 100%; height: 100%; }
+.corte__photo img { object-fit: cover; object-position: 50% 60%; }
 .corte__labels { fill: var(--blue-ink); font: 650 calc(var(--cw) * 0.0125px) var(--body); letter-spacing: 0.12em; text-transform: uppercase; text-anchor: middle; }
 @media (max-width: 600px) { .corte__labels { font-size: calc(var(--cw) * 0.026px); letter-spacing: 0.06em; } }
 
@@ -224,7 +216,7 @@ address { font-style: normal; }
 .svc__row h3 a:hover { text-decoration: underline; }
 .svc__row h3 a:hover .ic { translate: 4px 0; }
 .svc__short { color: var(--ink-soft); max-width: 40ch; }
-.svc__items { display: grid; gap: 3px; font-size: 0.9375rem; line-height: 1.4; color: var(--blue-ink); }
+.svc__items { display: grid; gap: 3px; font-size: 0.9375rem; line-height: 1.4; color: var(--ink-soft); }
 @media (min-width: 960px) {
   .svc__row { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: baseline; padding-block: 30px; }
   .svc__row h3 { grid-column: 1 / span 5; }
@@ -291,11 +283,13 @@ address { font-style: normal; }
 
 /* ---------- Obras: divisões de um corte (paredes e lajes em poché) ---------- */
 .works { padding-bottom: clamp(56px, 8vw, 112px); }
+.slab + .works, .slab + .proc { padding-top: clamp(56px, 8vw, 112px); }
 .rooms { display: grid; grid-template-columns: 1fr; gap: var(--wall); padding: calc(var(--wall) / 2); }
 .rm { background: var(--ground); box-shadow: 0 0 0 calc(var(--wall) / 2) var(--ink); min-width: 0; }
 .rm[hidden] { display: none; }
 .rm__link { display: flex; flex-direction: column; height: 100%; text-decoration: none; }
 .rm__photo { aspect-ratio: 4 / 3; background: #d9d9d4; overflow: hidden; }
+.lit { clip-path: inset(0); isolation: isolate; }
 .rm__photo picture, .rm__photo img { width: 100%; height: 100%; }
 .rm__photo img { object-fit: cover; }
 .rm__cap { display: grid; gap: 4px; padding: 14px 18px 20px; }
@@ -437,6 +431,18 @@ address { font-style: normal; }
 .qs__alt small { display: block; font-size: 0.8125rem; color: var(--blue-ink); }
 .qs__alt a { display: inline-flex; min-height: 44px; align-items: center; }
 
+/* ---------- Contactos (corpo) ---------- */
+.cx { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 8vw, 112px); }
+.cx__chan { display: grid; border-top: 1px solid var(--ink); }
+.cx__chan div { display: grid; gap: 4px; padding: 18px 0 20px; border-bottom: 1px solid var(--hair); }
+.cx__chan dt { font-size: 0.875rem; color: var(--blue-ink); }
+.cx__chan dd { display: grid; gap: 2px; justify-items: start; }
+.cx__tel { font: 740 clamp(1.625rem, 1.35rem + 0.9vw, 2.125rem)/1.1 var(--display); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; overflow-wrap: anywhere; }
+.cx__tel:hover { text-decoration: underline; text-decoration-thickness: 2px; }
+.cx__chan small { font-size: 0.8125rem; color: var(--blue-ink); }
+.cx__addr address { font-size: 1.125rem; line-height: 1.5; }
+@media (min-width: 960px) { .cx__chan { grid-template-columns: repeat(3, 1fr); column-gap: 32px; } .cx__addr { grid-column: span 2; } }
+
 /* ---------- Privacidade ---------- */
 .prv { display: grid; gap: 0; padding-block: clamp(40px, 6vw, 80px) clamp(64px, 9vw, 120px); max-width: calc(760px + var(--gut) * 2); margin-inline: 0 auto; }
 @media (min-width: 1360px) { .prv { margin-inline: calc((100vw - var(--max)) / 2) auto; } }
@@ -502,31 +508,29 @@ address { font-style: normal; }
   .bar a.bar__q { background: var(--gold); color: var(--ink); }
 }
 
-/* ---------- A luz: uma banda de sol que atravessa a página com o scroll ---------- */
-.sun > i {
-  position: fixed; z-index: 15; pointer-events: none;
+/* ---------- A luz: uma banda de sol que atravessa a página com o scroll ----------
+   A banda fica por baixo do conteúdo (z-index -1: só ilumina o fundo de cal). Dentro das fotografias
+   (.lit, recortadas com clip-path) repete-se a mesma banda fixa, que assim passa por cima da imagem. */
+@property --sp { syntax: '<number>'; inherits: true; initial-value: 0.42; }
+.sun > i, .lit::after {
+  content: ''; position: fixed; pointer-events: none;
   left: 50%; top: 50%;
-  width: 26vmax; height: 320vmax; margin: -160vmax 0 0 -13vmax;
-  background: linear-gradient(90deg, transparent, var(--c) 30%, var(--c) 70%, transparent);
-  translate: 20vw 0; rotate: 54deg;
+  width: 20vmax; height: 320vmax; margin: -160vmax 0 0 -10vmax;
+  background: linear-gradient(90deg, transparent, var(--c) 9%, var(--c) 91%, transparent);
+  translate: calc(36vw - 72vw * var(--sp)) 0;
+  rotate: calc(47deg + 19deg * var(--sp));
 }
-.sun__soft { --c: rgb(226 179 74 / 0.55); mix-blend-mode: soft-light; }
-.sun__warm { --c: rgb(226 179 74 / 0.14); mix-blend-mode: multiply; }
+.sun > i { z-index: -1; }
+.sun__soft { --c: rgb(226 179 74 / 0.6); mix-blend-mode: soft-light; }
+.sun__warm { --c: rgb(226 179 74 / 0.17); mix-blend-mode: multiply; }
+.lit::after { --c: rgb(226 179 74 / 0.32); mix-blend-mode: screen; z-index: 1; }
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {
-    .sun > i { animation: sunpath linear both; animation-timeline: scroll(root); }
+    :root { animation: sunpath linear both; animation-timeline: scroll(root); }
   }
-  [data-sun][data-js] > i {
-    translate: calc(36vw - 72vw * var(--p, 0)) 0;
-    rotate: calc(47deg + 19deg * var(--p, 0));
-    opacity: min(1, calc(var(--p, 0) * 9));
-  }
+  .sun > i { opacity: min(1, calc(var(--sp) * 9)); }
 }
-@keyframes sunpath {
-  0% { translate: 36vw 0; rotate: 47deg; opacity: 0; }
-  11% { opacity: 1; }
-  100% { translate: -36vw 0; rotate: 66deg; opacity: 1; }
-}
-@media (forced-colors: active) { .sun { display: none; } }
-@media print { .sun, .bar { display: none; } }
+@keyframes sunpath { from { --sp: 0; } to { --sp: 1; } }
+@media (forced-colors: active) { .sun, .lit::after { display: none; } }
+@media print { .sun, .bar, .lit::after { display: none; } }

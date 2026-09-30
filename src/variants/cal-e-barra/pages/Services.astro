@@ -15,6 +15,9 @@ const u = UI.pt;
 ---
 <Wall first label="t-page" size="s">
   <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services]]} title={C.servicesH} lede={C.servicesLead} />
+  <nav slot="barra" class="barra__links" aria-label="Serviços nesta página">
+    {SERVICES.map((s) => <a href={`#${s.id}`}>{s.title.pt}</a>)}
+  </nav>
 </Wall>
 
 <Wall label="t-lista" barra="ocre" size="s">

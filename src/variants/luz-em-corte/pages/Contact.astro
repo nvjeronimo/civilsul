@@ -1,8 +1,9 @@
 ---
 import PageHead from '../PageHead.astro';
 import Corte from '../Corte.astro';
+import Icon from '../Icon.astro';
 import Close from '../Close.astro';
-import { UI, href } from '../../../lib/site';
+import { SITE, UI, CALL_NOTE, href, tel, whatsapp } from '../../../lib/site';
 import { WHO } from '../../../content/company';
 import { HOME } from '../copy';
 const V = 'luz-em-corte' as const;
@@ -11,4 +12,18 @@ const u = UI.pt;
 <PageHead crumbs={[[HOME, href(V, 'pt', 'home')], [u.nav.contact]]} title="Contactos." lead={WHO.pt}>
   <Corte slot="aside" view="full" labels={false} />
 </PageHead>
-<Close title="Fale connosco sobre a sua obra." id="canais" />
+
+<section class="wrap cx" aria-label="Canais de contacto">
+  <dl class="cx__chan">
+    <div><dt>Telemóvel</dt><dd><a class="num cx__tel" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd></div>
+    {SITE.landlines.map((l) => <div><dt>Telefone fixo</dt><dd><a class="num cx__tel" href={tel(l.tel)}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd></div>)}
+    <div><dt>{u.whatsapp}</dt><dd><a class="cx__tel" href={whatsapp('pt')} rel="noopener" target="_blank">Conversar por WhatsApp</a><small>Para o telemóvel {SITE.mobile.display}</small></dd></div>
+    <div><dt>{u.email}</dt><dd><a class="cx__tel" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+    <div class="cx__addr"><dt>{u.address}</dt><dd>
+      <address>{SITE.legalName}<br />{SITE.address.street}<br /><span class="num">{SITE.address.postal}</span> {SITE.address.city}, {SITE.address.region}</address>
+      <a class="link-arrow" href={SITE.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" />{u.directions}</a>
+    </dd></div>
+  </dl>
+</section>
+
+<Close title="Pedir orçamento para a sua obra." channels={false} id="pedido" />

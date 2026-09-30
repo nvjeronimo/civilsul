@@ -3,8 +3,8 @@
 import Icon from './Icon.astro';
 import { SITE, UI, CALL_NOTE, href, whatsapp, tel } from '../../lib/site';
 import { INVITE } from '../../content/company';
-interface Props { title?: string; lead?: string; quote?: string; id?: string; headingLevel?: 'h1' | 'h2' }
-const { title = 'Fale connosco sobre a sua obra.', lead = INVITE.pt, quote = href('luz-em-corte', 'pt', 'quote'), id = 'contactos', headingLevel = 'h2' } = Astro.props;
+interface Props { title?: string; lead?: string; quote?: string; id?: string; headingLevel?: 'h1' | 'h2'; channels?: boolean }
+const { title = 'Fale connosco sobre a sua obra.', lead = INVITE.pt, quote = href('luz-em-corte', 'pt', 'quote'), id = 'contactos', headingLevel = 'h2', channels = true } = Astro.props;
 const H = headingLevel;
 const u = UI.pt;
 ---
@@ -19,7 +19,7 @@ const u = UI.pt;
         <a class="btn btn--line btn--line-rev" href={whatsapp('pt')} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
       </div>
     </div>
-    <dl class="ct__chan">
+    {channels && <dl class="ct__chan">
       <div><dt>Telemóvel</dt><dd><a class="num ct__tel" href={tel(SITE.mobile.tel)}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd></div>
       {SITE.landlines.map((l) => <div><dt>Telefone fixo</dt><dd><a class="num ct__tel" href={tel(l.tel)}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd></div>)}
       <div><dt>{u.email}</dt><dd><a class="ct__mail" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
@@ -30,6 +30,6 @@ const u = UI.pt;
           <a class="ct__map" href={SITE.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" />{u.directions}</a>
         </dd>
       </div>
-    </dl>
+    </dl>}
   </div>
 </section>

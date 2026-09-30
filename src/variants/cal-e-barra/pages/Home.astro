@@ -127,9 +127,10 @@ const facts = [SITE.legalName, u.permit, u.since, C.seat, u.area];
   </ul>
 </Wall>
 
-<Wall id="processo" label="t-processo" barra="ocre" size="xs" body="pr">
+<Wall id="processo" label="t-processo" barra="ocre" size="s" body="pr">
   <h2 id="t-processo">{C.processH}</h2>
   <Process />
+  <a slot="barra" class="barra__link" href={href(V, 'pt', 'quote')}>{u.nav.quote}<Icon name="arrow" /></a>
 </Wall>
 
 <Close />

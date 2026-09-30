@@ -31,7 +31,7 @@ const two = w.photos.length > 1;
   <div class="wrap">
     <div class:list={['wd__rooms', two && 'wd__rooms--two']}>
       {w.photos.map((p, n) => (
-        <figure class="wd__room">
+        <figure class="wd__room lit">
           <Picture src={p.src} alt={p.alt.pt} formats={['avif', 'webp']} widths={two ? [480, 800, 1200, 1600] : [640, 1000, 1400, 2000]} sizes={two ? '(min-width: 960px) 46vw, 100vw' : '(min-width: 1400px) 1300px, 100vw'} loading={n === 0 ? 'eager' : 'lazy'} fetchpriority={n === 0 ? 'high' : undefined} decoding="async" />
         </figure>
       ))}

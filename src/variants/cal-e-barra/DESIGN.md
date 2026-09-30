@@ -1,16 +1,16 @@
 # Cal e Barra (proposta B) — sistema como construído
 
 Site completo, só PT. Rota única `src/pages/cal-e-barra/[...path].astro` (`variantPaths(['pt'])`) + `src/variants/cal-e-barra/**`:
-`Layout.astro` (head, cabeçalho, rodapé, barra fixa móvel), `Wall.astro` (parede: platibanda + corpo + barra com slot), `PageHead.astro`, `Win.astro` (obra como janela), `Channels.astro`, `Close.astro` (remate de contacto), `Trades.astro`, `Process.astro`, `Crown.astro`, `Icon.astro`, `copy.ts`, scripts `barra.ts` / `menu.ts` / `filter.ts`, e `pages/` (Home, Services, Service, Works, Work, Quote, Contact, About, Privacy).
+`Layout.astro` (head, cabeçalho, rodapé, barra fixa móvel), `Wall.astro` (parede: corpo + barra com slot; barra vazia desce a `xs`), `PageHead.astro`, `Win.astro` (obra como janela), `Channels.astro`, `Close.astro` (remate de contacto), `Trades.astro`, `Process.astro`, `Icon.astro`, `copy.ts`, scripts `barra.ts` / `menu.ts` / `filter.ts`, e `pages/` (Home, Services, Service, Works, Work, Quote, Contact, About, Privacy).
 
 ## Tese
-A página é uma casa algarvia em alçado. A parede é cal (`--cal`), cada secção termina numa barra pintada que ocupa toda a largura, e cada parede é rematada por uma platibanda em degrau que sobe da "rua" (`--rua`, o intervalo entre paredes). Não há adereços: nem azulejo, nem sol, nem texturas. A casa vive na estrutura, na cor e nas fotografias reais.
+A página é uma casa algarvia em alçado. A parede é cal (`--cal`) e cada secção termina numa barra pintada a toda a largura, que encosta diretamente à parede seguinte. A platibanda desenhada foi retirada na revisão final (lia-se como um separador de interface); a platibanda fica só nas fotografias (primeira vista). Não há adereços: nem azulejo, nem sol, nem texturas. A casa vive na estrutura, na cor e nas fotografias reais.
 
 ## Cor
 | token | valor | uso |
 |---|---|---|
 | `--cal` | #F5F6F4 | parede, fundo de todas as secções |
-| `--rua` | #E6E7E2 | intervalo entre paredes, rodapé ("o chão"), fundo das janelas antes da foto carregar |
+| `--rua` | #E6E7E2 | rodapé ("o chão"), fundo das janelas antes da foto carregar |
 | `--ink` / `--ink-2` / `--ink-3` | #1B1B1B / #454643 / #5C5D59 | texto; todos ≥ 5.4:1 sobre cal |
 | `--anil` | #1F4FA0 | barra principal (primeira vista, obras, empresa, contactos), botão principal, barra fixa móvel, `::selection` |
 | `--anil-soft` | #CDD8EE | texto secundário sobre anil (5.4:1) |
@@ -23,7 +23,7 @@ A página é uma casa algarvia em alçado. A parede é cal (`--cal`), cada secç
 - Números de telefone: `.num` com `tnum`. `tnum` fica fora dos títulos (no Schibsted alarga vírgulas e pontos).
 
 ## Estrutura
-- `.wall` = secção. `margin-top: var(--street)` abre a rua; `.crown` (clip-path de 8 pontos, largura clamp(220px, 30vw, 440px)) fica sobre a coluna do título.
+- `.wall` = secção; as paredes seguem-se sem intervalo, separadas só pelas barras.
 - `.barra` = pé da parede, altura por modificador: `--hero` 88px, `--facts` 72/88px, `--m` 64px, `--s` 48px, `--xs` 40px. Só a primeira vista e a empresa levam conteúdo (ações; factos).
 - Primeira vista em desktop: cabeçalho e H1 em 5/12, janela com a reconstrução e ampliação de moradia (platibanda decorada, céu limpo) em 7/12, proporção 4:3.1 assente no pé da vista, barra anil a toda a largura no fundo da vista. O cabeçalho sobrepõe-se à grelha por `--hd-h` (156px).
 - Obras: grelha de 12 colunas, janelas alinhadas pelo lintel (topo), proporções 3:2 / 4:3 / 4:5, cantos retos, legenda por baixo (título + local/cliente quando a legenda original o diz).
@@ -31,12 +31,13 @@ A página é uma casa algarvia em alçado. A parede é cal (`--cal`), cada secç
 - Móvel: barra fixa anil com Ligar · WhatsApp · Orçamento (`#contactos`).
 
 ## Páginas
-- Cada página é uma sequência de `Wall`: a primeira sem platibanda e com a barra que se pinta ao carregar (`barra--load`); as seguintes com platibanda e barra pintada ao entrar em vista.
-- A barra leva conteúdo quando serve: ligações de secção (home), factos (empresa), navegação obra anterior/seguinte (obra), o alvará (obras públicas).
+- Cada página é uma sequência de `Wall`: a primeira com a barra que se pinta ao carregar (`barra--load`); as seguintes com a barra pintada ao entrar em vista.
+- A barra leva conteúdo quando serve: ligações de secção e "Pedir orçamento" (home), os seis serviços como âncoras (índice de serviços), o filtro (índice de obras), factos (empresa), obra anterior/seguinte (obra), o alvará (obras públicas). Barras vazias ficam a 40px. Em telemóvel a barra da primeira vista leva só os factos (as ações estão na barra fixa).
 - Obras públicas não têm fotografia: a primeira parede termina numa barra anil alta com "Alvará nº 4511" pintado; no índice de serviços a janela desse serviço é um painel anil com o alvará.
 - Obra: fotografias na proporção natural; com duas fotos as colunas repartem-se pela proporção de cada uma para as alturas coincidirem.
 - Obras: filtro por KINDS (botões `aria-pressed`, escondido sem JS, `?tipo=` na URL).
-- Orçamento: contrato de `src/scripts/quote.ts` à letra; o indicador de passos é uma barra anil sobre a rua; o resumo é uma folha branca com filete anil; sem JS todos os passos visíveis e envio por mailto.
+- Serviço: a primeira parede repete a composição da home, texto à esquerda e a obra principal do serviço como janela à direita; "O que inclui" em três colunas por baixo.
+- Orçamento: contrato de `src/scripts/quote.ts` à letra; o indicador de passos é um filete com o troço anil do passo; o resumo assenta na cal, só com filetes (sem cartão); sem JS todos os passos visíveis e envio por mailto.
 - Cabeçalho: na home ocupa 5/12 da primeira vista; nas interiores é uma linha. Menu móvel em painel (botão com `aria-expanded`, Escape fecha e devolve o foco); sem JS a navegação fica visível.
 
 ## Movimento
@@ -53,4 +54,4 @@ Nenhum raster novo. Todas as imagens são as fotografias reais do portefólio at
 - `impeccable detect`: sem achados.
 - Monte do Pocinho (barra azul) nas Obras da home e na página Empresa.
 - Site completo verificado a 1440 e 390 (8 páginas da captura + obras públicas + privacidade): sem overflow; formulário percorrido com Playwright (pré-seleção ?tipo=, validação por passo, resumo, envio WhatsApp); menu e filtro testados.
-- Veredito: a gramática (cal, barra, platibanda) lê-se como arquitetura e não como tema. Ponto fraco: muitas barras anil vazias ao longo de páginas longas repetem-se e dependem da pintura animada para ganhar sentido.
+- Veredito (após a revisão final): cal e barra lêem-se como arquitetura; as barras têm função ou ficam baixas. Ponto fraco: sem a platibanda desenhada, a gramática assenta só na barra e nas fotografias.

@@ -21,16 +21,19 @@ const tipo = QUOTE_TYPE[id];
 const isPublic = works.length === 0;
 ---
 <Wall first label="t-page" size={isPublic ? 'l' : 's'}>
-  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services, href(V, 'pt', 'services')], [s.title.pt]]} title={s.title.pt} lede={s.short.pt}>
-    <div class="sv__intro">
-      <p>{s.intro.pt}</p>
-      <div class="sv__inc">
-        <h2>{C.includes}</h2>
-        <ul role="list">{s.items.map((i) => <li>{i.pt}</li>)}</ul>
-      </div>
-    </div>
-    <a class="btn btn--anil sv__cta" href={`${href(V, 'pt', 'quote')}?tipo=${tipo}`}>{C.quoteFor}<Icon name="arrow" /></a>
-  </PageHead>
+  <div class:list={['sv__top', !isPublic && 'sv__top--win']}>
+    <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services, href(V, 'pt', 'services')], [s.title.pt]]} title={s.title.pt} lede={s.short.pt}>
+      <p class="sv__lead">{s.intro.pt}</p>
+      <a class="btn btn--anil sv__cta" href={`${href(V, 'pt', 'quote')}?tipo=${tipo}`}>{C.quoteFor}<Icon name="arrow" /></a>
+    </PageHead>
+    {!isPublic && (
+      <Win class="sv__win" work={works[0]} eager sizes="(min-width: 900px) 38vw, calc(100vw - 32px)" widths={[480, 720, 960, 1280]} href={href(V, 'pt', 'works', works[0].slug.pt)} />
+    )}
+  </div>
+  <div class="sv__inc">
+    <h2>{C.includes}</h2>
+    <ul role="list">{s.items.map((i) => <li>{i.pt}</li>)}</ul>
+  </div>
   {isPublic && (
     <div slot="barra" class="permit">
       <p class="permit__big">{u.permit}</p>

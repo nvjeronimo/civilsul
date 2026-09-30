@@ -1,7 +1,6 @@
 ---
-// Uma parede: platibanda no remate (menos na primeira da página), corpo em cal, barra pintada no pé.
+// Uma parede: corpo em cal e barra pintada no pé. Barra vazia fica na altura mínima (xs).
 // A barra pode levar conteúdo (slot "barra"): factos, ligações, navegação entre obras.
-import Crown from './Crown.astro';
 interface Props {
   id?: string;
   label?: string;
@@ -15,10 +14,9 @@ const { id, label, first = false, barra = 'anil', size = 'm', class: cls, body }
 const filled = Astro.slots.has('barra');
 ---
 <section class:list={['wall', first && 'wall--first', cls]} id={id} aria-labelledby={label}>
-  {!first && <Crown />}
   <div class:list={['wrap wall__body', body]}><slot /></div>
   {barra !== 'none' && (
-    <div class:list={['barra', barra === 'ocre' && 'barra--ocre', `barra--${size}`, first && 'barra--load', filled && 'barra--filled']} data-barra>
+    <div class:list={['barra', barra === 'ocre' && 'barra--ocre', `barra--${filled ? size : 'xs'}`, first && 'barra--load', filled && 'barra--filled']} data-barra>
       {filled && <div class="barra__in"><slot name="barra" /></div>}
     </div>
   )}

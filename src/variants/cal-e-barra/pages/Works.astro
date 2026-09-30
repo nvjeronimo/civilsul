@@ -10,13 +10,12 @@ import { C } from '../copy';
 const V = 'cal-e-barra' as const;
 const u = UI.pt;
 ---
-<Wall first label="t-page" size="s">
-  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.works]]} title={C.worksH} lede={C.worksLead}>
-    <div class="filter" role="group" aria-label={C.filter} data-filter hidden>
-      <button type="button" data-k="all" aria-pressed="true">{C.filterAll}</button>
-      {KINDS.map((k) => <button type="button" data-k={k.id} aria-pressed="false">{k.label.pt}</button>)}
-    </div>
-  </PageHead>
+<Wall first label="t-page" size="l">
+  <PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.works]]} title={C.worksH} lede={C.worksLead} />
+  <div slot="barra" class="filter" role="group" aria-label={C.filter} data-filter hidden>
+    <button type="button" data-k="all" aria-pressed="true">{C.filterAll}</button>
+    {KINDS.map((k) => <button type="button" data-k={k.id} aria-pressed="false">{k.label.pt}</button>)}
+  </div>
 </Wall>
 
 <Wall label="t-lista" size="m">

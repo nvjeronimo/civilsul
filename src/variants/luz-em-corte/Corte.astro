@@ -5,15 +5,17 @@
 // ala térrea com telhado de duas águas e chaminé, escada interior, pátio com muro baixo, terreno tracejado a 45°.
 // A luz do sol entra com o mesmo ângulo (≈51°) pela janela alta e pela porta do pátio.
 type View = 'full' | 'moradias' | 'reconstrucao' | 'remodelacoes' | 'piscinas' | 'telhados' | 'obras-publicas';
-interface Props { view?: View; labels?: boolean; class?: string; title?: string }
-const { view = 'full', labels = true, class: cls, title } = Astro.props;
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { view?: View; labels?: boolean; class?: string; title?: string; photo?: { src: ImageMetadata; alt: string } }
+const { view = 'full', labels = true, class: cls, title, photo } = Astro.props;
 
 const VIEWS: Record<View, [number, number, number, number]> = {
   full: [140, 100, 1060, 600],
   moradias: [150, 270, 520, 430],
   reconstrucao: [560, 290, 460, 410],
   remodelacoes: [206, 330, 470, 330],
-  piscinas: [880, 400, 320, 300],
+  piscinas: [900, 500, 300, 200],
   telhados: [600, 280, 420, 240],
   'obras-publicas': [150, 520, 1040, 180],
 };
@@ -30,11 +32,11 @@ for (let i = 0; i < 20; i++) {
 stair += `H401V486L583 608Z`;
 
 const DESC: Record<View, string> = {
-  full: 'Desenho em corte de uma moradia: volume de dois pisos com terraço e platibanda, escada interior, ala térrea com telhado de duas águas e chaminé, pátio com muro baixo e fundações no terreno. A luz do sol entra pela janela alta e pela porta do pátio.',
+  full: 'Desenho em corte de uma moradia: volume de dois pisos com terraço e platibanda, escada interior, ala térrea com telhado de duas águas e chaminé, pátio com piscina e muro baixo e fundações no terreno. A luz do sol entra pela janela alta e pela porta do pátio.',
   moradias: 'Pormenor do corte: volume de dois pisos, da fundação à platibanda.',
   reconstrucao: 'Pormenor do corte: a ligação entre o volume de dois pisos e a ala térrea.',
   remodelacoes: 'Pormenor do corte: interior com escada entre pisos, sala e quarto.',
-  piscinas: 'Pormenor do corte: pátio com pavimento e muro baixo, à saída da casa.',
+  piscinas: 'Pormenor do corte: pátio com piscina enterrada e muro baixo, à saída da casa.',
   telhados: 'Pormenor do corte: telhado de duas águas com chaminé algarvia.',
   'obras-publicas': 'Pormenor do corte: fundações e terreno, a base de qualquer obra.',
 };
@@ -52,12 +54,23 @@ const DESC: Record<View, string> = {
     </mask>
     <linearGradient id={`${uid}-sun`} gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="560">
       <stop offset="0" stop-color="#e2b34a" stop-opacity="0.04" />
-      <stop offset="1" stop-color="#e2b34a" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#e2b34a" stop-opacity="0.26" />
     </linearGradient>
   </defs>
 
   <!-- terreno -->
   <rect x="0" y="620" width="1200" height="84" fill={`url(#${uid}-earth)`} mask={`url(#${uid}-m)`} />
+
+  {photo && (
+    <foreignObject x="644" y="484" width="298" height="120">
+      <div xmlns="http://www.w3.org/1999/xhtml" class="corte__photo">
+        <Picture src={photo.src} alt={photo.alt} formats={['avif', 'webp']} widths={[320, 480, 720, 960]} sizes="(min-width: 960px) 26vw, 80vw" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+    </foreignObject>
+  )}
+
+  <!-- interior do tanque da piscina (limpa o tracejado do terreno) -->
+  <rect class="corte__clear" x="1010" y="608" width="90" height="62" />
 
   <!-- luz -->
   <g fill={`url(#${uid}-sun)`}>
@@ -69,8 +82,8 @@ const DESC: Record<View, string> = {
   <g class="corte__thin">
     <path d="M232 608V586h8v10h74v-10h8v22M240 596v-4h74v4" />
     <circle cx="352" cy="409" r="5.5" /><path d="M344 468l2-28-3-17c5-5 13-5 18 0l-3 17 2 28M352 436v32" />
-    <path d="M690 579h86M698 579v29M768 579v29M790 608v-40M790 588h14v20" />
-    <path d="M864 480 850 540h46l-14-60M846 540h54M852 540v68M894 540v68" />
+    {!photo && <path d="M690 579h86M698 579v29M768 579v29M790 608v-40M790 588h14v20M864 480 850 540h46l-14-60M846 540h54M852 540v68M894 540v68" />}
+    <path d="M1012 616h86" />
     <path d="M400 468v-36M610 572 401 432" />
     <path d="M640 454 800 406 992 463" />
     <path d="M214 330h412" />
@@ -87,7 +100,7 @@ const DESC: Record<View, string> = {
     <path fill-rule="evenodd" d="M864 364h18v104h-18zM852 328h42v36h-42zM858 338v10h6v-10zM870 338v10h6v-10zM882 338v10h6v-10z" />
     <path d="M846 328 873 312l27 16z" />
     <path d={stair} />
-    <path d="M960 608h174v6H960zM1136 572h14v48h-14zM1132 568h22v4h-22z" />
+    <path d="M960 608h40v6h-40zM1110 608h24v6h-24zM1000 608h10v72h-10zM1100 608h10v72h-10zM1000 670h110v10H1000zM1136 572h14v48h-14zM1132 568h22v4h-22z" />
     <path d="M186 620h42v28h-42zM612 620h42v28h-42zM932 620h42v28h-42zM1128 620h30v16h-30z" />
   </g>
 
@@ -103,8 +116,9 @@ const DESC: Record<View, string> = {
       <text x="420" y="324">Terraço</text>
       <text x="272" y="404">Quarto</text>
       <text x="300" y="548">Sala</text>
-      <text x="740" y="530">Cozinha</text>
-      <text x="1050" y="596">Pátio</text>
+      {!photo && <text x="740" y="530">Cozinha</text>}
+      <text x="1068" y="560">Pátio</text>
+      <text x="1055" y="650">Piscina</text>
     </g>
   )}
 </svg>
