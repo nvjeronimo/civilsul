@@ -1,0 +1,289 @@
+---
+// Civilsul · candidata B3 "Livro de Obra". Página inicial, PT.
+// A página é o livro de obra da empresa: páginas pautadas numa grelha de base única, registos numerados na margem,
+// provas fotográficas coladas e um carimbo. Fontes: Schibsted Grotesk (títulos) e Sofia Sans (texto).
+import '@fontsource-variable/sofia-sans/wght.css';
+import '@fontsource-variable/schibsted-grotesk/wght.css';
+import './styles.css';
+import Head from '../../components/Head.astro';
+import Logo from '../../components/Logo.astro';
+import Icon from './Icon.astro';
+import Stamp from './Stamp.astro';
+import Print from './Print.astro';
+import { SITE, BASE, UI, CALL_NOTE, whatsapp } from '../../lib/site';
+import { meta } from '../../lib/meta';
+import { SERVICES, TRADES } from '../../content/services';
+import { workById } from '../../content/works';
+import { MISSION, WHO, TEAM, INVITE, PROCESS } from '../../content/company';
+
+const lang = 'pt' as const;
+const u = UI.pt;
+const m = meta({ lang, page: 'home' });
+const two = (n: number) => String(n).padStart(2, '0');
+
+// Folhas do livro (número da página esquerda de cada abertura)
+const P = { services: 3, works: 5, about: 9, process: 11, contact: 13 };
+const toc = [
+  { href: '#servicos', label: u.nav.services, p: P.services },
+  { href: '#obras', label: u.nav.works, p: P.works },
+  { href: '#empresa', label: u.nav.about, p: P.about },
+  { href: '#contactos', label: u.nav.contact, p: P.contact },
+];
+
+// Registos pela ordem de leitura: 01 a obra de abertura, 02–07 serviços, 08–16 obras, 17 empresa, 18 a obra do visitante.
+const w = (id: string, i = 0) => {
+  const x = workById(id);
+  return { src: x.photos[i].src, alt: x.photos[i].alt.pt, title: x.title.pt, place: x.place && !x.title.pt.includes(x.place) ? x.place : undefined };
+};
+const hero = w('construcao-moradia');
+const services = SERVICES.map((s, i) => ({ ...s, no: two(i + 2) }));
+const worksA = { vale: w('vale-del-rey'), ampl: w('remodelacao-ampliacao-moradia'), fachada: w('fachada-portaldegenios'), monte: w('monte-do-pocinho') };
+const worksB = { maison: w('maison-amarande'), topaz: w('topazmoment'), recon: w('reconstrucao-ampliacao-moradia'), piscina: w('arranjos-exteriores-piscina'), edificio: w('reconstrucao-edificio') };
+const roof = w('remodelacao-moradia');
+
+const template = 'Olá Civilsul, gostava de pedir um orçamento.\n\nQue obra: \nOnde: \nPara quando: \n';
+const wa = whatsapp(lang);
+const waTemplate = whatsapp(lang, template);
+const mailTemplate = `mailto:${SITE.email}?subject=${encodeURIComponent('Pedido de orçamento')}&body=${encodeURIComponent(template)}`;
+const year = new Date().getFullYear();
+---
+<html lang="pt-PT" class="v-livro">
+  <head>
+    <Head title={m.title} description={m.description} lang="pt" variant="livro-de-obra" page="home" langs={['pt']} themeColor="#2B2E30" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{u.skip}</a>
+
+    <!-- Cabeçalho corrido na secretária: aparece quando a abertura inicial sai de vista (sem JS fica sempre visível). -->
+    <div class="runhead" data-runhead>
+      <a class="runhead__brand" href="#top" aria-label="Civilsul, início do livro"><Logo tone="reverse" size="1.6rem" /><span>Civilsul</span></a>
+      <nav aria-label="Secções (cabeçalho fixo)">
+        <ul>{toc.map((t) => <li><a href={t.href}>{t.label}</a></li>)}</ul>
+      </nav>
+      <p class="runhead__tel"><a href={`tel:${SITE.mobile.tel}`}><Icon name="phone" />{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></p>
+      <a class="btn btn--paper" href="#contactos">{u.nav.quote}</a>
+    </div>
+
+    <div class="desk" id="top">
+      <main id="main">
+        <!-- Páginas 1–2: abertura -->
+        <section class="spread spread--hero" aria-labelledby="h1" data-hero>
+          <div class="col col--l">
+            <header class="mast">
+              <div class="mast__row">
+                <a class="mast__brand" href="#top" aria-label="Civilsul, início">
+                  <Logo size="2.15rem" />
+                  <span class="mast__name"><strong>Civilsul</strong><small>{SITE.legalName}</small></span>
+                </a>
+                <p class="mast__tel">
+                  <a href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a>
+                  <small>{CALL_NOTE.mobile.pt}</small>
+                </p>
+              </div>
+              <nav class="toc" aria-label="Índice">
+                <ol>
+                  {toc.map((t) => (
+                    <li><a href={t.href}><span class="toc__l">{t.label}</span><span class="toc__p" aria-label={`página ${t.p}`}>{t.p}</span></a></li>
+                  ))}
+                </ol>
+              </nav>
+            </header>
+
+            <h1 id="h1" class="h1">Construímos, reconstruímos e remodelamos no Algarve desde 1985.</h1>
+            <p class="lede">Moradias novas, casas antigas refeitas e aumentadas, apartamentos, piscinas e obras públicas. Com o alvará nº 4511, a partir de Quarteira.</p>
+            <div class="ctas">
+              <a class="btn btn--ink" href="#contactos">{u.nav.quote}<Icon name="arrow" /></a>
+              <a class="btn btn--line" href={wa} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+            </div>
+          </div>
+
+          <div class="col col--r">
+            <Print class="print--hero" src={hero.src} alt={hero.alt} no="01" title={hero.title} rows={18} rowsSm={11} r={0.7} eager sizes="(min-width: 1100px) 600px, (min-width: 760px) 680px, 100vw" pos="50% 60%" />
+            <Stamp class="stamp--hero" />
+          </div>
+          <span class="folio folio--l" aria-hidden="true">1</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={"1"}>2</span>
+        </section>
+
+        <!-- Páginas 3–4: serviços -->
+        <section class="spread" id="servicos" aria-labelledby="h-serv">
+          <div class="col col--l">
+            <h2 id="h-serv" class="h2">O que fazemos</h2>
+            <p class="intro">Da moradia nova à reparação de um telhado, com as especialidades feitas pela mesma empresa.</p>
+            {services.slice(0, 3).map((s) => (
+              <article class="entry">
+                <p class="rec__no"><span class="rec__w">Registo </span>{s.no}</p>
+                <h3 class="h3">{s.title.pt}</h3>
+                <p>{s.short.pt}</p>
+                <ul class="course">{s.items.map((it) => <li>{it.pt}</li>)}</ul>
+              </article>
+            ))}
+          </div>
+          <div class="col col--r">
+            {services.slice(3).map((s) => (
+              <article class="entry">
+                <p class="rec__no"><span class="rec__w">Registo </span>{s.no}</p>
+                <h3 class="h3">{s.title.pt}</h3>
+                <p>{s.short.pt}</p>
+                <ul class="course">{s.items.map((it) => <li>{it.pt}</li>)}</ul>
+              </article>
+            ))}
+            <p class="note">A lista completa de ofícios está na <a href="#oficios">página {P.process + 1}</a>.</p>
+          </div>
+          <span class="folio folio--l" aria-hidden="true">{P.services}</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={P.services}>{P.services + 1}</span>
+        </section>
+
+        <!-- Páginas 5–6: obras -->
+        <section class="spread" id="obras" aria-labelledby="h-obras">
+          <div class="col col--l">
+            <h2 id="h-obras" class="h2">Obras entregues</h2>
+            <p class="intro">Fotografias de obras terminadas, com a legenda de cada uma.</p>
+            <Print src={worksA.vale.src} alt={worksA.vale.alt} no="08" title={worksA.vale.title} place={worksA.vale.place} rows={12} r={-0.6} />
+            <Print src={worksA.ampl.src} alt={worksA.ampl.alt} no="09" title={worksA.ampl.title} rows={12} r={0.5} pos="50% 55%" />
+          </div>
+          <div class="col col--r">
+            <Print src={worksA.fachada.src} alt={worksA.fachada.alt} no="10" title={worksA.fachada.title} place="Portaldegénios, Lda." rows={20} rowsSm={14} r={0.8} />
+            <Print src={worksA.monte.src} alt={worksA.monte.alt} no="11" title={worksA.monte.title} place={worksA.monte.place} rows={12} r={-0.9} />
+          </div>
+          <span class="folio folio--l" aria-hidden="true">{P.works}</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={P.works}>{P.works + 1}</span>
+        </section>
+
+        <!-- Páginas 7–8: obras (continuação) -->
+        <section class="spread" aria-label="Obras entregues, continuação">
+          <div class="col col--l">
+            <div class="pair">
+              <Print src={worksB.maison.src} alt={worksB.maison.alt} no="12" title={worksB.maison.title} rows={10} rowsSm={9} r={-0.8} inline sizes="(min-width: 1100px) 260px, 50vw" />
+              <Print src={worksB.topaz.src} alt={worksB.topaz.alt} no="13" title={worksB.topaz.title} rows={10} rowsSm={9} r={0.9} inline sizes="(min-width: 1100px) 260px, 50vw" />
+            </div>
+            <Print src={worksB.recon.src} alt={worksB.recon.alt} no="14" title={worksB.recon.title} rows={12} r={0.4} />
+          </div>
+          <div class="col col--r">
+            <Print src={worksB.piscina.src} alt={worksB.piscina.alt} no="15" title={worksB.piscina.title} rows={12} r={0.7} />
+            <Print class="print--side" src={worksB.edificio.src} alt={worksB.edificio.alt} no="16" title={worksB.edificio.title} rows={14} rowsSm={13} r={-0.7} sizes="(min-width: 1100px) 340px, 70vw" />
+          </div>
+          <span class="folio folio--l" aria-hidden="true">{P.works + 2}</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={P.works + 2}>{P.works + 3}</span>
+        </section>
+
+        <!-- Páginas 9–10: empresa -->
+        <section class="spread" id="empresa" aria-labelledby="h-emp">
+          <div class="col col--l">
+            <h2 id="h-emp" class="h2">Uma construtora desde 1985</h2>
+            <p>{MISSION.pt}</p>
+            <p>{TEAM.pt}</p>
+            <p>{WHO.pt}</p>
+            <dl class="facts">
+              <div><dt>Firma</dt><dd>{SITE.legalName}</dd></div>
+              <div><dt>Alvará</dt><dd>nº&nbsp;{SITE.permit}</dd></div>
+              <div><dt>Desde</dt><dd>{SITE.since}</dd></div>
+              <div><dt>Sede</dt><dd>{SITE.address.street}, <span class="nw">{SITE.address.postal.replace('-', '‑')} {SITE.address.city}</span></dd></div>
+              <div><dt>Onde</dt><dd>{u.area}</dd></div>
+            </dl>
+          </div>
+          <div class="col col--r">
+            <Print src={roof.src} alt={roof.alt} no="17" title={roof.title} rows={21} rowsSm={14} r={0.6} pos="50% 40%" />
+          </div>
+          <span class="folio folio--l" aria-hidden="true">{P.about}</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={P.about}>{P.about + 1}</span>
+        </section>
+
+        <!-- Páginas 11–12: como corre uma obra, ofícios -->
+        <section class="spread" aria-labelledby="h-proc">
+          <div class="col col--l">
+            <h2 id="h-proc" class="h2">Como corre uma obra</h2>
+            <ol class="steps">
+              {PROCESS.map((s, i) => (
+                <li class="entry">
+                  <p class="rec__no" aria-hidden="true"><span class="rec__w">Passo </span>{i + 1}</p>
+                  <h3 class="h3">{s.title.pt}</h3>
+                  <p>{s.text.pt}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div class="col col--r" id="oficios">
+            <h2 class="h2" id="h-of">Todos os ofícios</h2>
+            <ul class="trades" aria-labelledby="h-of">{TRADES.map((t) => <li>{t.pt}</li>)}</ul>
+          </div>
+          <span class="folio folio--l" aria-hidden="true">{P.process}</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={P.process}>{P.process + 1}</span>
+        </section>
+
+        <!-- Páginas 13–14: contactos e a página em branco -->
+        <section class="spread spread--last" id="contactos" aria-labelledby="h-cont">
+          <div class="col col--l">
+            <h2 id="h-cont" class="h2">A próxima página é a sua obra.</h2>
+            <p>{INVITE.pt}</p>
+            <dl class="reach">
+              <div>
+                <dt>Telemóvel</dt>
+                <dd><a class="num" href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd>
+              </div>
+              {SITE.landlines.map((l) => (
+                <div>
+                  <dt>Telefone</dt>
+                  <dd><a class="num" href={`tel:${l.tel}`}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd>
+                </div>
+              ))}
+              <div>
+                <dt>{u.email}</dt>
+                <dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+              </div>
+              <div>
+                <dt>{u.address}</dt>
+                <dd><span>{SITE.address.street}</span><span class="nw">{SITE.address.postal.replace('-', '‑')} {SITE.address.city}</span><a href={SITE.mapsUrl} rel="noopener" target="_blank"><Icon name="pin" />{u.directions}</a></dd>
+              </div>
+            </dl>
+            <div class="ctas">
+              <a class="btn btn--ink" href={wa} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+              <a class="btn btn--line" href={`tel:${SITE.mobile.tel}`} aria-label={`${u.call} ${SITE.mobile.display} (${CALL_NOTE.mobile.pt})`}><Icon name="phone" />{u.call}</a>
+            </div>
+          </div>
+
+          <div class="col col--r blank" aria-labelledby="h-blank">
+            <p class="rec__no"><span class="rec__w">Registo </span>18</p>
+            <h3 class="h3" id="h-blank">A sua obra</h3>
+            <p>Para abrir este registo, diga-nos:</p>
+            <ol class="lines">
+              <li><span>Que obra quer fazer</span></li>
+              <li><span>Onde fica</span></li>
+              <li><span>Para quando</span></li>
+              <li><span>Fotografias ou plantas, se tiver</span></li>
+            </ol>
+            <div class="ctas">
+              <a class="btn btn--ink" href={waTemplate} rel="noopener" target="_blank"><Icon name="chat" />Escrever no WhatsApp</a>
+              <a class="btn btn--line" href={mailTemplate}><Icon name="mail" />Enviar por email</a>
+            </div>
+          </div>
+          <span class="folio folio--l" aria-hidden="true">{P.contact}</span>
+          <span class="folio folio--r" aria-hidden="true" data-pair={P.contact}>{P.contact + 1}</span>
+        </section>
+      </main>
+
+      <footer class="foot">
+        <div class="foot__id">
+          <Logo tone="reverse" size="1.9rem" />
+          <p><strong>{SITE.legalName}</strong><br />Alvará nº&nbsp;{SITE.permit} · {u.since} · {SITE.address.city}, {SITE.address.region}</p>
+        </div>
+        <ul class="foot__links">
+          {toc.map((t) => <li><a href={t.href}>{t.label}</a></li>)}
+          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li><a href={SITE.mapsUrl} rel="noopener" target="_blank">{u.directions}</a></li>
+        </ul>
+        <p class="foot__demo"><a href={BASE}>{u.demo}</a> · © {year} {SITE.name}</p>
+      </footer>
+    </div>
+
+    <nav class="actbar" aria-label="Ações rápidas">
+      <a href={`tel:${SITE.mobile.tel}`} aria-label={`${u.call} ${SITE.mobile.display} (${CALL_NOTE.mobile.pt})`}><Icon name="phone" />{u.call}</a>
+      <a href={wa} rel="noopener" target="_blank"><Icon name="chat" />{u.whatsapp}</a>
+      <a class="actbar__q" href="#contactos">Orçamento</a>
+    </nav>
+
+    <script>
+      import './book.ts';
+    </script>
+  </body>
+</html>

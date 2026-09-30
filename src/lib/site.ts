@@ -23,12 +23,19 @@ export const SITE = {
 } as const;
 
 export type Lang = 'pt' | 'en';
-export type Variant = 'mapa' | 'mostruario' | 'padrao';
+export type Variant = 'mapa' | 'mostruario' | 'padrao' | 'cal-e-barra' | 'luz-em-corte' | 'livro-de-obra';
 
 export const VARIANTS: { id: Variant; name: string; line: { pt: string; en: string }; langs: Lang[] }[] = [
   { id: 'mapa', name: 'Mapa de Quantidades', line: { pt: 'O site como o orçamento de um construtor sério.', en: 'The site as a serious builder’s bill of quantities.' }, langs: ['pt', 'en'] },
   { id: 'mostruario', name: 'Mostruário', line: { pt: 'Cada serviço é uma amostra de material tirada das obras reais.', en: 'Every service is a material sample cut from real work.' }, langs: ['pt'] },
   { id: 'padrao', name: 'Padrão do setor', line: { pt: 'O site de construtora esperado, com acabamento a sério.', en: 'The expected builder site, finished properly.' }, langs: ['pt', 'en'] },
+];
+
+/** Candidatas à nova direção B (só página inicial, só PT), 2026-09-30. */
+export const B_CANDIDATES: { id: Variant; name: string; line: string }[] = [
+  { id: 'cal-e-barra', name: 'Cal e Barra', line: 'A casa algarvia como linguagem: cal, barra pintada, platibanda.' },
+  { id: 'luz-em-corte', name: 'Luz em Corte', line: 'Cada obra lida como um corte de arquiteto atravessado pela luz.' },
+  { id: 'livro-de-obra', name: 'Livro de Obra', line: 'A história contada como o livro que acompanha cada obra.' },
 ];
 
 // Nota obrigatória junto de números de telefone (DL 59/2021)

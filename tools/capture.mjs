@@ -13,6 +13,8 @@ const PAGES = [
   ['home', '/'], ['servicos', '/servicos/'], ['servico', '/servicos/remodelacoes/'], ['obras', '/obras/'],
   ['obra', '/obras/moradia-vale-del-rey/'], ['orcamento', '/orcamento/'], ['empresa', '/empresa/'], ['contactos', '/contactos/'], ...(variant === 'mostruario' ? [] : [['en-home', '/en/']]),
 ];
+const HOME_ONLY = ['cal-e-barra', 'luz-em-corte', 'livro-de-obra'].includes(variant);
+if (HOME_ONLY) PAGES.splice(1);
 const sizes = [[1440, 'desktop'], [390, 'mobile']].filter(([, l]) => which === 'both' || which === l);
 const b = await chromium.launch({ executablePath: CHROME });
 for (const [vw, label] of sizes) {

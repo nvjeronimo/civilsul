@@ -1,0 +1,107 @@
+{
+  "title": "Civilsul · nova direção B",
+  "question": "Que mundo visual substitui a proposta B? Escolha um, peça outra mão (mais segura ou mais ousada) ou escreva o que faltou no Aviso e no Mostruário.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Livro de Obra",
+      "kicker": "THE ROLL",
+      "lineage": "o livro de obra obrigatório em cada obra portuguesa: páginas numeradas, linhas azuis, registos datados, carimbos",
+      "thesis": "A história da Civilsul contada como o livro que acompanha cada obra: registos com data, fotografias coladas, o carimbo da empresa.",
+      "palette": ["#F3F5F2", "#1A1D22", "#0A6DAD", "#FFE500"],
+      "materials": ["papel pautado de linhas azuis", "carimbo da empresa a tinta azul", "fotografias coladas com legenda manuscrita impressa", "página em branco para a sua obra"],
+      "viewport": "Livro aberto em duas páginas: à esquerda o título e os factos (desde 1985, alvará 4511, Quarteira); à direita uma fotografia de obra colada com o registo por baixo; carimbo ‘Pedir orçamento’.",
+      "risk": "É outro documento, parente do Mapa de Quantidades: pode parecer repetido ao lado da A.",
+      "raised": [
+        {"from": "challenger-pixorama", "raise": "Uma só pauta: todo o texto, fotos e botões assentam nas linhas do livro."},
+        {"from": "challenger-segment", "raise": "As linhas vazias são desenhadas: a página seguinte está pronta para a obra do visitante."},
+        {"from": "challenger-coil", "raise": "Texto em fiadas horizontais com a medida da linha, como courses de tijolo."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Cal e Barra",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "a casa algarvia: paredes caiadas, barras pintadas a azul e ocre, platibandas e chaminés rendilhadas (está nas próprias fotos da Civilsul)",
+      "thesis": "O site é uma casa algarvia bem feita: cal branca como fundo, a barra azul como base de cada secção, a platibanda como remate. É o que a Civilsul constrói e reconstrói.",
+      "palette": ["#F5F6F4", "#1B1B1B", "#1F4FA0", "#D9A43A", "#B5553A"],
+      "materials": ["cal com textura subtil", "barra pintada azul e ocre", "perfil de platibanda como remate de secção", "rendilhado de chaminé como padrão pontual"],
+      "viewport": "Fotografia grande da casa do Monte do Pocinho; o título na parede de cal; uma barra azul larga a atravessar o fundo do ecrã com o botão de orçamento e os factos.",
+      "risk": "Se exagerado, fica regional ou turístico; tem de ser arquitetónico e contido."
+    },
+    {
+      "id": "challenger-daylight",
+      "label": "Luz em Corte",
+      "verdict": "competitive",
+      "lineage": "o corte arquitetónico: a casa cortada ao meio, com a luz do sol a atravessar as divisões",
+      "thesis": "Cada obra lida como um corte de arquiteto: paredes a carvão, cal branca, e uma faixa de sol dourado que se move com o scroll.",
+      "palette": ["#F4F4F1", "#24272A", "#E2B34A", "#5E7A99"],
+      "materials": ["corte com poché a carvão", "faixa de luz dourada", "sombra azul", "letras de arquiteto inclinadas"],
+      "viewport": "Um corte desenhado de uma casa algarvia a toda a largura; o sol percorre as divisões ao fazer scroll; título e botão pousados no chão do corte.",
+      "case": "Funde bem: construtor e arquitetura falam a mesma língua; perde na clareza por exigir ilustração técnica.",
+      "risk": "O desenho do corte é ilustração pesada; se ficar simplista parece infográfico.",
+      "hero": "https://impeccable.style/worlds/cards/architecture-inhabitable-space-daylight-section-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/architecture-inhabitable-space-daylight-section.webp"
+    },
+    {
+      "id": "challenger-coil",
+      "label": "Torre de Barro",
+      "verdict": "declined",
+      "lineage": "cerâmica em rolos de barro",
+      "palette": ["#B5623E", "#6E3B24", "#F1E6DA"],
+      "materials": ["rolos de terracota", "juntas brancas"],
+      "thesis": "Texto em fiadas como rolos de barro.",
+      "viewport": "Torre de rolos a subir.",
+      "case": "Funde mal: terracota a toda a página é artesanato, não construção.",
+      "risk": "Pesado e quente demais.",
+      "kept": "Texto em fiadas horizontais.",
+      "hero": "https://impeccable.style/worlds/cards/clay-ceramics-fracture-coiled-earth-tower-hero.webp"
+    },
+    {
+      "id": "challenger-segment",
+      "label": "Sete Segmentos",
+      "verdict": "declined",
+      "lineage": "relógios e totens de LED",
+      "palette": ["#0E0F10", "#FF3B2F"],
+      "materials": ["LED", "segmentos apagados"],
+      "thesis": "Tudo desenhado com a mesma máscara de oito segmentos.",
+      "viewport": "Números de LED.",
+      "case": "Funde mal: nada na construção é um mostrador.",
+      "risk": "Sem relação com o cliente.",
+      "kept": "O vazio desenhado com o mesmo cuidado que o cheio.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-seven-segment-alarm-clock-hero.webp"
+    },
+    {
+      "id": "challenger-pixorama",
+      "label": "Pixorama",
+      "verdict": "declined",
+      "lineage": "cidades isométricas em pixel",
+      "palette": ["#FF0040", "#00A0FF", "#FFE000"],
+      "materials": ["pixel", "isométrico"],
+      "thesis": "Uma cidade em pixel.",
+      "viewport": "Metrópole isométrica.",
+      "case": "Funde mal: lúdico demais para uma construtora com alvará.",
+      "risk": "Brinquedo.",
+      "kept": "Uma só grelha para tudo.",
+      "hero": "https://impeccable.style/worlds/cards/eboy-pixorama-metropolis-hero.webp"
+    },
+    {
+      "id": "challenger-ink",
+      "label": "Tinta Suminagashi",
+      "verdict": "declined",
+      "lineage": "marmoreado em água",
+      "palette": ["#F5F6F7", "#1D2A44"],
+      "materials": ["tinta em água"],
+      "thesis": "Correntes de tinta.",
+      "viewport": "Bacia de tinta.",
+      "case": "Funde mal: decorativo, sem ligação à obra.",
+      "risk": "Abstrato.",
+      "kept": "Margens calmas à volta do conteúdo.",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-fluid-ink-basin-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": false,
+  "steer": true
+}

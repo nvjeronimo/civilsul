@@ -1,0 +1,48 @@
+---
+// Corte ilustrativo de uma moradia algarvia (sem escala, sem cotas): volume de dois pisos com platibanda,
+// ampliação térrea de uma água. Poché a carvão, vidros a traço fino, e a luz do sol que entra
+// pelas duas aberturas com o mesmo ângulo. Uma fotografia real ocupa o piso térreo do volume alto.
+// As percentagens do .corte__room correspondem às coordenadas do viewBox (0 −40 720 488).
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props { photo: ImageMetadata; alt: string }
+const { photo, alt } = Astro.props;
+---
+<div class="corte">
+  <svg class="corte__svg" viewBox="0 -40 720 488" role="img" aria-label="Desenho em corte de uma moradia: dois pisos com cobertura em terraço e platibanda, e uma ampliação térrea com telhado de uma água. A luz do sol entra pela janela alta e pela porta envidraçada da ampliação.">
+    <defs>
+      <linearGradient id="lc-sun" gradientUnits="userSpaceOnUse" x1="0" y1="-40" x2="0" y2="240">
+        <stop offset="0" stop-color="#e2b34a" stop-opacity="0.06" />
+        <stop offset="1" stop-color="#e2b34a" stop-opacity="0.5" />
+      </linearGradient>
+    </defs>
+    <g class="corte__sun" fill="url(#lc-sun)">
+      <path d="M720 -30V20L560 220H546L523.6 248H497.6Z" />
+      <path d="M720 295L597.6 448H720Z" />
+    </g>
+    <g class="corte__poche">
+      <path d="M16 96h14v64H16zM16 210h14v90H16zM16 370h14v78H16zM546 96h14v74h-14zM546 220h14v110h-14zM670 264h14v76h-14z" />
+      <path d="M30 120h516v12H30zM30 248h516v12H30z" />
+      <path d="M560 232L700 262V274L560 244Z" />
+    </g>
+    <path class="corte__glass" d="M21 160V210M25 160V210M21 300V370M25 300V370M551 170V220M555 170V220M675 340V448M679 340V448" />
+    <g class="corte__labels">
+      <text x="288" y="113">Cobertura</text>
+      <text x="288" y="196">Quarto</text>
+      <text x="612" y="404">Sala</text>
+    </g>
+  </svg>
+  <div class="corte__room">
+    <Picture
+      src={photo}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={[400, 640, 900, 1200, 1500]}
+      sizes="(min-width: 960px) 42vw, 72vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+</div>

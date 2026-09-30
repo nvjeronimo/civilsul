@@ -1,0 +1,19 @@
+---
+version: 1
+slug: "src-pages-livro-de-obra"
+primary_target: "src/pages/livro-de-obra"
+related_targets: []
+---
+
+# Surface: Civilsul · candidata B3 "Livro de Obra" (src/pages/livro-de-obra, src/variants/livro-de-obra) — homepage only, PT
+
+Mode: Persuade.
+
+## Direction contract
+THESIS: Every Portuguese construction site keeps a livro de obra: a bound book of numbered pages where the work is recorded, dated and stamped. The homepage is Civilsul's book: its facts, services and finished works entered as records, with photographs pasted onto the page and the company's stamp. It must feel like a beautiful, well-kept book, not a form. It refuses the category hero and must NOT look like the Mapa de Quantidades variant (no tables with Art./Qt. columns, no highlighter).
+OWN-WORLD: Page paper #F3F5F2 (cool, not cream) with faint blue ruled lines #9DB8CF at ~18% opacity on a fixed baseline (every text line sits on the rule: one shared baseline grid, e.g. 32px), a red-violet or blue margin rule on the left (#0A6DAD at 40%), ink #1A1D22, the company stamp as a circular/oval rubber stamp in blue #0A6DAD with the logo mark and "Civilsul · Alvará nº 4511 · Desde 1985" (authored SVG, slightly rotated, ink texture only via opacity, no fake grunge filters). Pasted photos: square-cornered prints with a thin white border and a soft offset shadow, slightly rotated (±1°) — at most one tape corner, subtle. Records: each service / work is an entry with an entry number in the margin (Registo 01…), a title and a short line. Page numbers at the foot of each "page" (section). Empty ruled lines at the end: "A próxima página é a sua obra" leading to contact. Type: Sofia Sans Variable for body on the baseline grid; display in Schibsted Grotesk Variable 700–800 (large, confident) — NO handwriting fonts. The yellow logo circle #FFE500 appears only in the stamp mark.
+STORY: The visitor opens the book: sees who builds (stamp, facts), reads the services as entries, flips through the pasted photos of finished works, reads how a job runs, and reaches the blank page reserved for their own obra, with phone and WhatsApp.
+FIRST VIEWPORT: An open book spread on a dark desk-grey surround (#2B2E30) on desktop: left page = header nav as a table of contents, H1 "Construímos, reconstruímos e remodelamos no Algarve desde 1985.", support line, "Pedir orçamento" + WhatsApp, the stamp; right page = a large pasted photo (Construção de moradia or Vale del Rey) with its record line underneath (Registo, title, place). Gutter shadow between pages. Mobile: a single page (no spread), H1 → photo → CTA, sticky bar.
+FORM: the roll (assigned index 3) of re-roll round 2, seed 42e80edc. Raises: one shared baseline grid for everything (from pixorama); empty ruled lines designed as carefully as filled ones (from seven-segment); text in horizontal courses (from the coil tower).
+SIGNATURE: the stamp: on first view the company stamp presses onto the page once (scale 1.08→1 + opacity, 500ms, ink-press ease), and each pasted photo settles onto its page as it enters view. Reduced motion: static.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
