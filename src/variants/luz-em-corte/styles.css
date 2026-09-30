@@ -76,11 +76,11 @@ address { font-style: normal; }
 .btn--lit { overflow: hidden; }
 /* a ação principal atravessada pela luz: um feixe dourado translúcido ao ângulo da banda, de arestas suaves */
 .btn--lit::after {
-  background: linear-gradient(145deg, transparent 22%, rgb(226 179 74 / 0.42) 40%, rgb(226 179 74 / 0.42) 54%, transparent 72%) 0 0 / 220% 100% no-repeat, var(--bg);
+  background: linear-gradient(145deg, transparent 22%, rgb(243 212 142 / 0.2) 40%, rgb(243 212 142 / 0.2) 54%, transparent 72%) 0 0 / 220% 100% no-repeat, var(--bg);
   transition: background-position 0.6s var(--ease), background-color 0.25s var(--ease);
 }
 .btn--lit:hover::after { background-position: 40% 0, 0 0; }
-.btn--rev::after { background: linear-gradient(145deg, transparent 22%, rgb(226 179 74 / 0.55) 40%, rgb(226 179 74 / 0.55) 54%, transparent 72%) 0 0 / 220% 100% no-repeat, var(--bg); }
+.btn--rev::after { background: linear-gradient(145deg, transparent 22%, rgb(243 212 142 / 0.3) 40%, rgb(243 212 142 / 0.3) 54%, transparent 72%) 0 0 / 220% 100% no-repeat, var(--bg); }
 .btn--rev { --bg: var(--ground); --fg: var(--ink); border-color: var(--ground); }
 .btn--rev:hover { --bg: #fff; }
 .btn--line-rev { --fg: var(--ground); border-color: var(--hair-rev); }
@@ -422,7 +422,7 @@ address { font-style: normal; }
 @media (min-width: 640px) { .row2 { grid-template-columns: 1fr 1fr; } }
 .err { color: var(--err); font-weight: 600; font-size: 0.9375rem; }
 [data-invalid] > .opts .opt { border-color: var(--err); }
-.qf__note { padding: 14px 16px; background: rgb(226 179 74 / 0.22); border-left: 1px solid var(--ink); }
+.qf__note { padding: 14px 16px; background: rgb(243 212 142 / 0.2); border-left: 1px solid var(--ink); }
 .qf__nav { display: flex; flex-wrap: wrap; gap: 20px 28px; padding-top: 24px; border-top: 1px solid var(--ink); }
 .qf.is-js .qf__nav [data-next], .qf.is-js .qf__nav [data-send='wa'] { margin-left: auto; }
 .qf:not(.is-js) [data-prev], .qf:not(.is-js) [data-next], .qf:not(.is-js) [data-send='wa'] { display: none; }
@@ -525,14 +525,14 @@ address { font-style: normal; }
   content: ''; position: fixed; pointer-events: none;
   left: 50%; top: 50%;
   width: 20vmax; height: 320vmax; margin: -160vmax 0 0 -10vmax;
-  background: linear-gradient(90deg, transparent, var(--c) 9%, var(--c) 91%, transparent);
+  background: linear-gradient(90deg, transparent, var(--c) 24%, var(--c) 76%, transparent);
   translate: calc(36vw - 72vw * var(--sp)) 0;
   rotate: calc(47deg + 19deg * var(--sp));
 }
 .sun > i { z-index: -1; }
-.sun__soft { --c: rgb(226 179 74 / 0.6); mix-blend-mode: soft-light; }
-.sun__warm { --c: rgb(226 179 74 / 0.17); mix-blend-mode: multiply; }
-.lit::after { --c: rgb(226 179 74 / 0.32); mix-blend-mode: screen; z-index: 1; }
+.sun__soft { --c: rgb(243 212 142 / 0.4); mix-blend-mode: soft-light; }
+.sun__warm { --c: rgb(243 212 142 / 0.1); mix-blend-mode: multiply; }
+.lit::after { --c: rgb(243 212 142 / 0.18); mix-blend-mode: screen; z-index: 1; }
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {

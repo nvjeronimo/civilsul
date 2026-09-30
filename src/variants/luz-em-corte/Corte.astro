@@ -21,7 +21,7 @@ const VIEWS: Record<View, [number, number, number, number]> = {
 };
 const vb = VIEWS[view];
 const uid = 'c' + Math.random().toString(36).slice(2, 7);
-const peak = view === 'full' ? 0.26 : 0.3;
+const peak = view === 'full' ? 0.16 : 0.18;
 // nos recortes, a luz nasce transparente no topo do recorte e só ganha corpo junto ao chão
 const g = view === 'full' ? [100, 560] : [584, 616];
 // nos recortes só fica a luz que chega ao chão (manchas de sol no pavimento)
@@ -57,8 +57,8 @@ const DESC: Record<View, string> = {
       <rect x="0" y="620" width="1200" height="84" fill={`url(#${uid}-fade)`} />
     </mask>
     <linearGradient id={`${uid}-sun`} gradientUnits="userSpaceOnUse" x1="0" y1={g[0]} x2="0" y2={g[1]}>
-      <stop offset="0" stop-color="#e2b34a" stop-opacity="0.04" />
-      <stop offset="1" stop-color="#e2b34a" stop-opacity={peak} />
+      <stop offset="0" stop-color="#f3d48e" stop-opacity="0.03" />
+      <stop offset="1" stop-color="#f3d48e" stop-opacity={peak} />
     </linearGradient>
     <clipPath id={`${uid}-floor`}><rect x="0" y="584" width="1200" height="36" /></clipPath>
     <filter id={`${uid}-soft`} x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4" /></filter>
