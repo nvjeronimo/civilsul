@@ -12,8 +12,8 @@ export const C = {
   quoteShort: 'Orçamento',
 
   heroTag: 'Construtora desde 1985',
-  heroH: 'Construímos, reconstruímos e remodelamos no Algarve desde 1985.',
-  heroLede: 'Moradias de raiz, casas antigas reconstruídas e ampliadas, apartamentos remodelados, piscinas e exteriores. A mesma empresa, das fundações aos acabamentos.',
+  heroH: 'Construímos, reconstruímos e remodelamos no\u00A0Algarve desde 1985.',
+  heroLede: 'Moradias de raiz, casas antigas reconstruídas e ampliadas, apartamentos remodelados, piscinas e exteriores. A mesma empresa, da estrutura aos acabamentos.',
   seat: 'Quarteira, Algarve',
   seeWorks: 'Ver obras',
 
@@ -23,20 +23,20 @@ export const C = {
   stats: { since: 'início de atividade', permit: 'número do alvará', services: 'áreas de serviço', works: 'obras no portefólio' },
 
   waysTag: 'A equipa',
-  waysH: 'Uma equipa técnica com formação e vasta experiência, no Algarve e noutras regiões.',
+  waysH: 'Quem faz a obra, o que faz e onde trabalha.',
   ways: [
     { icon: 'team', tag: 'Experiência', h: 'Urbanizações, moradias e apartamentos', p: 'A equipa técnica tem formação adequada e uma vasta experiência nestas construções.' },
-    { icon: 'rule', tag: 'Âmbito', h: 'Obras públicas, reparações e remodelações', p: 'A mesma equipa executa obras públicas e trata de reparações e remodelações.' },
-    { icon: 'pin', tag: 'Território', h: 'Sede em Quarteira, obra no Algarve', p: 'Trabalhamos sobretudo no Algarve, e as equipas deslocam-se também a outras regiões do país.' },
+    { icon: 'rule', tag: 'Âmbito', h: 'Obras públicas, reparações e remodelações', p: 'Executamos obras públicas e tratamos de reparações e remodelações de construção civil.' },
+    { icon: 'pin', tag: 'Território', h: 'Sede em Quarteira, obra sobretudo no Algarve', p: 'As equipas deslocam-se também a outras regiões do país.' },
   ] as const,
 
   servicesTag: 'Serviços',
-  servicesHomeH: 'Da moradia de raiz à reparação do telhado, com a mesma empresa.',
+  servicesHomeH: 'Da moradia de raiz à reparação do telhado.',
   seeService: 'Ver o serviço',
   allServices: 'Todos os serviços',
   tradesTag: 'Lista completa',
   tradesH: 'Todos os trabalhos que executamos',
-  tradesP: 'As especialidades ficam com a mesma empresa. Se procura um trabalho específico, está aqui.',
+  tradesP: 'Se procura um trabalho específico, está aqui.',
 
   worksTag: 'Obras',
   worksHomeH: 'Moradias, casas antigas, apartamentos e exteriores: obras terminadas.',

@@ -193,6 +193,7 @@
 @media (min-width: 860px) {
   .pn .cards3 { grid-template-columns: repeat(3, 1fr); }
   .pn .cards3 li { padding: 32px 30px 40px; }
+  .pn .cards3 .d3 { min-height: 2lh; }
 }
 
 /* ── Serviços: acordeão numerado ───────────────────────────────────────── */
@@ -270,8 +271,8 @@
 .pn .close { display: grid; place-items: center; min-height: clamp(520px, 62vw, 760px); margin-top: var(--gut); padding: clamp(56px, 8vw, 120px) 20px; background: var(--ink); color: #fff; text-align: center; }
 .pn .close__bg { position: absolute; inset: 0; }
 .pn .close__bg img { width: 100%; height: 100%; object-fit: cover; }
-.pn .close::after { content: ''; position: absolute; inset: 0; background: #0d111761; }
-.pn .close__in::before { content: ''; position: absolute; z-index: -1; inset: -88px -128px; background: radial-gradient(closest-side, #0d1117a6 0%, #0d111785 45%, #0d111740 75%, #0d111700 100%); pointer-events: none; }
+/* véu em faixa horizontal a toda a largura (sem cúpula visível): mais denso atrás do texto, leve em cima e em baixo */
+.pn .close::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #0d11174d 0%, #0d11178f 30%, #0d11178f 72%, #0d11174d 100%); }
 .pn .close__in { position: relative; z-index: 1; display: grid; justify-items: center; max-width: 44rem; }
 .pn .close .d2 { max-width: 14em; }
 .pn .close__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 28px; }
