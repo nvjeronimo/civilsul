@@ -30,7 +30,7 @@ A etiqueta em pílula por cima dos títulos é traço do aspeto fixado: a proibi
 Os mosaicos só mostram 1985, 4511, `SERVICES.length` e `WORKS.length` (calculados em `Stats.astro`). Sem equipa, logótipos de clientes, preços, avaliações, testemunhos ou percentagens. Obras públicas nunca levam fotografia: painel tinta com "Alvará nº 4511".
 
 ## Movimento
-- Assinatura: a linha do processo. Um só traço SVG que serpenteia entre os quatro passos; `motion.ts` calcula o caminho a partir da posição real dos passos (ResizeObserver) e liga `stroke-dashoffset` ao scroll. Em móvel o mesmo traço com cantos de 18px pela margem.
+- Assinatura: a linha do processo. Um só traço SVG que serpenteia entre os quatro passos; `motion.ts` calcula o caminho a partir da posição real dos passos (ResizeObserver) e liga `stroke-dashoffset` ao scroll. Em móvel o mesmo traço com curvas de até 60px pela margem.
 - Apoio: entradas de 16px, uma vez, só para o que está abaixo da dobra (classe posta por JS); acordeão com altura animada (`::details-content`, onde o browser suporta) e o "+" a rodar 45°.
 - Curva `cubic-bezier(0.16, 1, 0.3, 1)`. Com movimento reduzido: linha completa, sem entradas nem transições.
 
@@ -43,7 +43,10 @@ Todas as fotografias são as obras da Civilsul em `src/assets/obras/` (originais
 ## Verificação (2026-10-04)
 Duas rondas de `tools/capture.mjs` (1440 e 390, sem overflow horizontal em nenhuma página); formulário percorrido com Playwright (pré-seleção `?tipo=`, erros, resumo, envio por WhatsApp); menu móvel, filtro das obras, acordeão e linha do processo testados; `impeccable detect` sem achados.
 
+## Revisão de acabamento (2026-10-04)
+Corrigido após a revisão: contraste das etiquetas sobre ardósia (fundo tinta a 25%), etiquetas a 0.75rem, curvas da linha em móvel, alinhamento das etiquetas nos cartões, caminho sem repetir o título, textos repetidos na página inicial, rótulos dos factos, véu do painel de fecho (38% + mancha suave atrás do texto) e título do herói em três linhas.
+
 ## Por rever
 - Sem JS a linha do processo não é desenhada (os passos leem-se na mesma).
 - A animação de altura do acordeão depende de `interpolate-size`; noutros browsers abre sem transição.
-- O título do herói ocupa só duas linhas a 1440px, deixando a metade direita do painel mais vazia do que na referência.
+- O painel de fecho usa a fotografia de Vale del Rey; das restantes fotografias largas, as que não estão na grelha inicial mostram obra em curso e não servem de fundo.

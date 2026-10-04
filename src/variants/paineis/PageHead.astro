@@ -7,7 +7,7 @@ const { crumbs, title, lede } = Astro.props;
   <div class="wrap">
     <nav class="crumbs" aria-label="Caminho">
       <ol role="list">
-        {crumbs.map(([label, url]) => <li>{url ? <a href={url}>{label}</a> : <span aria-current="page">{label}</span>}</li>)}
+        {crumbs.map(([label, url]) => <li class:list={[!url && crumbs.length > 2 && 'vh']}>{url ? <a href={url}>{label}</a> : <span aria-current="page">{label}</span>}</li>)}
       </ol>
     </nav>
     <h1 class="d1 d1--page">{title}</h1>

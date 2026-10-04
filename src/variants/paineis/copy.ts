@@ -20,14 +20,14 @@ export const C = {
   whoTag: 'Quem somos',
   whoH: 'Uma construtora com alvará desde 1985, sede em Quarteira e obra feita no Algarve.',
   whoBtn: 'Conhecer a empresa',
-  stats: { since: 'em atividade desde', permit: 'alvará nº', services: 'áreas de serviço', works: 'obras no portefólio' },
+  stats: { since: 'início de atividade', permit: 'número do alvará', services: 'áreas de serviço', works: 'obras no portefólio' },
 
-  waysTag: 'O que nos guia',
-  waysH: 'Ouvimos, aconselhamos e ajudamos a concretizar o seu projeto.',
+  waysTag: 'A equipa',
+  waysH: 'Uma equipa técnica com formação e vasta experiência, no Algarve e noutras regiões.',
   ways: [
-    { icon: 'listen', tag: 'Ouvir', h: 'Ouvimos a ideia e aconselhamos soluções', p: 'Com profissionalismo e flexibilidade, ajudamos a otimizar e a concretizar o seu projeto.' },
-    { icon: 'rule', tag: 'Rigor', h: 'Discutimos o projeto com rigor', p: 'Apresente-nos a sua ideia. Para orçamentos, informações ou esclarecimentos, contacte-nos.' },
-    { icon: 'team', tag: 'Equipa', h: 'Uma equipa técnica com formação e experiência', p: 'Urbanizações, moradias, apartamentos e obras públicas, bem como reparações e remodelações.' },
+    { icon: 'team', tag: 'Experiência', h: 'Urbanizações, moradias e apartamentos', p: 'A equipa técnica tem formação adequada e uma vasta experiência nestas construções.' },
+    { icon: 'rule', tag: 'Âmbito', h: 'Obras públicas, reparações e remodelações', p: 'A mesma equipa executa obras públicas e trata de reparações e remodelações.' },
+    { icon: 'pin', tag: 'Território', h: 'Sede em Quarteira, obra no Algarve', p: 'Trabalhamos sobretudo no Algarve, e as equipas deslocam-se também a outras regiões do país.' },
   ] as const,
 
   servicesTag: 'Serviços',
@@ -45,7 +45,7 @@ export const C = {
   processTag: 'Como trabalhamos',
   processH: 'Da primeira conversa à obra, em quatro passos.',
 
-  closeH: 'Apresente‑nos a sua ideia.',
+  closeH: 'Tem uma obra em mente?',
   closeChips: ['Alvará nº 4511', 'Desde 1985', 'Algarve e restante país'],
 
   servicesH: 'Serviços de construção no Algarve',

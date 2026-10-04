@@ -25,7 +25,7 @@ if (steps) {
     const w = steps.clientWidth;
     const h = steps.clientHeight;
     if (!w || !items.length) return;
-    const maxR = w >= 720 ? Infinity : 18;
+    const maxR = w >= 720 ? Infinity : 60;
     const xL = 1;
     const xR = w - 1;
     const ys = items.map((el) => el.offsetTop);
