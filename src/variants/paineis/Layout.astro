@@ -1,0 +1,103 @@
+---
+// Moldura comum da proposta "Painéis": <head>, cabeçalho branco fixo, painel de rodapé e barra de ação móvel.
+import '@fontsource-variable/geist/wght.css';
+import './styles.css';
+import Head from '../../components/Head.astro';
+import Logo from '../../components/Logo.astro';
+import Icon from './Icon.astro';
+import { SITE, BASE, UI, CALL_NOTE, href, whatsapp, type PageKey } from '../../lib/site';
+import type { RouteProps } from '../../lib/routes';
+import { meta } from '../../lib/meta';
+import { C } from './copy';
+
+interface Props extends RouteProps { image?: string; jsonLd?: Record<string, unknown>[] }
+const { lang, page, id, image, jsonLd } = Astro.props;
+const V = 'paineis' as const;
+const u = UI.pt;
+const m = meta({ lang, page, id });
+const nav: { key: PageKey; label: string }[] = [
+  { key: 'services', label: u.nav.services },
+  { key: 'works', label: u.nav.works },
+  { key: 'about', label: u.nav.about },
+  { key: 'contact', label: u.nav.contact },
+];
+const cur = (k: PageKey) => (page === k ? (id ? 'true' : 'page') : undefined);
+const quote = href(V, 'pt', 'quote');
+const callLabel = `${u.call} ${SITE.mobile.display} (${CALL_NOTE.mobile.pt})`;
+const year = new Date().getFullYear();
+---
+<html lang="pt-PT" class="pn">
+  <head>
+    <Head title={m.title} description={m.description} lang="pt" variant={V} page={page} id={id} image={image} jsonLd={jsonLd} themeColor="#ffffff" langs={['pt']} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{u.skip}</a>
+
+    <header class="hd">
+      <div class="hd__in">
+        <a class="brand" href={href(V, 'pt', 'home')} aria-label={`Civilsul, ${C.home.toLowerCase()}`}>
+          <Logo size="1.625rem" />
+          <span>Civilsul.</span>
+        </a>
+        <button class="btn btn--line hd__menu" type="button" aria-expanded="false" aria-controls="menu" hidden data-menu-btn>
+          <span data-open><Icon name="menu" />{C.menu}</span>
+          <span data-close hidden><Icon name="close" />{C.close}</span>
+        </button>
+        <nav class="hd__nav" id="menu" aria-label={C.mainNav} data-menu>
+          <ul role="list">
+            {nav.map((n) => <li><a href={href(V, 'pt', n.key)} aria-current={cur(n.key)}>{n.label}</a></li>)}
+          </ul>
+          <div class="hd__act">
+            <a class="btn btn--line" href={`tel:${SITE.mobile.tel}`} aria-label={callLabel} title={`${SITE.mobile.display} · ${CALL_NOTE.mobile.pt}`}>{u.call}</a>
+            <a class="btn btn--ink" href={quote} aria-current={cur('quote')}>{u.nav.quote}</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="panel panel--ink ft">
+      <div class="wrap">
+        <div class="ft__grid">
+          <div class="ft__id">
+            <a class="brand brand--lg" href={href(V, 'pt', 'home')} aria-label={`Civilsul, ${C.home.toLowerCase()}`}><Logo tone="reverse" size="2.25rem" /><span>Civilsul.</span></a>
+            <p><strong>{SITE.legalName}</strong><br />{u.permit} · {u.since}</p>
+            <p>{SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}, {SITE.address.region}<br /><a href={SITE.mapsUrl} target="_blank" rel="noopener">{u.directions}</a></p>
+          </div>
+          <dl class="ft__lines">
+            <div><dt>{C.mobile}</dt><dd><a class="num" href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a><small>{CALL_NOTE.mobile.pt}</small></dd></div>
+            {SITE.landlines.map((l) => (
+              <div><dt>{C.landline}</dt><dd><a class="num" href={`tel:${l.tel}`}>{l.display}</a><small>{CALL_NOTE.landline.pt}</small></dd></div>
+            ))}
+            <div><dt>{u.email}</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+          </dl>
+          <nav class="ft__nav" aria-label={C.footNav}>
+            <ul role="list">
+              {nav.map((n) => <li><a href={href(V, 'pt', n.key)}>{n.label}</a></li>)}
+              <li><a href={quote}>{u.nav.quote}</a></li>
+              <li><a href={href(V, 'pt', 'privacy')} aria-current={cur('privacy')}>{u.privacy}</a></li>
+            </ul>
+          </nav>
+        </div>
+        <p class="ft__end">
+          <span>© {year} Civilsul. {u.rights}</span>
+          <a href={BASE}>{u.demo}</a>
+        </p>
+      </div>
+    </footer>
+
+    <nav class:list={['dock', page === 'quote' && 'dock--two']} aria-label={C.quick}>
+      <a href={`tel:${SITE.mobile.tel}`} aria-label={callLabel}><Icon name="phone" />{u.call}</a>
+      <a href={whatsapp('pt')} target="_blank" rel="noopener"><Icon name="chat" />{u.whatsapp}</a>
+      {page !== 'quote' && <a href={quote}><Icon name="arrow" />{C.quoteShort}</a>}
+    </nav>
+
+    <script>
+      import './menu.ts';
+      import './motion.ts';
+    </script>
+  </body>
+</html>

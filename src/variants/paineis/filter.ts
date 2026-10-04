@@ -1,0 +1,17 @@
+// Filtro das obras por tipo. Sem JS: todas as obras visíveis e a barra de filtros escondida.
+const bar = document.querySelector<HTMLElement>('[data-filter]');
+if (bar) {
+  const items = [...document.querySelectorAll<HTMLElement>('[data-kind]')];
+  const buttons = [...bar.querySelectorAll<HTMLButtonElement>('button[data-k]')];
+  bar.hidden = false;
+  const apply = (k: string) => {
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === k)));
+    items.forEach((el) => { el.hidden = !(k === 'all' || el.dataset.kind === k); });
+    const url = new URL(location.href);
+    if (k === 'all') url.searchParams.delete('tipo'); else url.searchParams.set('tipo', k);
+    history.replaceState(null, '', url);
+  };
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.k!)));
+  const pre = new URLSearchParams(location.search).get('tipo');
+  if (pre && buttons.some((b) => b.dataset.k === pre)) apply(pre);
+}

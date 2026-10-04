@@ -1,0 +1,20 @@
+---
+// Obra como fotografia grande arredondada, com título e tipo por baixo. O cartão inteiro é a ligação.
+import { Picture } from 'astro:assets';
+import { href } from '../../lib/site';
+import type { Work } from '../../content/works';
+import { kindLabel } from './copy';
+interface Props { work: Work; sizes: string; eager?: boolean; level?: 'h2' | 'h3' }
+const { work: w, sizes, eager = false, level: H = 'h3' } = Astro.props;
+const p = w.photos[0];
+const sub = [kindLabel(w.kind), w.place, w.client].filter(Boolean).join(' · ');
+---
+<a class="wc" href={href('paineis', 'pt', 'works', w.slug.pt)}>
+  <span class="wc__img">
+    <Picture src={p.src} alt={p.alt.pt} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes={sizes} loading={eager ? 'eager' : 'lazy'} />
+  </span>
+  <span class="wc__txt">
+    <H class="wc__h">{w.title.pt}</H>
+    <span class="wc__sub">{sub}</span>
+  </span>
+</a>

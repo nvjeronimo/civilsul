@@ -1,0 +1,64 @@
+---
+// Empresa: missão, factos, onde estamos e quem faz a obra, processo, lista de trabalhos e fecho.
+import { Picture } from 'astro:assets';
+import PageHead from '../PageHead.astro';
+import Stats from '../Stats.astro';
+import Process from '../Process.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { SITE, UI, href } from '../../../lib/site';
+import { MISSION, WHO, TEAM, TAGLINE } from '../../../content/company';
+import { workById } from '../../../content/works';
+import { C } from '../copy';
+const V = 'paineis' as const;
+const u = UI.pt;
+const photo = workById('monte-do-pocinho').photos[0];
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.about]]} title={C.aboutH} lede={TAGLINE.pt + '.'} />
+
+<section class="sec sec--tight" aria-labelledby="t-mission">
+  <div class="wrap split">
+    <p class="tag">{C.missionTag}</p>
+    <div class="split__main">
+      <h2 id="t-mission" class="d2 d2--s">{MISSION.pt}</h2>
+    </div>
+  </div>
+</section>
+
+<section class="panel panel--ink factsp" aria-labelledby="t-facts">
+  <div class="wrap">
+    <p class="tag">{C.factsTag}</p>
+    <h2 id="t-facts" class="d2">{C.factsH}</h2>
+  </div>
+  <Stats />
+</section>
+
+<section class="sec" aria-label={C.whereTag}>
+  <div class="wrap duo">
+    <div class="duo__img" data-rv>
+      <Picture src={photo.src} alt={photo.alt.pt} formats={['avif', 'webp']} widths={[480, 720, 960, 1280]} sizes="(min-width: 1000px) 45vw, calc(100vw - 40px)" loading="lazy" />
+    </div>
+    <div class="duo__txt">
+      <div data-rv>
+        <p class="tag">{C.whereTag}</p>
+        <p class="d3">{WHO.pt}</p>
+        <a class="btn btn--line" href={SITE.mapsUrl} target="_blank" rel="noopener">{u.directions}</a>
+      </div>
+      <div data-rv>
+        <p class="tag">{C.teamTag}</p>
+        <p class="d3">{TEAM.pt}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<Process />
+
+<section class="sec" aria-label={C.tradesH}>
+  <div class="wrap split">
+    <p class="tag">{C.tradesTag}</p>
+    <div class="split__main"><Trades level="h2" /></div>
+  </div>
+</section>
+
+<Close />

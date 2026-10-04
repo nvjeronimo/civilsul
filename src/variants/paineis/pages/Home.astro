@@ -1,0 +1,102 @@
+---
+// Página inicial: painel escuro (promessa, fotografia, quem somos, factos) → três cartões → serviços em acordeão → obras → processo → fecho.
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import Stats from '../Stats.astro';
+import ServiceList from '../ServiceList.astro';
+import Trades from '../Trades.astro';
+import WorkCard from '../WorkCard.astro';
+import Process from '../Process.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { MISSION } from '../../../content/company';
+import { workById } from '../../../content/works';
+import { C } from '../copy';
+const V = 'paineis' as const;
+const u = UI.pt;
+const hero = workById('construcao-moradia').photos[0];
+const who = workById('vale-del-rey').photos[1];
+const picks = ['reconstrucao-ampliacao-moradia', 'vale-del-rey', 'monte-do-pocinho', 'fachada-portaldegenios', 'maison-amarande', 'arranjos-exteriores-piscina'].map(workById);
+---
+<section class="panel panel--ink hero">
+  <div class="wrap hero__top">
+    <p class="tag">{C.heroTag}</p>
+    <h1 class="d1">{C.heroH}</h1>
+    <div class="hero__low">
+      <div class="hero__lede">
+        <p class="lede">{C.heroLede}</p>
+        <div class="btns">
+          <a class="btn btn--white btn--lg" href={href(V, 'pt', 'quote')}>{u.nav.quote}<Icon name="arrow" size={18} /></a>
+          <a class="btn btn--line-d btn--lg" href={href(V, 'pt', 'works')}>{C.seeWorks}</a>
+        </div>
+      </div>
+      <ul class="hero__facts" role="list">
+        <li>{u.permit}</li>
+        <li>{C.seat}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hero__photo">
+    <Picture src={hero.src} alt={hero.alt.pt} formats={['avif', 'webp']} widths={[640, 960, 1280, 1600, 2000]} sizes="(min-width: 1000px) calc(100vw - 108px), calc(100vw - 40px)" loading="eager" fetchpriority="high" />
+  </div>
+
+  <div class="wrap who">
+    <div class="who__img" data-rv>
+      <Picture src={who.src} alt={who.alt.pt} formats={['avif', 'webp']} widths={[360, 540, 720, 960]} sizes="(min-width: 1000px) 30vw, calc(100vw - 56px)" loading="lazy" />
+    </div>
+    <div class="who__txt">
+      <p class="tag" data-rv>{C.whoTag}</p>
+      <h2 class="d2" data-rv>{C.whoH}</h2>
+      <p class="lede" data-rv>{MISSION.pt}</p>
+      <a class="btn btn--white" href={href(V, 'pt', 'about')} data-rv>{C.whoBtn}</a>
+    </div>
+  </div>
+  <Stats />
+</section>
+
+<section class="sec" aria-labelledby="t-ways">
+  <div class="wrap sec__head">
+    <p class="tag" data-rv>{C.waysTag}</p>
+    <h2 id="t-ways" class="d2" data-rv>{C.waysH}</h2>
+  </div>
+  <ul class="cards3" role="list">
+    {C.ways.map((c) => (
+      <li data-rv>
+        <Icon name={c.icon} size={40} />
+        <div>
+          <span class="tag tag--white tag--plain">{c.tag}</span>
+          <h3 class="d3">{c.h}</h3>
+          <p>{c.p}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<section class="sec sec--split" aria-labelledby="t-serv">
+  <div class="wrap split">
+    <p class="tag" data-rv>{C.servicesTag}</p>
+    <div class="split__main">
+      <h2 id="t-serv" class="d2" data-rv>{C.servicesHomeH}</h2>
+      <ServiceList />
+      <Trades />
+      <a class="btn btn--ink" href={href(V, 'pt', 'services')}>{C.allServices}<Icon name="arrow" size={18} /></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--flush" aria-labelledby="t-works">
+  <div class="wrap sec__head sec__head--row">
+    <div>
+      <p class="tag" data-rv>{C.worksTag}</p>
+      <h2 id="t-works" class="d2" data-rv>{C.worksHomeH}</h2>
+    </div>
+    <a class="btn btn--ink" href={href(V, 'pt', 'works')}>{C.allWorks}<Icon name="arrow" size={18} /></a>
+  </div>
+  <ul class="wgrid wgrid--2" role="list">
+    {picks.map((w) => <li data-rv><WorkCard work={w} sizes="(min-width: 720px) 50vw, calc(100vw - 16px)" /></li>)}
+  </ul>
+</section>
+
+<Process />
+<Close />

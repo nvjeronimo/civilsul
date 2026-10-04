@@ -1,0 +1,26 @@
+---
+// Privacidade: blocos de PRIVACY.pt numa coluna de leitura.
+import PageHead from '../PageHead.astro';
+import { UI, href } from '../../../lib/site';
+import { PRIVACY } from '../../../content/privacy';
+import { C, num } from '../copy';
+const V = 'paineis' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.privacy]]} title={C.privacyH} lede={C.privacyLead} />
+
+<section class="sec sec--tight" aria-label={C.privacyH}>
+  <div class="wrap">
+    <div class="prose">
+      {PRIVACY.pt.map((b, i) => (
+        <section>
+          <span class="acc__n">/ {num(i)}</span>
+          <div>
+            <h2 class="d3">{b.h}</h2>
+            {b.p.map((t) => <p>{t}</p>)}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</section>

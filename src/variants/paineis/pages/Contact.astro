@@ -1,0 +1,64 @@
+---
+// Contactos: todos os canais com a nota de custo da chamada, morada com ligação ao mapa, convite e ligação ao orçamento.
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import { SITE, UI, CALL_NOTE, href, whatsapp } from '../../../lib/site';
+import { INVITE } from '../../../content/company';
+import { C } from '../copy';
+const V = 'paineis' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.contact]]} title={C.contactH} lede={INVITE.pt} />
+
+<section class="sec sec--flush sec--tight" aria-labelledby="t-ch">
+  <h2 id="t-ch" class="vh">{C.channelsTag}</h2>
+  <ul class="chan" role="list">
+    <li>
+      <Icon name="phone" size={28} />
+      <div>
+        <span class="tag tag--white tag--plain">{C.mobile}</span>
+        <a class="chan__v num" href={`tel:${SITE.mobile.tel}`}>{SITE.mobile.display}</a>
+        <small>{CALL_NOTE.mobile.pt}</small>
+      </div>
+    </li>
+    <li>
+      <Icon name="chat" size={28} />
+      <div>
+        <span class="tag tag--white tag--plain">{u.whatsapp}</span>
+        <a class="chan__v num" href={whatsapp('pt')} target="_blank" rel="noopener">{SITE.mobile.display}</a>
+        <small>{CALL_NOTE.mobile.pt}</small>
+      </div>
+    </li>
+    <li>
+      <Icon name="phone" size={28} />
+      <div>
+        <span class="tag tag--white tag--plain">{C.landline}</span>
+        {SITE.landlines.map((l) => <a class="chan__v num" href={`tel:${l.tel}`}>{l.display}</a>)}
+        <small>{CALL_NOTE.landline.pt}</small>
+      </div>
+    </li>
+    <li>
+      <Icon name="mail" size={28} />
+      <div>
+        <span class="tag tag--white tag--plain">{u.email}</span>
+        <a class="chan__v" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </div>
+    </li>
+    <li class="chan__wide">
+      <Icon name="pin" size={28} />
+      <div>
+        <span class="tag tag--white tag--plain">{u.address}</span>
+        <address class="chan__v">{SITE.legalName}<br />{SITE.address.street}<br />{SITE.address.postal} {SITE.address.city}, {SITE.address.region}</address>
+        <a class="btn btn--ink" href={SITE.mapsUrl} target="_blank" rel="noopener">{u.directions}<Icon name="arrow" size={18} /></a>
+      </div>
+    </li>
+    <li class="chan__wide chan__dark">
+      <span class="tag tag--plain">{u.permit}</span>
+      <div>
+        <h2 class="d3">{C.quoteAskH}</h2>
+        <p>{C.quoteAskP}</p>
+        <a class="btn btn--white" href={href(V, 'pt', 'quote')}>{u.nav.quote}<Icon name="arrow" size={18} /></a>
+      </div>
+    </li>
+  </ul>
+</section>

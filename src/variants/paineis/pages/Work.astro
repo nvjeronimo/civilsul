@@ -1,0 +1,50 @@
+---
+// Página de obra: todas as fotografias grandes, ficha (tipo, local, cliente, serviço), obra anterior e seguinte.
+import { Picture } from 'astro:assets';
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, workById } from '../../../content/works';
+import { serviceById } from '../../../content/services';
+import { C, QUOTE_TYPE, kindLabel } from '../copy';
+interface Props { id: string }
+const { id } = Astro.props;
+const V = 'paineis' as const;
+const u = UI.pt;
+const w = workById(id);
+const s = serviceById(w.service);
+const i = WORKS.findIndex((x) => x.id === id);
+const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length];
+const next = WORKS[(i + 1) % WORKS.length];
+const spec: [string, string, string?][] = [
+  [C.kind, kindLabel(w.kind)],
+  ...(w.place ? [[C.place, w.place]] as [string, string][] : []),
+  ...(w.client ? [[C.client, w.client]] as [string, string][] : []),
+  [C.service, s.title.pt, href(V, 'pt', 'services', s.slug.pt)],
+];
+const other = w.id === 'vale-del-rey' ? 'construcao-moradia' : undefined;
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.works, href(V, 'pt', 'works')], [w.title.pt]]} title={w.title.pt}>
+  <dl class="spec">
+    {spec.map(([k, v, url]) => <div><dt>{k}</dt><dd>{url ? <a href={url}>{v}</a> : v}</dd></div>)}
+  </dl>
+</PageHead>
+
+<section class="wk" aria-labelledby="t-fotos">
+  <h2 id="t-fotos" class="vh">{u.photos}</h2>
+  <ul class="wk__photos" role="list">
+    {w.photos.map((p, n) => (
+      <li class:list={[p.src.height > p.src.width && 'is-tall']}>
+        <Picture src={p.src} alt={p.alt.pt} formats={['avif', 'webp']} widths={[640, 960, 1280, 1600, 2000]} sizes={p.src.height > p.src.width ? '(min-width: 1000px) 760px, calc(100vw - 16px)' : 'calc(100vw - 16px)'} loading={n === 0 ? 'eager' : 'lazy'} fetchpriority={n === 0 ? 'high' : undefined} />
+      </li>
+    ))}
+  </ul>
+</section>
+
+<nav class="wnav" aria-label={C.otherWorks}>
+  <a href={href(V, 'pt', 'works', prev.slug.pt)} rel="prev"><Icon name="arrow-left" /><span><small>{C.prev}</small>{prev.title.pt}</span></a>
+  <a href={href(V, 'pt', 'works', next.slug.pt)} rel="next"><span><small>{C.next}</small>{next.title.pt}</span><Icon name="arrow" /></a>
+</nav>
+
+<Close title={C.workAsk} text={C.workAskP} tipo={QUOTE_TYPE[w.service]} work={other} />

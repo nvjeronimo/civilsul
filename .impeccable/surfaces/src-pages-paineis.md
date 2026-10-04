@@ -1,0 +1,21 @@
+---
+version: 1
+slug: "src-pages-paineis"
+primary_target: "src/pages/paineis"
+related_targets: []
+---
+
+# Surface: Civilsul · proposta E "Painéis" (src/pages/paineis, src/variants/paineis) — site completo, só PT
+
+Mode: Persuade. Audience, job, proof and constraints as in PRODUCT.md.
+
+BRIEF-PINNED REFERENCE (user, 2026-10-01/04): the user asked for a proposal "idêntica" in look to https://flat-white.framer.website/ (a consultancy template). The brief wins over the roll and over the craft floor's eyebrow ban: the small pill labels above headings are a defining trait of this look and are allowed here. Recreate the design LANGUAGE only: never copy the template's code, text, images, logo, icons or licensed fonts. Reference captures (for looking, not copying): _research/flat-white/a.png, b.png, c.png and d00–d13.png (1440 wide viewports top to bottom).
+
+## Direction contract
+THESIS: Civilsul presented with the calm authority of a modern consultancy studio: large rounded panels, light oversized headlines, a lot of air, and real work photography. It refuses the builder cliché (hard hats, orange, stock renders) and any themed metaphor.
+OWN-WORLD: Page ground white #FFFFFF with a 6–8px white gutter around full-width PANELS with 10–12px radius. Panel colours alternate: ink navy-black #0D1117 (hero, facts, footer), white, slate blue #636E86 (process), pale grey #EEF0F3 cards. Text ink #0D1117, muted #5B6474 on light / #A9B1BF on dark. Accent: none beyond the logo's own colours in the logo; primary button = ink pill on light, white pill on dark; secondary = outline pill. Type: Geist Variable (@fontsource-variable/geist) for everything; display 300–400 weight, very large (hero ~4.25–4.75rem, section heads ~3–3.5rem), tracking -0.03em to -0.04em, line-height ~1.0–1.05; body 400 at 1–1.0625rem; pill labels 600 at 0.6875–0.75rem uppercase with a leading "/" (e.g. "/ QUEM SOMOS") on a subtle pill (#ffffff14 on dark, #EEF0F3 on light). Photos: wide, 10–12px radius, real Civilsul works; a wide photo tucks up from the bottom edge of the hero panel. Icons: authored line SVG, 1.5px stroke. Header: white, fixed, wordmark "Civilsul." left (logo mark + name), nav centre-left, two pills right ("Ligar" outline, "Pedir orçamento" ink).
+STORY: hero promise on the dark panel → who we are (statement + the only true facts as stat tiles: "1985" desde, "4511" alvará nº, "6" áreas de serviço, "13" obras no portefólio — these counts are computed from the content, never invented) → methods/values as three pale cards (from MISSION/INVITE/TEAM, no new claims) → services as a numbered accordion list (/ 001 … / 006) that opens to show items and a link to the service page → works as large rounded photos → process on the slate panel as steps joined by one curved line → closing photo panel with headline and CTA → footer panel. NO team section, client logos, pricing, ratings or testimonials (no facts exist for them).
+FIRST VIEWPORT: fixed white header; below it one dark rounded panel filling the viewport: pill label "/ CONSTRUTORA DESDE 1985", H1 "Construímos, reconstruímos e remodelamos no Algarve desde 1985." in light weight, support paragraph lower-left (max ~32ch), facts lower-right (Alvará nº 4511 · Quarteira, Algarve), and a wide real photo (Construção de moradia or Vale del Rey) rising from the bottom edge of the panel. Mobile: same panel stacked, sticky bottom bar Ligar · WhatsApp · Orçamento.
+FORM: brief-pinned reference world (FlatWhite look), overriding the roll. Seed key 42e80edc.
+SIGNATURE: the process line: one continuous curved SVG path linking the four steps on the slate panel, drawn with scroll (stroke-dashoffset tied to scroll progress, IntersectionObserver/scroll fallback). Supporting motion: headings and panels fade/slide up 16px once on entry (staggered, expo-out); accordion opens with height + rotate of the plus icon. Reduced motion: line fully drawn, no entrances.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

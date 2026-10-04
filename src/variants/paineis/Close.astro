@@ -1,0 +1,29 @@
+---
+// Painel de fecho: fotografia real de obra, título, convite e chamada para o orçamento.
+// plain: sem fotografia (página de obras públicas, que nunca leva fotografia de obra).
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { SITE, UI, CALL_NOTE, href } from '../../lib/site';
+import { INVITE } from '../../content/company';
+import { workById } from '../../content/works';
+import { C } from './copy';
+interface Props { title?: string; text?: string; tipo?: string; work?: string; plain?: boolean }
+const { title = C.closeH, text = INVITE.pt, tipo, work = 'vale-del-rey', plain = false } = Astro.props;
+const u = UI.pt;
+const p = workById(work).photos[0];
+const quote = href('paineis', 'pt', 'quote') + (tipo ? `?tipo=${tipo}` : '');
+---
+<section class="panel close" aria-labelledby="t-close">
+  {!plain && <Picture src={p.src} alt="" formats={['avif', 'webp']} widths={[640, 960, 1440, 1920]} sizes="calc(100vw - 16px)" loading="lazy" pictureAttributes={{ class: 'close__bg' }} />}
+  <div class="close__in" data-rv>
+    <h2 id="t-close" class="d2">{title}</h2>
+    <ul class="close__chips" role="list">
+      {C.closeChips.map((c) => <li class="tag tag--plain">{c}</li>)}
+    </ul>
+    <p>{text}</p>
+    <div class="btns">
+      <a class="btn btn--white btn--lg" href={quote}>{u.nav.quote}<Icon name="arrow" size={18} /></a>
+      <a class="btn btn--line-d btn--lg" href={`tel:${SITE.mobile.tel}`} aria-label={`${u.call} ${SITE.mobile.display} (${CALL_NOTE.mobile.pt})`}><Icon name="phone" size={18} />{u.call}</a>
+    </div>
+  </div>
+</section>

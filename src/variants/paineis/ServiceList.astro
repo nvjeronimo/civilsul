@@ -1,0 +1,25 @@
+---
+// Serviços como lista numerada em acordeão (/ 001 … / 006). <details> nativo: abre sem JS; a altura anima onde o browser o permite.
+import Icon from './Icon.astro';
+import { href } from '../../lib/site';
+import { SERVICES } from '../../content/services';
+import { C, num } from './copy';
+---
+<div class="acc">
+  {SERVICES.map((s, i) => (
+    <details name="servicos">
+      <summary>
+        <span class="acc__n">/ {num(i)}</span>
+        <h3 class="acc__t">{s.title.pt}</h3>
+        <span class="acc__plus"><Icon name="plus" size={16} /></span>
+      </summary>
+      <div class="acc__body">
+        <p>{s.short.pt}</p>
+        <ul role="list">
+          {s.items.map((it) => <li><Icon name="check" size={16} />{it.pt}</li>)}
+        </ul>
+        <a class="btn btn--line" href={href('paineis', 'pt', 'services', s.slug.pt)}>{C.seeService}<span class="vh">: {s.title.pt}</span><Icon name="arrow" size={18} /></a>
+      </div>
+    </details>
+  ))}
+</div>

@@ -1,0 +1,32 @@
+---
+// Índice de obras: as treze como fotografias grandes, filtráveis por tipo (sem JS: todas visíveis).
+import PageHead from '../PageHead.astro';
+import WorkCard from '../WorkCard.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { WORKS, KINDS } from '../../../content/works';
+import { C } from '../copy';
+const V = 'paineis' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.works]]} title={C.worksH} lede={C.worksLead} />
+
+<section class="sec sec--flush sec--tight" aria-label={C.worksH}>
+  <div class="wrap">
+    <div class="filter" role="group" aria-label={C.filter} data-filter hidden>
+      <button type="button" data-k="all" aria-pressed="true">{C.filterAll}</button>
+      {KINDS.map((k) => <button type="button" data-k={k.id} aria-pressed="false">{k.label.pt}</button>)}
+    </div>
+  </div>
+  <ul class="wgrid wgrid--3" role="list">
+    {WORKS.map((w, i) => (
+      <li data-kind={w.kind}><WorkCard work={w} level="h2" eager={i < 3} sizes="(min-width: 1000px) 33vw, (min-width: 720px) 50vw, calc(100vw - 16px)" /></li>
+    ))}
+  </ul>
+</section>
+
+<Close />
+
+<script>
+  import '../filter.ts';
+</script>

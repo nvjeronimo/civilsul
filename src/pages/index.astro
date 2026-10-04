@@ -1,5 +1,5 @@
 ---
-// Página da proposta: diagnóstico do site atual, as quatro direções e o que muda em todas.
+// Página da proposta: diagnóstico do site atual, as cinco direções e o que muda em todas.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Logo from '../components/Logo.astro';
@@ -38,7 +38,7 @@ const features = [
 ];
 
 const needs = [
-  'Escolher uma das quatro direções (ou combinar).',
+  'Escolher uma das cinco direções (ou combinar).',
   'Confirmar os factos usados e acrescentar os que quiserem mostrar: número de obras, anos de algumas obras, locais, equipa, NIF.',
   'Mais fotografias das obras (antes e depois, se existirem) e do logótipo em vetor.',
   'Decidir o envio do formulário (WhatsApp e email já funcionam; um envio direto precisa de um pequeno serviço no alojamento).',
@@ -51,7 +51,7 @@ const needs = [
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'self'; object-src 'none'" />
   <title>Proposta de redesign · Civilsul</title>
-  <meta name="description" content="Proposta de redesign do site civilsul.pt: diagnóstico, quatro direções visuais e as melhorias de funcionalidade, SEO, velocidade e segurança." />
+  <meta name="description" content="Proposta de redesign do site civilsul.pt: diagnóstico, cinco direções visuais e as melhorias de funcionalidade, SEO, velocidade e segurança." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" href={`${BASE}favicon.svg`} type="image/svg+xml" />
 </head>
@@ -62,7 +62,7 @@ const needs = [
       <div>
         <Logo size="3.2rem" tone="reverse" />
         <h1>Proposta de redesign do site <span>civilsul.pt</span></h1>
-        <p class="lede">Quatro direções visuais para o mesmo site novo: mais claro, mais rápido, mais seguro e feito para trazer pedidos de orçamento.</p>
+        <p class="lede">Cinco direções visuais para o mesmo site novo: mais claro, mais rápido, mais seguro e feito para trazer pedidos de orçamento.</p>
         <p class="actions">
           {VARIANTS.map((v) => <a class="btn" href={`${BASE}${v.id}/`}>Abrir “{v.name}”</a>)}
         </p>
@@ -79,7 +79,7 @@ const needs = [
   <nav class="toc" aria-label="Secções">
     <ol class="wrap">
       <li><a href="#diagnostico">Diagnóstico</a></li>
-      <li><a href="#direcoes">Quatro direções</a></li>
+      <li><a href="#direcoes">Cinco direções</a></li>
       <li><a href="#melhorias">O que muda</a></li>
       <li><a href="#numeros">Números</a></li>
       <li><a href="#proximos">Próximos passos</a></li>
@@ -106,8 +106,8 @@ const needs = [
     <section id="direcoes" class="s s--tint">
       <div class="wrap">
         <div class="intro">
-          <h2>Quatro direções, o mesmo conteúdo</h2>
-          <p>As quatro versões têm as mesmas páginas, textos, fotografias e funcionalidades. Muda a forma de apresentar a Civilsul. Todas estão completas e navegáveis. A e D já têm versão inglesa; B e C, por agora, só em português.</p>
+          <h2>Cinco direções, o mesmo conteúdo</h2>
+          <p>As cinco versões têm as mesmas páginas, textos, fotografias e funcionalidades. Muda a forma de apresentar a Civilsul. Todas estão completas e navegáveis. A e D já têm versão inglesa; B, C e E, por agora, só em português.</p>
         </div>
         <div class="dirs">
           {VARIANTS.map((v, i) => (
@@ -123,6 +123,7 @@ const needs = [
                   mapa: 'O site apresenta-se como o documento que um construtor sério entrega: cada serviço e cada obra é um artigo numerado, as fotografias são os anexos, e o pedido de orçamento monta uma folha em tempo real. Distinto, rigoroso, fácil de percorrer.',
                   'cal-e-barra': 'A casa algarvia como linguagem: paredes caiadas como fundo, a barra pintada (azul e ocre) como base de cada secção e a platibanda como remate. É o que a Civilsul constrói e reconstrói, e está nas suas próprias fotografias. Arquitetónico, luminoso e contido.',
                   'luz-em-corte': 'A casa vista como um arquiteto a pensa: em corte. Paredes e lajes a carvão, divisões em branco-cal, as fotografias das obras dentro das divisões, e uma faixa de sol dourado que atravessa a página com o scroll. Técnico, preciso, com luz.',
+                  paineis: 'Inspirado nos sites de estúdios de consultoria: grandes painéis de cantos arredondados que alternam entre escuro, branco e azul-ardósia, títulos finos e grandes, serviços numa lista que abre e o processo ligado por uma linha curva. Sóbrio, atual, com muito ar.',
                   padrao: 'O site de construtora que o visitante espera, feito com o cuidado de um estúdio de arquitetura: fotografia grande, serviços com imagens reais, portefólio com filtros e um botão de orçamento sempre à mão. Seguro e familiar.',
                 } as Record<string, string>)[v.id]}</p>
                 <p class="dir__links"><a class="btn btn--ink" href={`${BASE}${v.id}/`}>Ver em português</a> {v.langs.includes('en') && <a href={`${BASE}${v.id}/en/`}>English</a>} <a href={`${BASE}${v.id}/orcamento/`}>Pedido de orçamento</a></p>
@@ -136,7 +137,7 @@ const needs = [
     <section id="melhorias" class="s">
       <div class="wrap">
         <div class="intro">
-          <h2>O que muda, em qualquer das quatro</h2>
+          <h2>O que muda, em qualquer das cinco</h2>
           <p>Usámos apenas o que o site atual já diz: 1985, alvará nº 4511, a lista de serviços, as 14 fotografias e os contactos. Nada foi inventado. O que falta confirmar está em “Próximos passos”.</p>
         </div>
         <ul class="features">

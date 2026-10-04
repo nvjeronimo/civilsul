@@ -23,13 +23,14 @@ export const SITE = {
 } as const;
 
 export type Lang = 'pt' | 'en';
-export type Variant = 'mapa' | 'cal-e-barra' | 'luz-em-corte' | 'padrao';
+export type Variant = 'mapa' | 'cal-e-barra' | 'luz-em-corte' | 'padrao' | 'paineis';
 
 export const VARIANTS: { id: Variant; name: string; line: { pt: string; en: string }; langs: Lang[] }[] = [
   { id: 'mapa', name: 'Mapa de Quantidades', line: { pt: 'O site como o orçamento de um construtor sério.', en: 'The site as a serious builder’s bill of quantities.' }, langs: ['pt', 'en'] },
   { id: 'cal-e-barra', name: 'Cal e Barra', line: { pt: 'A casa algarvia como linguagem: cal, barra pintada, platibanda.', en: 'The Algarve house as a language: limewash, painted band, parapet.' }, langs: ['pt'] },
   { id: 'luz-em-corte', name: 'Luz em Corte', line: { pt: 'Cada obra lida como um corte de arquiteto atravessado pela luz.', en: 'Every work read as an architect’s section crossed by light.' }, langs: ['pt'] },
   { id: 'padrao', name: 'Padrão do setor', line: { pt: 'O site de construtora esperado, com acabamento a sério.', en: 'The expected builder site, finished properly.' }, langs: ['pt', 'en'] },
+  { id: 'paineis', name: 'Painéis', line: { pt: 'Grandes painéis arredondados, títulos finos e muito espaço: o tom de um estúdio de consultoria.', en: 'Large rounded panels, light headlines and generous space: a consultancy-studio tone.' }, langs: ['pt'] },
 ];
 
 

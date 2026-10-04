@@ -1,0 +1,26 @@
+---
+// Processo no painel azul-ardósia: quatro passos ligados por uma só linha curva, desenhada com o scroll (motion.ts).
+import { PROCESS } from '../../content/company';
+import { C, num } from './copy';
+---
+<section class="panel panel--slate proc" aria-labelledby="t-proc">
+  <div class="wrap">
+    <p class="tag" data-rv>{C.processTag}</p>
+    <h2 id="t-proc" class="d2 proc__h" data-rv>{C.processH}</h2>
+    <ol class="steps" role="list" data-line>
+      <svg class="steps__line" aria-hidden="true" focusable="false" fill="none">
+        <path data-track />
+        <path data-draw />
+      </svg>
+      {PROCESS.map((s, i) => (
+        <li data-step-item>
+          <div class="step">
+            <span class="tag">{num(i)}</span>
+            <h3 class="d3">{s.title.pt}</h3>
+            <p>{s.text.pt}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

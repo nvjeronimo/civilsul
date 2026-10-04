@@ -1,0 +1,76 @@
+---
+// Página de serviço: título, entrada, o que inclui, obras relacionadas (ou painel do alvará nas obras públicas), outros serviços.
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import WorkCard from '../WorkCard.astro';
+import Close from '../Close.astro';
+import { SITE, UI, CALL_NOTE, href } from '../../../lib/site';
+import { SERVICES, serviceById } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { C, QUOTE_TYPE, num } from '../copy';
+interface Props { id: string }
+const { id } = Astro.props;
+const V = 'paineis' as const;
+const u = UI.pt;
+const s = serviceById(id);
+const works = s.works.map(workById);
+const quote = `${href(V, 'pt', 'quote')}?tipo=${QUOTE_TYPE[s.id]}`;
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services, href(V, 'pt', 'services')], [s.title.pt]]} title={s.title.pt} lede={s.short.pt}>
+  <div class="btns">
+    <a class="btn btn--white btn--lg" href={quote}>{C.quoteFor}<Icon name="arrow" size={18} /></a>
+  </div>
+</PageHead>
+
+<section class="sec sec--tight" aria-labelledby="t-inc">
+  <div class="wrap split">
+    <p class="tag">{C.includes}</p>
+    <div class="split__main">
+      <h2 id="t-inc" class="d2 d2--s">{s.intro.pt}</h2>
+      <ul class="lines" role="list">
+        {s.items.map((it, i) => <li><span class="acc__n">/ {num(i)}</span><span>{it.pt}</span></li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{works.length > 0 ? (
+  <section class="sec sec--flush sec--tight" aria-labelledby="t-rel">
+    <div class="wrap sec__head">
+      <p class="tag">{u.nav.works}</p>
+      <h2 id="t-rel" class="d2">{C.relatedWorks}</h2>
+    </div>
+    <ul class:list={['wgrid', works.length % 3 === 0 ? 'wgrid--3' : 'wgrid--2']} role="list">
+      {works.map((w) => <li data-rv><WorkCard work={w} sizes="(min-width: 720px) 50vw, calc(100vw - 16px)" /></li>)}
+    </ul>
+  </section>
+) : (
+  <section class="panel panel--ink permitp" aria-labelledby="t-permit">
+    <div class="wrap">
+      <p class="tag">{C.publicTag}</p>
+      <h2 id="t-permit" class="permitp__n">{u.permit}</h2>
+      <p class="lede">{C.publicNote} {C.publicAsk}</p>
+      <div class="btns">
+        <a class="btn btn--white" href={`mailto:${SITE.email}`}><Icon name="mail" size={18} />{SITE.email}</a>
+        <a class="btn btn--line-d" href={`tel:${SITE.mobile.tel}`}><Icon name="phone" size={18} /><span class="num">{SITE.mobile.display}</span></a>
+      </div>
+      <p class="note">{CALL_NOTE.mobile.pt}</p>
+    </div>
+  </section>
+)}
+
+<section class="sec sec--tight" aria-labelledby="t-other">
+  <div class="wrap split">
+    <p class="tag">{u.nav.services}</p>
+    <div class="split__main">
+      <h2 id="t-other" class="d2 d2--s">{C.otherServices}</h2>
+      <ul class="lines lines--links" role="list">
+        {SERVICES.map((o, i) => o.id !== s.id && (
+          <li><a href={href(V, 'pt', 'services', o.slug.pt)}><span class="acc__n">/ {num(i)}</span><span>{o.title.pt}</span><Icon name="arrow" size={18} /></a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<Close tipo={QUOTE_TYPE[s.id]} work={works[0]?.id} plain={works.length === 0} />

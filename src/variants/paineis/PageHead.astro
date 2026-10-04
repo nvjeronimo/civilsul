@@ -1,0 +1,17 @@
+---
+// Cabeça das páginas interiores: painel escuro com o caminho em etiqueta, título e entrada.
+interface Props { crumbs: [string, string?][]; title: string; lede?: string }
+const { crumbs, title, lede } = Astro.props;
+---
+<section class="panel panel--ink ph">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Caminho">
+      <ol role="list">
+        {crumbs.map(([label, url]) => <li>{url ? <a href={url}>{label}</a> : <span aria-current="page">{label}</span>}</li>)}
+      </ol>
+    </nav>
+    <h1 class="d1 d1--page">{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    <slot />
+  </div>
+</section>

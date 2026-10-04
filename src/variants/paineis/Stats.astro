@@ -1,0 +1,22 @@
+---
+// Os únicos números verdadeiros, como mosaicos: ano de início, nº do alvará e duas contagens calculadas do conteúdo.
+import { SITE } from '../../lib/site';
+import { SERVICES } from '../../content/services';
+import { WORKS } from '../../content/works';
+import { C } from './copy';
+const tiles = [
+  { n: String(SITE.since), l: C.stats.since },
+  { n: SITE.permit, l: C.stats.permit },
+  { n: String(SERVICES.length), l: C.stats.services },
+  { n: String(WORKS.length), l: C.stats.works },
+];
+---
+<ul class="stats" role="list">
+  {tiles.map((t, i) => (
+    <li data-rv>
+      <span class="stats__dots" aria-hidden="true">{[0, 1, 2, 3].map((d) => <i data-on={d <= i ? '' : undefined}></i>)}</span>
+      <strong class="num">{t.n}</strong>
+      <span class="stats__l">{t.l}</span>
+    </li>
+  ))}
+</ul>

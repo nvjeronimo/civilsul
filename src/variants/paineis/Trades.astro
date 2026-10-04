@@ -1,0 +1,14 @@
+---
+// Lista original completa de trabalhos (TRADES), para quem procura um ofício específico.
+import { TRADES } from '../../content/services';
+import { C } from './copy';
+interface Props { level?: 'h2' | 'h3' }
+const { level: H = 'h3' } = Astro.props;
+---
+<div class="trades">
+  <H class="d3">{C.tradesH}</H>
+  <p class="muted">{C.tradesP}</p>
+  <ul role="list">
+    {TRADES.map((t) => <li>{t.pt}</li>)}
+  </ul>
+</div>

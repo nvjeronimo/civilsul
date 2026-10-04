@@ -1,0 +1,53 @@
+---
+// Índice de serviços: os seis, cada um com entrada, itens e uma obra relacionada (obras públicas: painel do alvará, sem fotografia).
+import { Picture } from 'astro:assets';
+import PageHead from '../PageHead.astro';
+import Icon from '../Icon.astro';
+import Trades from '../Trades.astro';
+import Close from '../Close.astro';
+import { UI, href } from '../../../lib/site';
+import { SERVICES } from '../../../content/services';
+import { workById } from '../../../content/works';
+import { C, num } from '../copy';
+const V = 'paineis' as const;
+const u = UI.pt;
+---
+<PageHead crumbs={[[C.home, href(V, 'pt', 'home')], [u.nav.services]]} title={C.servicesH} lede={C.servicesLead} />
+
+<section class="sec sec--tight" aria-label={u.nav.services}>
+  <div class="wrap">
+    <ol class="srows" role="list">
+      {SERVICES.map((s, i) => {
+        const w = s.works[0] ? workById(s.works[0]) : undefined;
+        const url = href(V, 'pt', 'services', s.slug.pt);
+        return (
+          <li class="srow" data-rv>
+            <span class="acc__n">/ {num(i)}</span>
+            <div class="srow__main">
+              <h2 class="d3 srow__h"><a href={url}>{s.title.pt}</a></h2>
+              <p>{s.intro.pt}</p>
+              <a class="btn btn--line" href={url}>{C.seeService}<span class="vh">: {s.title.pt}</span><Icon name="arrow" size={18} /></a>
+            </div>
+            <ul class="checks" role="list">
+              {s.items.map((it) => <li><Icon name="check" size={16} />{it.pt}</li>)}
+            </ul>
+            {w ? (
+              <div class="srow__img"><Picture src={w.photos[0].src} alt={w.photos[0].alt.pt} formats={['avif', 'webp']} widths={[320, 480, 640]} sizes="(min-width: 1000px) 240px, calc(100vw - 40px)" loading={i < 2 ? 'eager' : 'lazy'} /></div>
+            ) : (
+              <div class="srow__img permit"><span>{u.permit}</span></div>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</section>
+
+<section class="sec sec--tight" aria-label={C.tradesH}>
+  <div class="wrap split">
+    <p class="tag">{C.tradesTag}</p>
+    <div class="split__main"><Trades level="h2" /></div>
+  </div>
+</section>
+
+<Close />
