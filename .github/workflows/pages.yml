@@ -20,6 +20,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # As imagens já processadas ficam guardadas de uma publicação para a outra: sem isto, cada build refaz todas.
+      # Repõe-se depois do npm ci, que esvazia o node_modules.
+      - uses: actions/cache@v4
+        with:
+          path: node_modules/.astro
+          key: astro-images-${{ github.run_id }}
+          restore-keys: astro-images-
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
